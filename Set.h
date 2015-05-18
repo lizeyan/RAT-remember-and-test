@@ -30,3 +30,4 @@ public:
     Set (std::string n): setName(n)	{}
 };
 #endif
+

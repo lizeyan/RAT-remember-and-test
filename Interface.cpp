@@ -36,13 +36,12 @@ void consoleInterface::ini()
     dic->Read (fin);
     fin.close();
     fin.open("RAT.ini");
-    cout<<"duang!!!"<<endl;
     string tmp1;
     string tmp2;
-    while(fin >> tmp1 >> tmp2)
+    string tmp3;
+    while(fin >> tmp1 >> tmp2 >> tmp3)
     {
-        cout<<tmp1<<tmp2<<endl;
-        users.push_back(new User(tmp1, tmp2));
+        users.push_back(new User(tmp1, tmp2, tmp3));
     }
     fin.close();
     cout << "succefullly load." << endl
@@ -472,7 +471,7 @@ void consoleInterface::TouchUser(string command)
     {
         password += command[i];
     }
-    users.push_back(new User(userName, password));
+    users.push_back(new User(userName, password, "1"));
     modified = true;
     cout << "successfully touch user:" << userName << endl;
 }
@@ -535,10 +534,10 @@ void consoleInterface::outHelp()
     << "list --list all sets" << endl
     << "test -t setname testType --test words in this set" << endl
     << "in test:"<<endl
-    << "testType can only be 0,1 or 2"<<endl
-    << "input mode0 to return normal mode"<<endl
-    << "add -t setname -w word -- add word to a set, and you can add many word to one set in one command." << endl
-    << "		In order to do this, end each word with \'.\'" << endl
+    << "\ttestType can only be 0,1 or 2"<<endl
+    << "\tinput mode0 to return normal mode"<<endl
+    << "add -t setname -w word -- add word to a set, and you can add many word to one\n\t set in one command." << endl
+    << "In order to do this, end each word with \'.\'" << endl
     << "touch -t setname --new set" << endl
     << "touch -u userName -p password-- new user" << endl
     << "switch -u userName --switch user" << endl

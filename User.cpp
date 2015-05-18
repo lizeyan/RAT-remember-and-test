@@ -1,11 +1,17 @@
 //:User.cpp
 #include "User.h"
+#include <sstream>
 #include <fstream>
 #include <string>
 #include <vector>
 using namespace std;
-User::User(string n, string p):name(n), password(p)
+User::User(string n, string p, string level):name(n), password(p)
 {
+    stringstream ss;
+    ss << level;
+    int levelInt;
+    ss >> levelInt;
+    this->level = levelInt;
     ifstream fin((name + ".set").c_str());
     string setName;
     while (fin >> setName)

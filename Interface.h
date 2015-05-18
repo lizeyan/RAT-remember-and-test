@@ -40,11 +40,11 @@ protected:
     void FindSimilarWord(std::string);
     void FindWordFuzzy(std::string);
     void Test(std::string);
+    void TestDo();
     void Add (std::string);
     void outHelp();
     void outVersion();
     void quiryModeAnalyse(std::string command);
-    void TestModeAnalyse(std::string command);
     void normalAnalyse(std::string command);
 public:
     static consoleInterface* GetInstance();

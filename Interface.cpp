@@ -76,10 +76,6 @@ void consoleInterface::operation()
         {
             quiryModeAnalyse(command);
         }
-        else if(mode == 2)
-        {
-            TestModeAnalyse(command);
-        }
         else
         {
             normalAnalyse(command);
@@ -209,34 +205,34 @@ bool consoleInterface::pass(int testType)
 }
 void consoleInterface::Exam()
 {
-        if (user->GetLevel() == 3)
-        {
-            cout << "You are the highest level now. "
-                     << "Maybe we will open more level in the furure" << endl;
-            return;
-        }
-        cout << "You will pass the exam if you test at least 20 times and keep you rate:\n"
-                << "type0: 0.95\ttype1: 0.80\ttype2: 0.75" << endl
-                << "The type of exam is random. The level of type 0 or type 1 is 4.\nQuit anytime with \"mode 0\"" << endl;
-        string examFileName[3] = {"", "level2.txt", "level3.txt"};
-        Set* examSet = new Set;
-        ifstream fin(examFileName[user->GetLevel()].c_str());
-        examSet->Read(fin);
-        fin.close();
-        int level = 4;
-        int testType = rand() % 3;
-        op=new opera(examSet, level, testType);
-        op->ope(cout);
-        if (pass(testType))
-        {
-            user->LevelUp();
-            cout << "Good! You pass the exam. Now your level is " << user->GetLevel() << "." << endl;
-        }
-        else
-        {
-            cout << "Maybe you need to learn more." << endl;
-        }
-        delete examSet;
+    if (user->GetLevel() == 3)
+    {
+        cout << "You are the highest level now. "
+        << "Maybe we will open more level in the furure" << endl;
+        return;
+    }
+    cout << "You will pass the exam if you test at least 20 times and keep you rate:\n"
+    << "type0: 0.95\ttype1: 0.80\ttype2: 0.75" << endl
+    << "The type of exam is random. The level of type 0 or type 1 is 4.\nQuit anytime with \"mode 0\"" << endl;
+    string examFileName[3] = {"", "level2.txt", "level3.txt"};
+    Set* examSet = new Set;
+    ifstream fin(examFileName[user->GetLevel()].c_str());
+    examSet->Read(fin);
+    fin.close();
+    int level = 4;
+    int testType = rand() % 3;
+    op=new opera(examSet, level, testType);
+    op->ope(cout);
+    if (pass(testType))
+    {
+        user->LevelUp();
+        cout << "Good! You pass the exam. Now your level is " << user->GetLevel() << "." << endl;
+    }
+    else
+    {
+        cout << "Maybe you need to learn more." << endl;
+    }
+    delete examSet;
 }
 void consoleInterface::Save()
 {
@@ -369,17 +365,7 @@ void consoleInterface::normalAnalyse(string command)
         cout << "no command of " << command << ". Try \"help\"" << endl;
     }
 }
-void consoleInterface::TestModeAnalyse(std::string command)
-{
-    if(command == "mode 0"){
-        mode = 0;
-        return;
-    }
-    op->first(command, cout);
-    //delete op;
-    op = new opera(user->GetSet(pos), level, testType);
-    op->ope(cout);
-}
+
 void consoleInterface::Test(string command)
 {
     if (user == NULL)
@@ -419,7 +405,6 @@ void consoleInterface::Test(string command)
     }
     else
     {
-        mode = 2;
         if(testType!=2){
             cout<<"plesae choose level (2~8)"<<endl;
             cin>>level;
@@ -433,8 +418,18 @@ void consoleInterface::Test(string command)
         }else{
             level=-1;
         }
+        TestDo();
+    }
+}
+void consoleInterface::TestDo()
+{
+    while(1){
         op=new opera(user->GetSet(pos), level, testType);
         op->ope(cout);
+        string answer;
+        getline(cin,answer);
+        if(answer=="mode 0") return;
+        op->first(answer, cout);
     }
 }
 void consoleInterface::Add(string command)

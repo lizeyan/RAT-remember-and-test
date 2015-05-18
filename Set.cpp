@@ -55,13 +55,6 @@ void Set::Read(std::istream& load)
     ReadAndAdd (load);
 }
 Set::Set ()	{}
-void Set::Test()
-{
-    for (int i = 0; i < words.size(); ++i)
-    {
-        words[i]->Test();
-    }
-}
 ostream& operator<< (ostream& out, Set& s)
 {
     out << s.setName << ":" << endl;

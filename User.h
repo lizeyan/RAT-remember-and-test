@@ -15,7 +15,6 @@ public:
     User (std::string n, std::string p);
     Set* GetSet(int rank) {return wordSets[rank];}
     int GetSize() {return wordSets.size();}
-    void Test (std::string targetSet);
     int InsertSet (Set&);
 };
 #endif

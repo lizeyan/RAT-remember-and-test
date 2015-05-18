@@ -1,9 +1,9 @@
 //:Set.h
 #ifndef ___SET___
 #define ___SET___
-#include "Word.h"
 #include <vector>
 #include <string>
+#include "Word.h"
 /*
  格式
  顺序列出单词的拼写即可
@@ -28,6 +28,5 @@ public:
     }
     Set();
     Set (std::string n): setName(n)	{}
-    void Test();
 };
 #endif

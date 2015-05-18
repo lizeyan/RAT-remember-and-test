@@ -18,11 +18,6 @@ User::User(string n, string p):name(n), password(p)
     }
     fin.close();
 }
-void User::Test(string targetSet)
-{
-    int target = FindSet (targetSet);
-    wordSets[target]->Test();
-}
 int  User::InsertSet(Set& targetSet)
 {
     int pos = FindSet(targetSet.GetName());

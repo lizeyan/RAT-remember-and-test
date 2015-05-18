@@ -5,19 +5,38 @@
 using namespace std;
 Word::Word ()
 {
+    quan0=EntrySize();
+    quan1=EntrySize();
+    quan2=EntrySize();
     //remember = new remember;
 }
 Word::Word (const Word& w): spell(w.spell), entries(w.entries)
 {
+    quan0=EntrySize();
+    quan1=EntrySize();
+    quan2=EntrySize();
     //remember = new remember(w.remember);
 }
-void Word::Test()
-{
-    cout << "test: " << spell << endl;
-    for (int i = 0; i < entries.size(); ++i)
-    {
-        //
+void Word::Quanchange0(){
+    int lin=0;
+    for(int i=0; i<EntrySize(); i++){
+        lin+=entries[i]->test->quan0;
     }
+    quan0=lin;
+}
+void Word::Quanchange1(){
+    int lin=0;
+    for(int i=0; i<EntrySize(); i++){
+        lin+=entries[i]->test->quan1;
+    }
+    quan1=lin;
+}
+void Word::Quanchange2(){
+    int lin=0;
+    for(int i=0; i<EntrySize(); i++){
+        lin+=entries[i]->test->quan2;
+    }
+    quan2=lin;
 }
 ostream& operator<< (ostream& out, Word& w)
 {

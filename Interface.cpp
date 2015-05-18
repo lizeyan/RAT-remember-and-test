@@ -36,10 +36,12 @@ void consoleInterface::ini()
     dic->Read (fin);
     fin.close();
     fin.open("RAT.ini");
+    cout<<"duang!!!"<<endl;
     string tmp1;
     string tmp2;
     while(fin >> tmp1 >> tmp2)
     {
+        cout<<tmp1<<tmp2<<endl;
         users.push_back(new User(tmp1, tmp2));
     }
     fin.close();
@@ -343,6 +345,10 @@ void consoleInterface::Test(string command)
     lin++;
     char testtype=command[lin];
     testType=testtype-'0';
+    if(testType>2){
+        cout<<"no this testType, please input again!"<<endl;
+        return;
+    }
     pos = user->FindSet(setName);
     if (pos < 0 || pos >= user->GetSize())
     {
@@ -413,7 +419,8 @@ void consoleInterface::Add(string command)
         user->GetSet(pos)->Insert ((*dic)[p]);
         modified = true;
     }
-    cout << "successfully add" << endl;}
+    cout << "successfully add" << endl;
+}
 void consoleInterface::TouchSet(string command)
 {
     if (user == NULL)
@@ -526,7 +533,10 @@ void consoleInterface::outHelp()
     << "\t-s wordname --list similar word" << endl
     << "\t-f string -- list all words contain this string" << endl
     << "list --list all sets" << endl
-    << "test -t setname --test words in this set" << endl
+    << "test -t setname testType --test words in this set" << endl
+    << "in test:"<<endl
+    << "testType can only be 0,1 or 2"<<endl
+    << "input mode0 to return normal mode"<<endl
     << "add -t setname -w word -- add word to a set, and you can add many word to one set in one command." << endl
     << "		In order to do this, end each word with \'.\'" << endl
     << "touch -t setname --new set" << endl

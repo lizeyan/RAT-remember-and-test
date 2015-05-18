@@ -53,7 +53,7 @@ int* searchEntry(Word* m, int num, int type){
         int j;
         for(j=0; j<choose.size(); j++){
             number+=choose[j];
-            if(number<=out){
+            if(number>=out){
                 break;
             }
         }
@@ -124,7 +124,13 @@ void QuestionFirst::DisorganizeQuestion(){
 }
 
 void QuestionFirst::ShowInScreen(std::ostream& osout){
-    osout<<wordFirst->GetSpell()<<std::endl;
+    if(wordFirst->GetEntry(0)->GetPhonogram()!=""){
+        osout<<wordFirst->GetSpell()<<"  |";
+        osout<<wordFirst->GetEntry(0)->GetPhonogram()<<"|"<<std::endl;
+    }else{
+        osout<<wordFirst->GetSpell()<<"  ";
+        osout<<wordFirst->GetEntry(0)->GetPhonogram()<<std::endl;
+    }
     osout<<std::endl;
     osout<<std::endl;
     char choose[10]={' ','A','B','C','D','E','F','G','H'};
@@ -227,6 +233,14 @@ QuestionSecondChoose::QuestionSecondChoose(Word* m, int lev, Set* n): wordsecond
 
 void QuestionSecondChoose::AddQuestion(){
     question[0].s=wordsecond->GetSpell();
+    if(wordsecond->GetEntry(0)->GetPhonogram().length()!=0){
+        question[0].s+="  |";
+        question[0].s+=wordsecond->GetEntry(0)->GetPhonogram();
+        question[0].s+="|";
+    }else{
+        question[0].s+="  ";
+        question[0].s+=wordsecond->GetEntry(0)->GetPhonogram();
+    }
     question[0].num=0;
     int dos[5000];
     for(int i=0; i<5000; i++) dos[i]=i;
@@ -247,6 +261,14 @@ void QuestionSecondChoose::AddQuestion(){
         if(plus) k=i-level;
         else k=i;
         question[k].s=lin->GetSpell();
+        if(lin->GetEntry(0)->GetPhonogram().length()!=0){
+            question[k].s+="  |";
+            question[k].s+=lin->GetEntry(0)->GetPhonogram();
+            question[k].s+="|";
+        }else{
+            question[k].s+="  ";
+            question[k].s+=lin->GetEntry(0)->GetPhonogram();
+        }
         question[k].num=k;
     }
 }

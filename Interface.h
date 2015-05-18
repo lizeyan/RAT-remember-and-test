@@ -27,11 +27,13 @@ class consoleInterface: public Interface
     bool modified;
     consoleInterface();
 protected:
+    bool pass(int);
+    void Exam();
     void Save();
     bool Login(User*);
     void Switch(std::string);
     void Exit();
-    void List();
+    void Info();
     void TouchSet(std::string);
     void TouchUser (std::string);
     void FindWordExact(std::string);

@@ -1,5 +1,6 @@
 #include "Interface.h"
 #include <iostream>
+#include <cstdlib>
 #include <ctime>
 #include <cstdlib>
 #include <fstream>
@@ -180,6 +181,63 @@ void consoleInterface::quiryModeAnalyse(string command)
         FindWordExact(string ("-e") + command);
     }
 }
+bool consoleInterface::pass(int testType)
+{
+    if (testType == 0)
+    {
+        if (Test::rightRate0 >= 0.95)
+            return true;
+        return false;
+    }
+    else if (testType == 1)
+    {
+        if (Test::rightRate1 >= 0.80)
+            return true;
+        return false;
+    }
+    else if (testType == 2)
+    {
+        if (Test::rightRate2 >= 0.75)
+            return true;
+        return false;
+    }
+    else
+    {
+        cout << "wrong testType:" << testType;
+        return false;
+    }
+}
+void consoleInterface::Exam()
+{
+        if (user->GetLevel() == 3)
+        {
+            cout << "You are the highest level now. "
+                     << "Maybe we will open more level in the furure" << endl;
+            return;
+        }
+        cout << "You will pass the exam if you test at least 20 times and keep you rate:\n"
+                << "type0: 0.95\ttype1: 0.80\ttype2: 0.75" << endl
+                << "The type of exam is random. The level of type 0 or type 1 is 4.\nQuit anytime with \"mode 0\"" << endl;
+        string examFileName[3] = {"", "level2.txt", "level3.txt"};
+        Set* examSet = new Set;
+        ifstream fin(examFileName[user->GetLevel()].c_str());
+        examSet->Read(fin);
+        fin.close();
+        int level = 4;
+        int testType = rand() % 3;
+        op=new opera(examSet, level, testType);
+        op->ope(cout);
+        if (pass(testType))
+        {
+            user->LevelUp();
+            cout << "Good! You pass the exam. Now your level is " << user->GetLevel() << "." << endl;
+        }
+        else
+        {
+            cout << "Maybe you need to learn more." << endl;
+        }
+        delete examSet;
+}
 void consoleInterface::Save()
 {
     ofstream fout;
@@ -234,12 +292,14 @@ void consoleInterface::Save()
     }
     modified = false;
 }
-void consoleInterface::List()
+void consoleInterface::Info()
 {
+    cout << "level: " << user->GetLevel() << endl;
+    cout << "set information:" << endl;
     if (user != NULL)
         for (int i = 0; i < user->GetSize(); ++i)
         {
-            cout << i + 1 << ": " << user->GetSet(i)->GetName()
+            cout << "\t" << i + 1 << ": " << user->GetSet(i)->GetName()
             << " size:" << user->GetSet(i)->GetSize() << endl;
         }
 }
@@ -270,9 +330,9 @@ void consoleInterface::normalAnalyse(string command)
     {
         mode = 1;
     }
-    else if (command == "list")
+    else if (command == "info")
     {
-        List();
+        Info();
     }
     else if (kmp("test", command) == 0)
     {
@@ -298,6 +358,10 @@ void consoleInterface::normalAnalyse(string command)
     else if (kmp ("switch", command) == 0)
     {
         Switch(command);
+    }
+    else if (kmp("exam", command) == 0)
+    {
+        Exam();
     }
     else if (command == "");
     else
@@ -531,12 +595,13 @@ void consoleInterface::outHelp()
     << "\t[-e] wordname --list all about this word" << endl
     << "\t-s wordname --list similar word" << endl
     << "\t-f string -- list all words contain this string" << endl
-    << "list --list all sets" << endl
+    << "info --info about the current user" << endl
     << "test -t setname testType --test words in this set" << endl
     << "in test:"<<endl
     << "\ttestType can only be 0,1 or 2"<<endl
     << "\tinput mode0 to return normal mode"<<endl
     << "add -t setname -w word -- add word to a set, and you can add many word to one\n\t set in one command." << endl
+    <<"exam --exam for one higher level" << endl
     << "In order to do this, end each word with \'.\'" << endl
     << "touch -t setname --new set" << endl
     << "touch -u userName -p password-- new user" << endl

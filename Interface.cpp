@@ -36,12 +36,10 @@ void consoleInterface::ini()
     dic->Read (fin);
     fin.close();
     fin.open("RAT.ini");
-    cout<<"duang!!!"<<endl;
     string tmp1;
     string tmp2;
     while(fin >> tmp1 >> tmp2)
     {
-        cout<<tmp1<<tmp2<<endl;
         users.push_back(new User(tmp1, tmp2));
     }
     fin.close();

@@ -3,13 +3,6 @@
 
 #include <iostream>
 #include <vector>
-
-class QuestionChoose;
-class QuestionFirst;
-class QuestionSecondChoose;
-class QuestionSecondFillBlank;
-class Word;
-
 class Test{
     int rightNum0;
     int rightNum1;
@@ -37,11 +30,12 @@ public:
     static void RightRateChange0();
     static void RightRateChange1();
     static void RightRateChange2();
-    friend QuestionChoose;
-    friend QuestionFirst;
-    friend QuestionSecondChoose;
-    friend QuestionSecondFillBlank;
-    friend Word;
+    friend class QuestionChoose;
+    friend class QuestionFirst;
+    friend class QuestionSecondChoose;
+    friend class QuestionSecondFillBlank;
+    friend class Word;
+    friend class consoleInterface;
 };
 
 #endif /* defined(_______Test__) */

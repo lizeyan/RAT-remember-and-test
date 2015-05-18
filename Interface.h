@@ -41,6 +41,7 @@ protected:
     void FindWordFuzzy(std::string);
     void Test(std::string);
     void TestDo();
+    void TestDo(Set*, int, int);
     void Add (std::string);
     void outHelp();
     void outVersion();

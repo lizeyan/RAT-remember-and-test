@@ -214,15 +214,14 @@ void consoleInterface::Exam()
     cout << "You will pass the exam if you test at least 20 times and keep you rate:\n"
     << "type0: 0.95\ttype1: 0.80\ttype2: 0.75" << endl
     << "The type of exam is random. The level of type 0 or type 1 is 4.\nQuit anytime with \"mode 0\"" << endl;
-    string examFileName[3] = {"", "level2.txt", "level3.txt"};
+    string examFileName[4] = {"", "level1.txt", "level2.txt", "level3.txt"};
     Set* examSet = new Set;
-    ifstream fin(examFileName[user->GetLevel()].c_str());
+    ifstream fin(examFileName[user->GetLevel() + 1].c_str());
     examSet->Read(fin);
     fin.close();
     int level = 4;
     int testType = rand() % 3;
-    op=new opera(examSet, level, testType);
-    op->ope(cout);
+    TestDo(examSet, level, testType);
     if (pass(testType))
     {
         user->LevelUp();
@@ -250,7 +249,8 @@ void consoleInterface::Save()
             fout.open("RAT.ini");
             for (int i = 0; i < users.size(); ++i)
             {
-                fout << users[i]->GetName() << endl << users[i]->GetPassword();
+                fout << users[i]->GetName() << endl << users[i]->GetPassword() 
+                        << endl << users[i]->GetLevel() << endl;
                 if (!i == users.size() - 1)
                     fout << endl;
             }
@@ -415,7 +415,8 @@ void consoleInterface::Test(string command)
             string s;
             getline (cin, s);
             cout<<endl;
-        }else{
+        }
+        else{
             level=-1;
         }
         TestDo();
@@ -423,12 +424,30 @@ void consoleInterface::Test(string command)
 }
 void consoleInterface::TestDo()
 {
-    while(1){
+    while(1)
+    {
         op=new opera(user->GetSet(pos), level, testType);
         op->ope(cout);
         string answer;
         getline(cin,answer);
-        if(answer=="mode 0") return;
+        if(answer=="mode 0") 
+            return;
+        op->first(answer, cout);
+    }
+}
+void consoleInterface::TestDo(Set* s, int le, int ttype)
+{
+       ttype = 0;
+    if (ttype == 2)
+        le = -1;
+    while(1)
+    {
+        op=new opera(s, le, ttype);
+        op->ope(cout);
+        string answer;
+        getline(cin,answer);
+        if(answer=="mode 0") 
+            return;
         op->first(answer, cout);
     }
 }

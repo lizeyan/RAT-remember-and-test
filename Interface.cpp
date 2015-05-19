@@ -204,7 +204,7 @@ void consoleInterface::quiryModeAnalyse(string command)
         FindWordExact(string ("-e") + command);
     }
 }
-bool consoleInterface::pass(int testType)
+bool consoleInterface::Pass(int testType)
 {
     if (testType == 0)
     {
@@ -249,7 +249,7 @@ void consoleInterface::Exam()
     int level = 4;
     int testType = rand() % 3;
     TestDo(examSet, level, testType);
-    if (pass(testType))
+    if (Pass(testType))
     {
         modified = 1;
         user->LevelUp();
@@ -364,7 +364,11 @@ void consoleInterface::normalAnalyse(string command)
     }
     else if (kmp("add", command) == 0)
     {
-        Add(command);
+        int file = kmp ("-f", command);
+        if (file >= 0 && file < command.size())
+            AddFile (command);
+        else
+            AddWord (command);
     }
     else if (kmp("touch", command) == 0)
     {
@@ -478,7 +482,7 @@ void consoleInterface::TestDo(Set* s, int le, int ttype)
         op->first(answer, cout);
     }
 }
-void consoleInterface::Add(string command)
+void consoleInterface::AddWord(string command)
 {
     if (user == NULL)
     {
@@ -525,6 +529,91 @@ void consoleInterface::Add(string command)
     }
     cout << "successfully add" << endl;
 }
+void consoleInterface::AddFile(string command)
+{
+    if (user == NULL)
+    {
+        cout << "please login" << endl;
+        return;
+    }
+    int begin = kmp("-t", command) + 1;
+    while (command[++begin] == 32);
+    string setName;
+    for (int i = begin; i < command.size() && command[i] != 32; ++i)
+    {
+        setName += command[i];
+    }
+    int pos = user->FindSet(setName);
+    if (pos < 0 || pos >= user->GetSize())
+    {
+        cout << "no such set: " << setName << endl;
+        return;
+    }
+    begin = kmp ("-f", command) + 1;
+    string fileName;
+    for (int i = begin; i < command.size(); ++i)
+    {
+        fileName += command[i];
+    }
+    ifstream fin(fileName.c_str());
+    AnalyseFile(fin, user->GetSet(pos));
+    fin.close();
+}
+bool consoleInterface::IsLetter (char x)
+{
+    if (x <= 'z' && x >= 'a')
+        return true;
+    else if (x <= 'Z' && x >= 'A')
+        return true;
+    else
+        return false;
+}
+bool consoleInterface::FamiliarWord(string word, Set* levelSet)
+{
+    int pos = dic->FindWord(word);
+    if (pos < 0 || pos >= dic->GetSize())
+        return false;
+    if (levelSet != NULL && levelSet->WordExist(word))
+    {
+            return true;
+    }
+    
+}
+void consoleInterface::AnalyseFile(ifstream& fin, Set* s)
+{
+    string examFileName[4] = {"", "level1.txt", "level2.txt", "level3.txt"};
+    Set* examSet = new Set;
+    examSet = NULL;
+    if (user->GetLevel() > 0)
+    {
+        ifstream finSet(examFileName[user->GetLevel()].c_str());
+        examSet->Read(finSet);
+        finSet.close();
+    }
+    string file;
+    char tmp;
+    while ((tmp = fin.get()) != EOF)
+    {
+        file += tmp;
+    }
+    int p = 0, q = 0;
+    while (q < file.size())
+    {
+        while (!IsLetter(p++));
+        while (IsLetter(q++));
+        string tmpWord;
+        for (int i = p; i < q; ++i)
+        {
+            tmpWord += file[i];
+        }
+        if (FamiliarWord(tmpWord, examSet))
+        {
+            s->Insert((*dic)[dic->FindWord(tmpWord)]);
+        }
+        p = q + 1;
+    }
+    delete examSet;
+}
 void consoleInterface::TouchSet(string command)
 {
     if (user == NULL)
@@ -537,6 +626,8 @@ void consoleInterface::TouchSet(string command)
     string setName;
     for (int i = begin; i < command.size(); ++i)
     {
+        if (command[i] == 10 || command[i] == 13 || command[i] == 32 || command[i] == 9)
+            break;
         setName += command[i];
     }
     int pos = user->FindSet(setName);
@@ -642,9 +733,10 @@ void consoleInterface::outHelp()
     << "\ttestType can only be 0,1 or 2"<<endl
     << "\tinput mode0 to return normal mode"<<endl
     << "add -t setname -w word -- add word to a set, and you can add many word to one\n\t set in one command." << endl
+    << "add -t setname -f filename --add new words from a text file, \n\tRAT will recognize your unfamiliar word" << endl
     << "\tIn order to do this, end each word with \'.\'" << endl
-    <<"exam --exam for one higher level" << endl
-    << "touch -t setname --new set" << endl
+    << "exam --exam for one higher level" << endl
+    << "touch -t setname --new set, the name must be a constant string." << endl
     << "touch -u userName -p password-- new user" << endl
     << "switch -u userName --switch user" << endl
     << "exit --exit this program" << endl

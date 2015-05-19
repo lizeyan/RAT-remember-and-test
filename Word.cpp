@@ -49,3 +49,19 @@ ostream& operator<< (ostream& out, Word& w)
     return out;
     
 }
+bool Word::Familiar()
+{
+    if (!haveRecited)
+        return false;
+    if (kill)
+        return true;
+    int correct = 0;
+    int allNum = 0;
+    for (int i = check.size() - 1; i >= 0; i--)
+    {
+        allNum++;
+        if (check[i])
+            correct++;
+    }
+    return double(correct) / allNum > 0.6;
+}

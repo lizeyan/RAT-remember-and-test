@@ -40,6 +40,7 @@ public:
     void Quanchange0();
     void Quanchange1();
     void Quanchange2();
+    bool Familiar();
     friend int search(Set* m, int type);
     friend int* searchEntry(Word* m, int num, int type);
     friend class recite;

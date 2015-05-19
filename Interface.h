@@ -6,6 +6,7 @@
 #include "User.h"
 #include <string>
 #include <vector>
+class Set;
 class Interface
 {
 public:
@@ -27,7 +28,10 @@ class consoleInterface: public Interface
     bool modified;
     consoleInterface();
 protected:
-    bool pass(int);
+    bool IsLetter(char);
+    bool Pass(int);
+    bool FamiliarWord(std::string, Set*);
+    void AnalyseFile(std::ifstream&, Set*);
     void Exam();
     void Save();
     bool Login(User*);
@@ -42,7 +46,8 @@ protected:
     void Test(std::string);
     void TestDo();
     void TestDo(Set*, int, int);
-    void Add (std::string);
+    void AddWord (std::string);
+    void AddFile (std::string);
     void outHelp();
     void outVersion();
     void quiryModeAnalyse(std::string command);

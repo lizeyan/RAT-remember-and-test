@@ -114,7 +114,7 @@ void consoleInterface::FindSimilarWord(string command)
     vector<Word*> result;
     dic->FindWordFuzzy(targetWord, result);
     int idioms = kmp ("-i", command);
-    if (idioms < 0 || idioms >= result.size())
+    if (idioms < 0 || idioms >= command.size())
     {
         for (int i = 0; i < result.size(); ++i)
         {
@@ -135,7 +135,7 @@ void consoleInterface::FindSimilarWord(string command)
         cout << "similar words:" << endl;
         for (int i = 0 ; i < result.size(); ++i)
         {
-            cout << "\t" << i << ": " << result[i]->GetSpell() << endl;
+            cout << "\t" << i + 1 << ": " << result[i]->GetSpell() << endl;
         }
     }
 }
@@ -151,7 +151,7 @@ void consoleInterface::FindWordFuzzy(string command)
     vector<Word*> result;
     dic->FindWordFuzzy(targetWord, result);
     int idioms = kmp ("-i", command);
-    if (idioms < 0 || idioms >= result.size())
+    if (idioms < 0 || idioms >= command.size())
     {
         for (int i = 0; i < result.size(); ++i)
         {
@@ -296,13 +296,11 @@ void consoleInterface::Save()
                 fout.open((user->GetSet(i)->GetName() + ".txt").c_str());
                 for (int j = 0; j < user->GetSet(i)->GetSize(); ++j)
                 {
-                    cout << "rewrite: " << (*(user->GetSet(i)))[j].GetSpell() <<endl;
                     fout << (*(user->GetSet(i)))[j].GetSpell();
                     if (j != user->GetSet(i)->GetSize() - 1)
                         fout << endl;
                 }
                 fout.close();
-                cout << "rewrite " << user->GetSet(i)->GetName() + ".txt" << endl;
             }
             cout << "saved" << endl;
             break;
@@ -724,7 +722,7 @@ void consoleInterface::outHelp()
     << "in mode 1:" << endl
     << "\t[-e] wordname --list all about this word,type -i to include all idioms" << endl
     << "\t-s [-i] wordname --list similar word" << endl
-    << "\t-f [-i] string -- list all words details contain this string,type -i to include all idioms" << endl
+    << "\t-f [-i] string -- list all words details contain this string,\n\ttype -i to include all idioms" << endl
     << "info --info about the current user" << endl
     << "test -t setname testType --test words in this set" << endl
     << "in test:"<<endl

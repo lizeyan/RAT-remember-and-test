@@ -40,7 +40,7 @@ int User::FindSet (string targetSet) const
     }
     return --lo;
 }
-int User::LevelUp()
+void User::LevelUp()
 {
     level++;
     if (level > 3)

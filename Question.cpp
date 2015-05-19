@@ -1,11 +1,3 @@
-//
-//  Question.cpp
-//  大作业
-//
-//  Created by Lv Xin on 15/5/11.
-//  Copyright (c) 2015年 Lv Xin. All rights reserved.
-//
-
 #include "Question.h"
 
 int search(Set* m, int type){
@@ -181,7 +173,9 @@ void QuestionFirst::GetTheAnswer(std::string s, std::ostream& osout){
         }
     }
     if(check){
+        judge=true;
         Test::staticRightNum0++;
+        Test::staticTmpRightNum0++;
         Test::RightRateChange0();
         osout<<"Right!!"<<std::endl;
         osout<<std::endl;
@@ -196,7 +190,9 @@ void QuestionFirst::GetTheAnswer(std::string s, std::ostream& osout){
             entryFirst[i]->test->QuanChange0();
         }
     }else{
+        judge=false;
         Test::staticWrongNum0++;
+        Test::staticTmpWrongNum0++;
         Test::RightRateChange0();
         osout<<"Wrong!!"<<std::endl;
         osout<<"The Answer is:"<<std::endl;
@@ -323,6 +319,7 @@ void QuestionSecondChoose::GetTheAnswer(std::string s, std::ostream& osout){
     wordsecond->Quanchange1();
     if(check){
         Test::staticRightNum1++;
+        Test::staticTmpRightNum1++;
         Test::RightRateChange1();
         osout<<"Right!!!"<<std::endl;
         osout<<std::endl;
@@ -334,6 +331,7 @@ void QuestionSecondChoose::GetTheAnswer(std::string s, std::ostream& osout){
         osout<<std::endl;
     }else{
         Test::staticWrongNum1++;
+        Test::staticTmpWrongNum1++;
         Test::RightRateChange1();
         osout<<"Wrong!!!"<<std::endl;
         osout<<"The Answer is:"<<std::endl;
@@ -384,6 +382,7 @@ void QuestionSecondFillBlank::GetTheAnswer(std::string s, std::ostream& osout){
     if(word && wordclass){
         wordFillBlank->GetEntry(choose)->test->rightNum2++;
         Test::staticRightNum2++;
+        Test::staticTmpRightNum2++;
         Test::RightRateChange2();
         wordFillBlank->GetEntry(choose)->test->QuanChange2();
         wordFillBlank->Quanchange2();
@@ -397,6 +396,7 @@ void QuestionSecondFillBlank::GetTheAnswer(std::string s, std::ostream& osout){
     }else if(word && !wordclass){
         wordFillBlank->GetEntry(choose)->test->rightNum2++;
         Test::staticRightNum2++;
+        Test::staticTmpRightNum2++;
         Test::RightRateChange2();
         wordFillBlank->GetEntry(choose)->test->QuanChange2();
         wordFillBlank->Quanchange2();
@@ -413,6 +413,7 @@ void QuestionSecondFillBlank::GetTheAnswer(std::string s, std::ostream& osout){
     }else if(!word && wordclass){
         wordFillBlank->GetEntry(choose)->test->wrongNum2++;
         Test::staticWrongNum2++;
+        Test::staticTmpWrongNum2++;
         Test::RightRateChange2();
         wordFillBlank->GetEntry(choose)->test->QuanChange2();
         wordFillBlank->Quanchange2();
@@ -429,6 +430,7 @@ void QuestionSecondFillBlank::GetTheAnswer(std::string s, std::ostream& osout){
     }else{
         wordFillBlank->GetEntry(choose)->test->wrongNum2++;
         Test::staticWrongNum2++;
+        Test::staticTmpWrongNum2++;
         Test::RightRateChange2();
         wordFillBlank->GetEntry(choose)->test->QuanChange2();
         wordFillBlank->Quanchange2();
@@ -447,15 +449,22 @@ void QuestionSecondFillBlank::GetTheAnswer(std::string s, std::ostream& osout){
 
 
 opera::opera(Set* m, int k, int Type): set(m), level(k), type(Type){
-    set=m;
-    level=k;
-    type=Type;
     if(type==0){
         ques = new QuestionFirst(set->GetWord(search(set, 0)), k, set);
     }else if(type==1){
         ques = new QuestionSecondChoose(set->GetWord(search(set, 1)), k, set);
     }else if(type==2){
         ques = new QuestionSecondFillBlank(set->GetWord(search(set, 2)), set);
+    }
+}
+
+opera::opera(Word* m, int k, int Type): level(k), type(Type){
+    if(type==0){
+        ques = new QuestionFirst(m, k, set);
+    }else if(type==1){
+        ques = new QuestionSecondChoose(m, k, set);
+    }else if(type==2){
+        ques = new QuestionSecondFillBlank(m, set);
     }
 }
 

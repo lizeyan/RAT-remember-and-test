@@ -13,6 +13,12 @@ class Test{
     int quan0;
     int quan1;
     int quan2;
+    static int staticTmpRightNum0;
+    static int staticTmpRightNum1;
+    static int staticTmpRightNum2;
+    static int staticTmpWrongNum0;
+    static int staticTmpWrongNum1;
+    static int staticTmpWrongNum2;
     static int staticRightNum0;
     static int staticRightNum1;
     static int staticRightNum2;
@@ -27,6 +33,7 @@ public:
     void QuanChange0();
     void QuanChange1();
     void QuanChange2();
+    void Clear();
     static void RightRateChange0();
     static void RightRateChange1();
     static void RightRateChange2();

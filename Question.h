@@ -16,6 +16,7 @@ struct Question{
 
 class QuestionChoose{
 public:
+    bool judge;
     QuestionChoose(){}
     virtual void AddQuestion()=0;
     virtual void DisorganizeQuestion()=0;
@@ -77,9 +78,11 @@ class opera{
     int type;
 public:
     opera(Set* m, int k, int Type);
+    opera(Word* m, int k, int type);
     ~opera();
     void ope(std::ostream& osout);
     void first(std::string ans, std::ostream& osout);
+    friend class recite;
 };
 
 #endif /* defined(_______Question__) */

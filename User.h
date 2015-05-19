@@ -18,6 +18,6 @@ public:
     int GetSize() {return wordSets.size();}
     int InsertSet (Set&);
     int GetLevel()  {return level;}
-    int LevelUp();
+    void LevelUp();
 };
 #endif

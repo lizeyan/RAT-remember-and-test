@@ -16,6 +16,7 @@ int Set::Find(string targetWord) const
     }
     return --lo;
 }
+
 bool Set::WordExist(string targetWord)
 {
     int pos = Find (targetWord);
@@ -23,16 +24,19 @@ bool Set::WordExist(string targetWord)
         return false;
     return words[pos]->GetSpell() == targetWord;
 }
+
 Word& Set::operator[] (int rank)
 {
     return *((Word*)words[rank]);
 }
+
 int Set::Insert(Word& targetWord)
 {
     int pos = Find(targetWord.GetSpell()) +1;
     words.insert (words.begin() + pos, &targetWord);
     return pos;
 }
+
 void Set::ReadAndAdd(std::istream& load)
 {
     Dictionary* dic = Dictionary::GetInstance();
@@ -49,12 +53,20 @@ void Set::ReadAndAdd(std::istream& load)
         }
     }
 }
+
 void Set::Read(std::istream& load)
 {
     words.clear();
     ReadAndAdd (load);
+    for(int i=0; i<words.size(); i++){
+        if(words[i]->GetHaveRecited()){
+            recited.push_back(words[i]);
+        }
+    }
 }
+
 Set::Set ()	{}
+
 ostream& operator<< (ostream& out, Set& s)
 {
     out << s.setName << ":" << endl;

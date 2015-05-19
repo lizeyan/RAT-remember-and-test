@@ -296,13 +296,11 @@ void consoleInterface::Save()
                 fout.open((user->GetSet(i)->GetName() + ".txt").c_str());
                 for (int j = 0; j < user->GetSet(i)->GetSize(); ++j)
                 {
-                    cout << "rewrite: " << (*(user->GetSet(i)))[j].GetSpell() <<endl;
                     fout << (*(user->GetSet(i)))[j].GetSpell();
                     if (j != user->GetSet(i)->GetSize() - 1)
                         fout << endl;
                 }
                 fout.close();
-                cout << "rewrite " << user->GetSet(i)->GetName() + ".txt" << endl;
             }
             cout << "saved" << endl;
             break;

@@ -456,7 +456,7 @@ void consoleInterface::TestDo()
 {
     while(1)
     {
-        op=new opera(user->GetSet(pos), level, testType);
+        op=new opera(user->GetSet(pos), level, testType, true);
         op->ope(cout);
         string answer;
         getline(cin,answer);

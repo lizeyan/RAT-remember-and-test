@@ -182,7 +182,7 @@ void QuestionFirst::GetTheAnswer(std::string s, std::ostream& osout, bool exam){
         osout<<std::endl;
         osout<<"now the right rate is:  ";
         if(exam){
-            osout<<Test::rightRate0<<std::endl;
+            osout<<Test::staticTmpRightNum0*1.0/(Test::staticTmpWrongNum0+Test::staticTmpRightNum0 ==0 ? 1 : Test::staticTmpWrongNum0+Test::staticTmpRightNum0)*100.0<<"%"<<std::endl;
         }else{
             osout<<Test::staticRightNum0*1.0/(Test::staticWrongNum0+Test::staticRightNum0 ==0 ? 1 : Test::staticWrongNum0+Test::staticRightNum0)*100.0<<"%"<<std::endl;
         }
@@ -208,7 +208,7 @@ void QuestionFirst::GetTheAnswer(std::string s, std::ostream& osout, bool exam){
         osout<<std::endl;
         osout<<"now the right rate is:  ";
         if(exam){
-            osout<<Test::rightRate0<<std::endl;
+            osout<<Test::staticTmpRightNum0*1.0/(Test::staticTmpWrongNum0+Test::staticTmpRightNum0 ==0 ? 1 : Test::staticTmpWrongNum0+Test::staticTmpRightNum0)*100.0<<"%"<<std::endl;
         }else{
             osout<<Test::staticRightNum0*1.0/(Test::staticWrongNum0+Test::staticRightNum0 ==0 ? 1 : Test::staticWrongNum0+Test::staticRightNum0)*100.0<<"%"<<std::endl;
         }
@@ -334,7 +334,7 @@ void QuestionSecondChoose::GetTheAnswer(std::string s, std::ostream& osout, bool
         osout<<std::endl;
         osout<<"now the right rate is:  ";
         if(exam){
-            osout<<Test::rightRate1<<std::endl;
+            osout<<Test::staticTmpRightNum1*1.0/(Test::staticTmpWrongNum1+Test::staticTmpRightNum1 ==0 ? 1 : Test::staticTmpWrongNum1+Test::staticTmpRightNum1)*100.0<<"%"<<std::endl;
         }else{
             osout<<Test::staticRightNum1*1.0/(Test::staticWrongNum1+Test::staticRightNum1 ==0 ? 1 : Test::staticWrongNum1+Test::staticRightNum1)*100.0<<"%"<<std::endl;
         }
@@ -352,7 +352,7 @@ void QuestionSecondChoose::GetTheAnswer(std::string s, std::ostream& osout, bool
         osout<<std::endl;
         osout<<"now the right rate is:  ";
         if(exam){
-            osout<<Test::rightRate1<<std::endl;
+            osout<<Test::staticTmpRightNum1*1.0/(Test::staticTmpWrongNum1+Test::staticTmpRightNum1 ==0 ? 1 : Test::staticTmpWrongNum1+Test::staticTmpRightNum1)*100.0<<"%"<<std::endl;
         }else{
             osout<<Test::staticRightNum1*1.0/(Test::staticWrongNum1+Test::staticRightNum1 ==0 ? 1 : Test::staticWrongNum1+Test::staticRightNum1)*100.0<<"%"<<std::endl;
         }
@@ -407,7 +407,7 @@ void QuestionSecondFillBlank::GetTheAnswer(std::string s, std::ostream& osout, b
         osout<<std::endl;
         osout<<"now the right rate is:  ";
         if(exam){
-            osout<<Test::rightRate2<<std::endl;
+            osout<<Test::staticTmpRightNum2*1.0/(Test::staticTmpWrongNum2+Test::staticTmpRightNum2 ==0 ? 1 : Test::staticTmpWrongNum2+Test::staticTmpRightNum2)*100.0<<"%"<<std::endl;
         }else{
             osout<<Test::staticRightNum2*1.0/(Test::staticWrongNum2+Test::staticRightNum2 ==0 ? 1 : Test::staticWrongNum2+Test::staticRightNum2)*100.0<<"%"<<std::endl;
         }
@@ -429,7 +429,7 @@ void QuestionSecondFillBlank::GetTheAnswer(std::string s, std::ostream& osout, b
         osout<<std::endl;
         osout<<"now the right rate is:  ";
         if(exam){
-            osout<<Test::rightRate2<<std::endl;
+            osout<<Test::staticTmpRightNum2*1.0/(Test::staticTmpWrongNum2+Test::staticTmpRightNum2 ==0 ? 1 : Test::staticTmpWrongNum2+Test::staticTmpRightNum2)*100.0<<"%"<<std::endl;
         }else{
             osout<<Test::staticRightNum2*1.0/(Test::staticWrongNum2+Test::staticRightNum2 ==0 ? 1 : Test::staticWrongNum2+Test::staticRightNum2)*100.0<<"%"<<std::endl;
         }
@@ -451,7 +451,7 @@ void QuestionSecondFillBlank::GetTheAnswer(std::string s, std::ostream& osout, b
         osout<<std::endl;
         osout<<"now the right rate is:  ";
         if(exam){
-            osout<<Test::rightRate2<<std::endl;
+            osout<<Test::staticTmpRightNum2*1.0/(Test::staticTmpWrongNum2+Test::staticTmpRightNum2 ==0 ? 1 : Test::staticTmpWrongNum2+Test::staticTmpRightNum2)*100.0<<"%"<<std::endl;
         }else{
             osout<<Test::staticRightNum2*1.0/(Test::staticWrongNum2+Test::staticRightNum2 ==0 ? 1 : Test::staticWrongNum2+Test::staticRightNum2)*100.0<<"%"<<std::endl;
         }
@@ -473,7 +473,7 @@ void QuestionSecondFillBlank::GetTheAnswer(std::string s, std::ostream& osout, b
         osout<<std::endl;
         osout<<"now the right rate is:  ";
         if(exam){
-            osout<<Test::rightRate2<<std::endl;
+            osout<<Test::staticTmpRightNum2*1.0/(Test::staticTmpWrongNum2+Test::staticTmpRightNum2 ==0 ? 1 : Test::staticTmpWrongNum2+Test::staticTmpRightNum2)*100.0<<"%"<<std::endl;
         }else{
             osout<<Test::staticRightNum2*1.0/(Test::staticWrongNum2+Test::staticRightNum2 ==0 ? 1 : Test::staticWrongNum2+Test::staticRightNum2)*100.0<<"%"<<std::endl;
         }

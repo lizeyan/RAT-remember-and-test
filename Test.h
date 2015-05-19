@@ -33,7 +33,7 @@ public:
     void QuanChange0();
     void QuanChange1();
     void QuanChange2();
-    void Clear();
+    static void Clear();
     static void RightRateChange0();
     static void RightRateChange1();
     static void RightRateChange2();

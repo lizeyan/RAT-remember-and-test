@@ -204,6 +204,7 @@ void consoleInterface::quiryModeAnalyse(string command)
 }
 bool consoleInterface::Pass(int testType)
 {
+    Test::Clear();
     if (testType == 0)
     {
         if (Test::rightRate0 >= 0.95)

@@ -31,6 +31,7 @@ int Interface::kmp(string a, string b)
 }
 void consoleInterface::ini()
 {
+    srand((unsigned int)time(NULL));
     int beginTime = clock();
     cout << "loading......" << endl;
     ifstream fin("StandardSource.txt");
@@ -105,13 +106,26 @@ void consoleInterface::FindSimilarWord(string command)
 {
     int begin = 1;
     string targetWord;
-    while (command[++begin] == 32);
+    while (command[++begin] == 32 || command[begin] == '-' || command[begin] == 'i');
     for (int i = begin; i < command.size(); ++i)
     {
         targetWord += command[i];
     }
     vector<Word*> result;
     dic->FindWordFuzzy(targetWord, result);
+    int idioms = kmp ("-i", command);
+    if (idioms < 0 || idioms >= result.size())
+    {
+        for (int i = 0; i < result.size(); ++i)
+        {
+            int isIdiom = kmp (" ", result[i]->GetSpell());
+            if (isIdiom >= 0 && isIdiom < result[i]->GetSpell().size())
+            {
+                result.erase(result.begin() + i);
+                --i;
+            }
+        }
+    }
     if (result.size() == 0)
     {
         cout << "no similar word in current dictionary found" << endl;
@@ -129,7 +143,7 @@ void consoleInterface::FindWordFuzzy(string command)
 {
     int begin = 1;
     string targetWord;
-    while (command[++begin] == 32);
+    while (command[++begin] == 32 || command[begin] == '-' || command[begin] == 'i');
     for (int i = begin; i < command.size(); ++i)
     {
         targetWord += command[i];
@@ -137,6 +151,19 @@ void consoleInterface::FindWordFuzzy(string command)
     vector<Word*> result;
     cout << "begin find" << endl;
     dic->FindWordFuzzy(targetWord, result);
+    int idioms = kmp ("-i", command);
+    if (idioms < 0 || idioms >= result.size())
+    {
+        for (int i = 0; i < result.size(); ++i)
+        {
+            int isIdiom = kmp (" ", result[i]->GetSpell());
+            if (isIdiom >= 0 && isIdiom < result[i]->GetSpell().size())
+            {
+                result.erase(result.begin() + i);
+                --i;
+            }
+        }
+    }
     cout << "end find" << endl;
     if (result.size() == 0)
     {
@@ -224,6 +251,7 @@ void consoleInterface::Exam()
     TestDo(examSet, level, testType);
     if (pass(testType))
     {
+        modified = 1;
         user->LevelUp();
         cout << "Good! You pass the exam. Now your level is " << user->GetLevel() << "." << endl;
     }
@@ -437,7 +465,6 @@ void consoleInterface::TestDo()
 }
 void consoleInterface::TestDo(Set* s, int le, int ttype)
 {
-       ttype = 0;
     if (ttype == 2)
         le = -1;
     while(1)
@@ -549,7 +576,7 @@ void consoleInterface::TouchUser(string command)
     {
         password += command[i];
     }
-    users.push_back(new User(userName, password, "1"));
+    users.push_back(new User(userName, password, "0"));
     modified = true;
     cout << "successfully touch user:" << userName << endl;
 }
@@ -606,17 +633,17 @@ void consoleInterface::outHelp()
     << "mode 1 --step into quiry mode" << endl
     << "mode 0 --step into normal mode" << endl
     << "in mode 1:" << endl
-    << "\t[-e] wordname --list all about this word" << endl
-    << "\t-s wordname --list similar word" << endl
-    << "\t-f string -- list all words contain this string" << endl
+    << "\t[-e] wordname --list all about this word,type -i to include all idioms" << endl
+    << "\t-s [-i] wordname --list similar word" << endl
+    << "\t-f [-i] string -- list all words details contain this string,type -i to include all idioms" << endl
     << "info --info about the current user" << endl
     << "test -t setname testType --test words in this set" << endl
     << "in test:"<<endl
     << "\ttestType can only be 0,1 or 2"<<endl
     << "\tinput mode0 to return normal mode"<<endl
     << "add -t setname -w word -- add word to a set, and you can add many word to one\n\t set in one command." << endl
+    << "\tIn order to do this, end each word with \'.\'" << endl
     <<"exam --exam for one higher level" << endl
-    << "In order to do this, end each word with \'.\'" << endl
     << "touch -t setname --new set" << endl
     << "touch -u userName -p password-- new user" << endl
     << "switch -u userName --switch user" << endl

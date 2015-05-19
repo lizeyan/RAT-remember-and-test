@@ -137,7 +137,8 @@ bool Dictionary::FindWordFuzzy(string s, vector<Word*>& target)
     target.clear();
     for (int i = 0; i < words.size(); ++i)
     {
-        if (kmp(s, words[i].GetSpell()) >= 0)
+        if (kmp(s, words[i].GetSpell()) >= 0 
+                && kmp(s, words[i].GetSpell()) < words[i].GetSpell().size())
         {
             target.push_back(&words[i]);
             res = true;

@@ -149,7 +149,6 @@ void consoleInterface::FindWordFuzzy(string command)
         targetWord += command[i];
     }
     vector<Word*> result;
-    cout << "begin find" << endl;
     dic->FindWordFuzzy(targetWord, result);
     int idioms = kmp ("-i", command);
     if (idioms < 0 || idioms >= result.size())
@@ -164,7 +163,6 @@ void consoleInterface::FindWordFuzzy(string command)
             }
         }
     }
-    cout << "end find" << endl;
     if (result.size() == 0)
     {
         cout << "no matched word in current dictionary found" << endl;

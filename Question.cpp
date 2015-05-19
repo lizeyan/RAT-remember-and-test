@@ -131,7 +131,7 @@ void QuestionFirst::ShowInScreen(std::ostream& osout){
     }
 }
 
-void QuestionFirst::GetTheAnswer(std::string s, std::ostream& osout){
+void QuestionFirst::GetTheAnswer(std::string s, std::ostream& osout, bool exam){
     std::string ans="";
     for(int i=0; i<s.length(); i++){
         if(s[i]==' ') continue;
@@ -181,7 +181,11 @@ void QuestionFirst::GetTheAnswer(std::string s, std::ostream& osout){
         osout<<std::endl;
         osout<<std::endl;
         osout<<"now the right rate is:  ";
-        osout<<Test::staticRightNum0*1.0/(Test::staticWrongNum0+Test::staticRightNum0 ==0 ? 1 : Test::staticWrongNum0+Test::staticRightNum0)*100.0<<"%"<<std::endl;
+        if(exam){
+            osout<<Test::rightRate0<<std::endl;
+        }else{
+            osout<<Test::staticRightNum0*1.0/(Test::staticWrongNum0+Test::staticRightNum0 ==0 ? 1 : Test::staticWrongNum0+Test::staticRightNum0)*100.0<<"%"<<std::endl;
+        }
         osout<<"-------------------------------------------------------------"<<std::endl;
         osout<<std::endl;
         osout<<std::endl;
@@ -203,7 +207,11 @@ void QuestionFirst::GetTheAnswer(std::string s, std::ostream& osout){
         osout<<std::endl;
         osout<<std::endl;
         osout<<"now the right rate is:  ";
-        osout<<Test::staticRightNum0*1.0/(Test::staticWrongNum0+Test::staticRightNum0 ==0 ? 1 : Test::staticWrongNum0+Test::staticRightNum0)*100.0<<"%"<<std::endl;
+        if(exam){
+            osout<<Test::rightRate0<<std::endl;
+        }else{
+            osout<<Test::staticRightNum0*1.0/(Test::staticWrongNum0+Test::staticRightNum0 ==0 ? 1 : Test::staticWrongNum0+Test::staticRightNum0)*100.0<<"%"<<std::endl;
+        }
         osout<<"-------------------------------------------------------------"<<std::endl;
         osout<<std::endl;
         osout<<std::endl;
@@ -288,7 +296,7 @@ void QuestionSecondChoose::ShowInScreen(std::ostream& osout){
     }
 }
 
-void QuestionSecondChoose::GetTheAnswer(std::string s, std::ostream& osout){
+void QuestionSecondChoose::GetTheAnswer(std::string s, std::ostream& osout, bool exam){
     std::string ans="";
     for(int i=0; i<s.length(); i++){
         if(s[i]==' ') continue;
@@ -325,7 +333,11 @@ void QuestionSecondChoose::GetTheAnswer(std::string s, std::ostream& osout){
         osout<<std::endl;
         osout<<std::endl;
         osout<<"now the right rate is:  ";
-        osout<<Test::staticRightNum1*1.0/(Test::staticWrongNum1+Test::staticRightNum1 ==0 ? 1 : Test::staticWrongNum1+Test::staticRightNum1)*100.0<<"%"<<std::endl;
+        if(exam){
+            osout<<Test::rightRate1<<std::endl;
+        }else{
+            osout<<Test::staticRightNum1*1.0/(Test::staticWrongNum1+Test::staticRightNum1 ==0 ? 1 : Test::staticWrongNum1+Test::staticRightNum1)*100.0<<"%"<<std::endl;
+        }
         osout<<"-------------------------------------------------------------"<<std::endl;
         osout<<std::endl;
         osout<<std::endl;
@@ -339,7 +351,11 @@ void QuestionSecondChoose::GetTheAnswer(std::string s, std::ostream& osout){
         osout<<std::endl;
         osout<<std::endl;
         osout<<"now the right rate is:  ";
-        osout<<Test::staticRightNum1*1.0/(Test::staticWrongNum1+Test::staticRightNum1 ==0 ? 1 : Test::staticWrongNum1+Test::staticRightNum1)*100.0<<"%"<<std::endl;
+        if(exam){
+            osout<<Test::rightRate1<<std::endl;
+        }else{
+            osout<<Test::staticRightNum1*1.0/(Test::staticWrongNum1+Test::staticRightNum1 ==0 ? 1 : Test::staticWrongNum1+Test::staticRightNum1)*100.0<<"%"<<std::endl;
+        }
         osout<<"-------------------------------------------------------------"<<std::endl;
         osout<<std::endl;
         osout<<std::endl;
@@ -362,11 +378,11 @@ void QuestionSecondFillBlank::ShowInScreen(std::ostream& osout){
     osout<<std::endl;
 }
 
-void QuestionSecondFillBlank::GetTheAnswer(std::string s, std::ostream& osout){
+void QuestionSecondFillBlank::GetTheAnswer(std::string s, std::ostream& osout, bool exam){
     std::string ans_word;
     std::string ans_wordclass;
     int begin=0;
-    for(int i=0; ; i++){
+    for(int i=0;i<s.length(); i++){
         begin=i;
         if(s[i]==' ') break;
         ans_word+=s[i];
@@ -389,7 +405,12 @@ void QuestionSecondFillBlank::GetTheAnswer(std::string s, std::ostream& osout){
         osout<<"Both are right!!!"<<std::endl;
         osout<<std::endl;
         osout<<std::endl;
-        osout<<Test::staticRightNum2*1.0/(Test::staticWrongNum2+Test::staticRightNum2 ==0 ? 1 : Test::staticWrongNum2+Test::staticRightNum2)*100.0<<"%"<<std::endl;
+        osout<<"now the right rate is:  ";
+        if(exam){
+            osout<<Test::rightRate2<<std::endl;
+        }else{
+            osout<<Test::staticRightNum2*1.0/(Test::staticWrongNum2+Test::staticRightNum2 ==0 ? 1 : Test::staticWrongNum2+Test::staticRightNum2)*100.0<<"%"<<std::endl;
+        }
         osout<<"-------------------------------------------------------------"<<std::endl;
         osout<<std::endl;
         osout<<std::endl;
@@ -406,7 +427,12 @@ void QuestionSecondFillBlank::GetTheAnswer(std::string s, std::ostream& osout){
         osout<<wordFillBlank->GetSpell()<<"    "<<wordFillBlank->GetEntry(choose)->GetWordClass()<<std::endl;
         osout<<std::endl;
         osout<<std::endl;
-        osout<<Test::staticRightNum2*1.0/(Test::staticWrongNum2+Test::staticRightNum2 ==0 ? 1 : Test::staticWrongNum2+Test::staticRightNum2)*100.0<<"%"<<std::endl;
+        osout<<"now the right rate is:  ";
+        if(exam){
+            osout<<Test::rightRate2<<std::endl;
+        }else{
+            osout<<Test::staticRightNum2*1.0/(Test::staticWrongNum2+Test::staticRightNum2 ==0 ? 1 : Test::staticWrongNum2+Test::staticRightNum2)*100.0<<"%"<<std::endl;
+        }
         osout<<"-------------------------------------------------------------"<<std::endl;
         osout<<std::endl;
         osout<<std::endl;
@@ -423,7 +449,12 @@ void QuestionSecondFillBlank::GetTheAnswer(std::string s, std::ostream& osout){
         osout<<wordFillBlank->GetSpell()<<"    "<<wordFillBlank->GetEntry(choose)->GetWordClass()<<std::endl;
         osout<<std::endl;
         osout<<std::endl;
-        osout<<Test::staticRightNum2*1.0/(Test::staticWrongNum2+Test::staticRightNum2 ==0 ? 1 : Test::staticWrongNum2+Test::staticRightNum2)*100.0<<"%"<<std::endl;
+        osout<<"now the right rate is:  ";
+        if(exam){
+            osout<<Test::rightRate2<<std::endl;
+        }else{
+            osout<<Test::staticRightNum2*1.0/(Test::staticWrongNum2+Test::staticRightNum2 ==0 ? 1 : Test::staticWrongNum2+Test::staticRightNum2)*100.0<<"%"<<std::endl;
+        }
         osout<<"-------------------------------------------------------------"<<std::endl;
         osout<<std::endl;
         osout<<std::endl;
@@ -440,7 +471,12 @@ void QuestionSecondFillBlank::GetTheAnswer(std::string s, std::ostream& osout){
         osout<<wordFillBlank->GetSpell()<<"    "<<wordFillBlank->GetEntry(choose)->GetWordClass()<<std::endl;
         osout<<std::endl;
         osout<<std::endl;
-        osout<<Test::staticRightNum2*1.0/(Test::staticWrongNum2+Test::staticRightNum2 ==0 ? 1 : Test::staticWrongNum2+Test::staticRightNum2)*100.0<<"%"<<std::endl;
+        osout<<"now the right rate is:  ";
+        if(exam){
+            osout<<Test::rightRate2<<std::endl;
+        }else{
+            osout<<Test::staticRightNum2*1.0/(Test::staticWrongNum2+Test::staticRightNum2 ==0 ? 1 : Test::staticWrongNum2+Test::staticRightNum2)*100.0<<"%"<<std::endl;
+        }
         osout<<"-------------------------------------------------------------"<<std::endl;
         osout<<std::endl;
         osout<<std::endl;
@@ -448,7 +484,8 @@ void QuestionSecondFillBlank::GetTheAnswer(std::string s, std::ostream& osout){
 }
 
 
-opera::opera(Set* m, int k, int Type): set(m), level(k), type(Type){
+opera::opera(Set* m, int k, int Type, bool exam): set(m), level(k), type(Type){
+    Exam=exam;
     if(type==0){
         ques = new QuestionFirst(set->GetWord(search(set, 0)), k, set);
     }else if(type==1){
@@ -458,7 +495,8 @@ opera::opera(Set* m, int k, int Type): set(m), level(k), type(Type){
     }
 }
 
-opera::opera(Word* m, int k, int Type): level(k), type(Type){
+opera::opera(Word* m, int k, int Type, bool exam): level(k), type(Type){
+    Exam=exam;
     if(type==0){
         ques = new QuestionFirst(m, k, set);
     }else if(type==1){
@@ -481,7 +519,7 @@ void opera::ope(std::ostream& osout){
 }
 
 void opera::first(std::string ans, std::ostream& osout){
-    ques->GetTheAnswer(ans, osout);
+    ques->GetTheAnswer(ans, osout, Exam);
 }
 
 

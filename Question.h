@@ -21,7 +21,7 @@ public:
     virtual void AddQuestion()=0;
     virtual void DisorganizeQuestion()=0;
     virtual void ShowInScreen(std::ostream& osout)=0;
-    virtual void GetTheAnswer(std::string s, std::ostream& osout)=0;
+    virtual void GetTheAnswer(std::string s, std::ostream& osout, bool exam=false)=0;
 };
 
 class QuestionFirst: public QuestionChoose{//由单词拼写测试单词的释义和一些属性
@@ -39,7 +39,7 @@ public:
     void AddQuestion();
     void DisorganizeQuestion();
     void ShowInScreen(std::ostream& osout);
-    void GetTheAnswer(std::string s, std::ostream& osout);
+    void GetTheAnswer(std::string s, std::ostream& osout, bool exam=false);
 };
 
 class QuestionSecondChoose: public QuestionChoose{//由单词意思给出相应的单词拼写和一些属性，选择题
@@ -55,7 +55,7 @@ public:
     void AddQuestion();
     void DisorganizeQuestion();
     void ShowInScreen(std::ostream& osout);
-    void GetTheAnswer(std::string s, std::ostream& osout);
+    void GetTheAnswer(std::string s, std::ostream& osout, bool exam=false);
 };
 
 class QuestionSecondFillBlank: public QuestionChoose{//由单词意思给出相应的单词拼写和一些属性，填空题
@@ -68,7 +68,7 @@ public:
     void AddQuestion();
     void DisorganizeQuestion();
     void ShowInScreen(std::ostream& osout);
-    void GetTheAnswer(std::string s, std::ostream& osout);
+    void GetTheAnswer(std::string s, std::ostream& osout, bool exam=false);
 };
 
 class opera{
@@ -76,9 +76,10 @@ class opera{
     QuestionChoose* ques;
     int level;
     int type;
+    bool Exam;
 public:
-    opera(Set* m, int k, int Type);
-    opera(Word* m, int k, int type);
+    opera(Set* m, int k, int Type, bool exam=false);
+    opera(Word* m, int k, int type, bool exam=false);
     ~opera();
     void ope(std::ostream& osout);
     void first(std::string ans, std::ostream& osout);

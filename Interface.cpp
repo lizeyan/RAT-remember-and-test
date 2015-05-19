@@ -114,7 +114,7 @@ void consoleInterface::FindSimilarWord(string command)
     vector<Word*> result;
     dic->FindWordFuzzy(targetWord, result);
     int idioms = kmp ("-i", command);
-    if (idioms < 0 || idioms >= command.size())
+    if (idioms < 0 || idioms >= result.size())
     {
         for (int i = 0; i < result.size(); ++i)
         {
@@ -135,7 +135,7 @@ void consoleInterface::FindSimilarWord(string command)
         cout << "similar words:" << endl;
         for (int i = 0 ; i < result.size(); ++i)
         {
-            cout << "\t" << i + 1 << ": " << result[i]->GetSpell() << endl;
+            cout << "\t" << i << ": " << result[i]->GetSpell() << endl;
         }
     }
 }
@@ -151,7 +151,7 @@ void consoleInterface::FindWordFuzzy(string command)
     vector<Word*> result;
     dic->FindWordFuzzy(targetWord, result);
     int idioms = kmp ("-i", command);
-    if (idioms < 0 || idioms >= command.size())
+    if (idioms < 0 || idioms >= result.size())
     {
         for (int i = 0; i < result.size(); ++i)
         {
@@ -204,7 +204,6 @@ void consoleInterface::quiryModeAnalyse(string command)
 }
 bool consoleInterface::Pass(int testType)
 {
-    Test::Clear();
     if (testType == 0)
     {
         if (Test::rightRate0 >= 0.95)
@@ -276,8 +275,8 @@ void consoleInterface::Save()
             fout.open("RAT.ini");
             for (int i = 0; i < users.size(); ++i)
             {
-                fout << users[i]->GetName() << endl << users[i]->GetPassword() 
-                        << endl << users[i]->GetLevel() << endl;
+                fout << users[i]->GetName() << endl << users[i]->GetPassword()
+                << endl << users[i]->GetLevel() << endl;
                 if (!i == users.size() - 1)
                     fout << endl;
             }
@@ -297,11 +296,13 @@ void consoleInterface::Save()
                 fout.open((user->GetSet(i)->GetName() + ".txt").c_str());
                 for (int j = 0; j < user->GetSet(i)->GetSize(); ++j)
                 {
+                    cout << "rewrite: " << (*(user->GetSet(i)))[j].GetSpell() <<endl;
                     fout << (*(user->GetSet(i)))[j].GetSpell();
                     if (j != user->GetSet(i)->GetSize() - 1)
                         fout << endl;
                 }
                 fout.close();
+                cout << "rewrite " << user->GetSet(i)->GetName() + ".txt" << endl;
             }
             cout << "saved" << endl;
             break;
@@ -459,7 +460,10 @@ void consoleInterface::TestDo()
         op->ope(cout);
         string answer;
         getline(cin,answer);
-        if(answer=="mode 0") 
+        while(answer==""){
+            getline(cin,answer);
+        }
+        if(answer=="mode 0")
             return;
         op->first(answer, cout);
     }
@@ -474,7 +478,7 @@ void consoleInterface::TestDo(Set* s, int le, int ttype)
         op->ope(cout);
         string answer;
         getline(cin,answer);
-        if(answer=="mode 0") 
+        if(answer=="mode 0")
             return;
         op->first(answer, cout);
     }
@@ -572,9 +576,9 @@ bool consoleInterface::FamiliarWord(string word, Set* levelSet)
         return false;
     if (levelSet != NULL && levelSet->WordExist(word))
     {
-            return true;
+        return true;
     }
-    
+    return true;
 }
 void consoleInterface::AnalyseFile(ifstream& fin, Set* s)
 {
@@ -723,7 +727,7 @@ void consoleInterface::outHelp()
     << "in mode 1:" << endl
     << "\t[-e] wordname --list all about this word,type -i to include all idioms" << endl
     << "\t-s [-i] wordname --list similar word" << endl
-    << "\t-f [-i] string -- list all words details contain this string,\n\ttype -i to include all idioms" << endl
+    << "\t-f [-i] string -- list all words details contain this string,type -i to include all idioms" << endl
     << "info --info about the current user" << endl
     << "test -t setname testType --test words in this set" << endl
     << "in test:"<<endl

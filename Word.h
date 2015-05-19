@@ -18,8 +18,8 @@ private:
     int quan2;
     bool haveRecited;//是否已经背过
     bool kill;//判断是否斩掉
-    std::vector<int[4]> reciteTime;//上次背诵的日期，用这一年的第几天表示
-    std::vector<int[4]> reviewTime;
+    std::vector<int*> reciteTime;//上次背诵的日期，用这一年的第几天表示
+    std::vector<int*> reviewTime;
     std::vector<bool> check;//统计最近十次的正确情况
     int right;//总共正确的次数
     int wrong;//错误的次数

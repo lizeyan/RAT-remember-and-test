@@ -8,7 +8,7 @@ class User
     std::string name;
     std::string password;
     std::vector<Set*> wordSets;
-    int level;//1 2 3
+    int level;//0 1 2 3
 public:
     int FindSet(std::string targetSet) const;
     std::string GetName() {return name;}

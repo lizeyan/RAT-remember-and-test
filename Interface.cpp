@@ -282,7 +282,12 @@ void consoleInterface::Save()
             }
             fout.close();
             //rewrite .set
-            fout.open((user->GetName() + ".set").c_str());
+            fout.open((user->GetName() + "/" + user->GetName() + ".set").c_str());
+            if (!fout)
+                {
+                    system(("mkdir " + user->GetName()).c_str());
+                    fout.open((user->GetName() + "/" + user->GetName() + ".set").c_str());
+                }
             for (int i = 0; i < user->GetSize(); ++i)
             {
                 fout << user->GetSet(i)->GetName();
@@ -293,7 +298,12 @@ void consoleInterface::Save()
             //rewrite set
             for (int i = 0; i < user->GetSize(); ++i)
             {
-                fout.open((user->GetSet(i)->GetName() + ".txt").c_str());
+                fout.open((user->GetName() + "/" + user->GetSet(i)->GetName() + ".txt").c_str());
+                if (!fout)
+                {
+                    system(("mkdir " + user->GetName()).c_str());
+                    fout.open((user->GetName() + "/" + user->GetSet(i)->GetName() + ".txt").c_str());
+                }
                 for (int j = 0; j < user->GetSet(i)->GetSize(); ++j)
                 {
                     fout << (*(user->GetSet(i)))[j].GetSpell();

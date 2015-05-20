@@ -12,11 +12,12 @@ User::User(string n, string p, string level):name(n), password(p)
     int levelInt;
     ss >> levelInt;
     this->level = levelInt;
-    ifstream fin((name + ".set").c_str());
+    string pre = name + "/";
+    ifstream fin((pre + name + ".set").c_str());
     string setName;
     while (fin >> setName)
     {
-        ifstream finSet ((setName + ".txt").c_str());
+        ifstream finSet ((pre + setName + ".txt").c_str());
         Set* tmp = new Set(setName);
         tmp->Read (finSet);
         finSet.close();

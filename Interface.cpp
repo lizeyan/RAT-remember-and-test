@@ -296,13 +296,11 @@ void consoleInterface::Save()
                 fout.open((user->GetSet(i)->GetName() + ".txt").c_str());
                 for (int j = 0; j < user->GetSet(i)->GetSize(); ++j)
                 {
-                    cout << "rewrite: " << (*(user->GetSet(i)))[j].GetSpell() <<endl;
                     fout << (*(user->GetSet(i)))[j].GetSpell();
                     if (j != user->GetSet(i)->GetSize() - 1)
                         fout << endl;
                 }
                 fout.close();
-                cout << "rewrite " << user->GetSet(i)->GetName() + ".txt" << endl;
             }
             cout << "saved" << endl;
             break;
@@ -550,15 +548,21 @@ void consoleInterface::AddFile(string command)
         cout << "no such set: " << setName << endl;
         return;
     }
-    begin = kmp ("-f", command) + 1;
+    begin = kmp ("-f", command) + 3;
     string fileName;
     for (int i = begin; i < command.size(); ++i)
     {
         fileName += command[i];
     }
     ifstream fin(fileName.c_str());
+    if (!fin)
+    {
+        cout << "fail to open the file" << endl;
+        return;
+    }
     AnalyseFile(fin, user->GetSet(pos));
     fin.close();
+    cout << "Finished" << endl;
 }
 bool consoleInterface::IsLetter (char x)
 {
@@ -578,7 +582,7 @@ bool consoleInterface::FamiliarWord(string word, Set* levelSet)
     {
         return true;
     }
-    return true;
+    return false;
 }
 void consoleInterface::AnalyseFile(ifstream& fin, Set* s)
 {
@@ -592,24 +596,31 @@ void consoleInterface::AnalyseFile(ifstream& fin, Set* s)
         finSet.close();
     }
     string file;
-    char tmp;
-    while ((tmp = fin.get()) != EOF)
+    string tmp;
+    while (fin >> tmp)
     {
-        file += tmp;
+            file += tmp;
     }
     int p = 0, q = 0;
-    while (q < file.size())
+    while (q < file.size() && p < file.size())
     {
-        while (!IsLetter(p++));
-        while (IsLetter(q++));
+        while (!IsLetter(file[p]) && p < file.size())
+            p++;
+        q = p;
+        while (IsLetter(file[q]) && q < file.size())
+            q++;
         string tmpWord;
         for (int i = p; i < q; ++i)
         {
             tmpWord += file[i];
         }
-        if (FamiliarWord(tmpWord, examSet))
+        if (!FamiliarWord(tmpWord, examSet))
         {
-            s->Insert((*dic)[dic->FindWord(tmpWord)]);
+            if (!s->WordExist(tmpWord) && dic->WordExist(tmpWord))
+            {
+                modified = 1;
+                s->Insert((*dic)[dic->FindWord(tmpWord)]);
+            }
         }
         p = q + 1;
     }

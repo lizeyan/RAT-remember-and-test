@@ -32,7 +32,7 @@ int* searchEntry(Word* m, int num, int type){
         if(type==0){
             choose.push_back(m->quan0);
         }else if(type==1){
-            choose.push_back(m->quan0);
+            choose.push_back(m->quan1);
         }
     }
     for(int i=0; i<num; i++){
@@ -521,10 +521,3 @@ void opera::ope(std::ostream& osout){
 void opera::first(std::string ans, std::ostream& osout){
     ques->GetTheAnswer(ans, osout, Exam);
 }
-
-
-
-
-
-
-

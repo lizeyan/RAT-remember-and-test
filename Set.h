@@ -40,5 +40,6 @@ public:
     }
     Set();
     Set (std::string n): setName(n)	{}
+    friend class recite;
 };
 #endif

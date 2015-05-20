@@ -52,6 +52,7 @@ protected:
     void outVersion();
     void quiryModeAnalyse(std::string command);
     void normalAnalyse(std::string command);
+    void Recite(std::string);
 public:
     static consoleInterface* GetInstance();
     void operation();

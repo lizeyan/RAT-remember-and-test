@@ -8,39 +8,10 @@
 using namespace std;
 Word::Word ()
 {
-    quan0=EntrySize();
-    quan1=EntrySize();
-    quan2=EntrySize();
-    //remember = new remember;
-    quanReview=1;
-    zu=false;
-    huiHe=0;
-    int zhiShuDian=0;
-    time_t t = time(0);
-    char tmp[5];
-    strftime( tmp, sizeof(tmp), "%j",localtime(&t) );
-    int lishi=atoi(tmp);
-    lishi-=reciteTime[0][0];
-    int i;
-    for(i=0; ; i++){
-        if(pow(2,i)>lishi) break;
-    }
-    int have=reviewDay;
-    i-=have;
-    zhiShuDian=i>=0?i:0;
-    quanSelect=1;
-    for(int i=0; i<zhiShuDian; i++){
-        quanSelect*=2;
-    }
-    quanSelect*=(wrong/(right+1)+1)>8? 8: wrong/(right+1)+1;
-    quanSelect-=reviewDay;
-    quanSelect=quanSelect>=1? quanSelect : 1;
+    
 }
 Word::Word (const Word& w): spell(w.spell), entries(w.entries)
 {
-    quan0=EntrySize();
-    quan1=EntrySize();
-    quan2=EntrySize();
     //remember = new remember(w.remember);
 }
 void Word::Quanchange0(){

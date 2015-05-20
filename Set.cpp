@@ -65,7 +65,10 @@ void Set::Read(std::istream& load)
     }
 }
 
-Set::Set ()	{}
+Set::Set ()	{
+    beginDay=177;
+    useDay=120;
+}
 
 ostream& operator<< (ostream& out, Set& s)
 {

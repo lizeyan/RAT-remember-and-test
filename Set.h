@@ -39,7 +39,10 @@ public:
         return beginDay;
     }
     Set();
-    Set (std::string n): setName(n)	{}
+    Set (std::string n): setName(n)	{
+        beginDay=177;
+        useDay=120;
+    }
     friend class recite;
 };
 #endif

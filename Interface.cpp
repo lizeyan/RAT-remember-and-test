@@ -1,4 +1,5 @@
 #include "Interface.h"
+#include "recite.h"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -284,10 +285,10 @@ void consoleInterface::Save()
             //rewrite .set
             fout.open((user->GetName() + "/" + user->GetName() + ".set").c_str());
             if (!fout)
-                {
-                    system(("mkdir " + user->GetName()).c_str());
-                    fout.open((user->GetName() + "/" + user->GetName() + ".set").c_str());
-                }
+            {
+                system(("mkdir " + user->GetName()).c_str());
+                fout.open((user->GetName() + "/" + user->GetName() + ".set").c_str());
+            }
             for (int i = 0; i < user->GetSize(); ++i)
             {
                 fout << user->GetSet(i)->GetName();
@@ -368,6 +369,10 @@ void consoleInterface::normalAnalyse(string command)
     {
         Test(command);
     }
+    else if(kmp("recite", command)==0)
+    {
+        Recite(command);
+    }
     else if (kmp("add", command) == 0)
     {
         int file = kmp ("-f", command);
@@ -403,7 +408,35 @@ void consoleInterface::normalAnalyse(string command)
         cout << "no command of " << command << ". Try \"help\"" << endl;
     }
 }
-
+void consoleInterface::Recite(std::string command)
+{
+    if (user == NULL)
+    {
+        cout << "please login" << endl;
+        return;
+    }
+    int begin = kmp("-t", command) + 1;
+    if(begin<3 || begin>=command.size()){
+        cout<<"please type in set"<<endl;
+        return;
+    }
+    while (command[++begin] == 32);
+    string setName;
+    for(int i=begin; i<command.size(); ++i)
+    {
+        setName += command[i];
+    }
+    int linpos = user->FindSet(setName);
+    if (linpos < 0 || linpos >= user->GetSize())
+    {
+        cout << "no such set. Try \"toch\"" << endl;
+    }
+    else
+    {
+        recite* Recite = new recite(user->GetSet(linpos));
+        Recite->ReciteControl(cout, cin);
+    }
+}
 void consoleInterface::Test(string command)
 {
     if (user == NULL)
@@ -609,7 +642,7 @@ void consoleInterface::AnalyseFile(ifstream& fin, Set* s)
     string tmp;
     while (fin >> tmp)
     {
-            file += tmp;
+        file += tmp;
     }
     int p = 0, q = 0;
     while (q < file.size() && p < file.size())

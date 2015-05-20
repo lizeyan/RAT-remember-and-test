@@ -18,7 +18,7 @@ private:
 protected:
     virtual void Output(std::ostream&) const = 0;
     void OutputEle(std::ostream&) const;
-
+    
 public:
     Entry (std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&);
     Entry ();

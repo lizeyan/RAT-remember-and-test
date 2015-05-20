@@ -37,10 +37,12 @@ void Word::Quanchange2(){
 }
 ostream& operator<< (ostream& out, Word& w)
 {
-    out << w.spell << endl;
+    out << "_____________________________________________" << endl;
+    out << w.spell << ":" << endl;
     for (int i = 0; i < w.entries.size(); ++i)
     {
-        out << "entry " << i + 1 << endl;
+        out << "_____________________________________________" << endl;
+        out << "entry " << i + 1 << ":"<< endl;
         out << *(w.entries[i]) << endl;
     }
     return out;

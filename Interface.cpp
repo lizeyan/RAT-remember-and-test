@@ -370,11 +370,11 @@ void consoleInterface::normalAnalyse(string command)
     {
         Info();
     }
-    else if (kmp("test", command) == 0)
+    else if (kmp("test", command) == 0 || kmp("t", command) == 0)
     {
         Test(command);
     }
-    else if(kmp("recite", command)==0)
+    else if(kmp("recite", command)==0 || kmp("r", command)==0)
     {
         Recite(command);
     }
@@ -423,7 +423,7 @@ void consoleInterface::normalAnalyse(string command)
 }
 void consoleInterface::RemoveUser()
 {
-   if (Login(user))
+    if (Login(user))
     {
         User* oldUser = user;
         User* guest;
@@ -475,8 +475,8 @@ void consoleInterface::RemoveSet(string command)
     }
     else
     {
-       user->RemoveSet(pos);
-       modified = 1;
+        user->RemoveSet(pos);
+        modified = 1;
     }
 }
 void consoleInterface::Recite(std::string command)

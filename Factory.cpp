@@ -36,12 +36,11 @@ Word* WordFactory::create(vector<string>& source)
     int p = 0;
     Word* result = new Word;
     result->spell = source[p++];
-    //cout << result->spell << endl;
     std::vector<string> entry;
     while (p < source.size())
     {
         entry.clear();
-        EntryFactory* ef;
+        EntryFactory* ef=NULL;
         int i = 0;
         while (source[p + i] != "#")
         {
@@ -54,7 +53,9 @@ Word* WordFactory::create(vector<string>& source)
         }//end while
         p = p + i + 1;
         result->entries.push_back(ef->create(entry));
-        delete ef;
+        if(p<source.size()){
+            delete ef;
+        }
     }//end while
     result->quan0=result->EntrySize();
     result->quan1=result->EntrySize();

@@ -185,8 +185,11 @@ void recite::ReciteControl(std::ostream& osout, std::istream& input){
             if(Exit) return;
         }
         for(int i=0; i<reviewWord.size(); i++){
+            if((huihe-reviewWord[i]->huiHe)*15>reviewWord.size()){
+                reviewWord[i]->zu=false;
+            }
             int lin=true;
-            for(int j=reviewWord[i]->check.size()-1; j>=reviewWord[i]->check.size()-ReciteNeedTime(reviewWord[i])>=0?
+            for(int j=reviewWord[i]->check.size()-1; j>=(reviewWord[i]->check.size()-ReciteNeedTime(reviewWord[i]))>=0?
                 reviewWord[i]->check.size()-ReciteNeedTime(reviewWord[i]): 0; j--){
                 if(!reviewWord[i]->check[i]){
                     lin=false;
@@ -200,10 +203,6 @@ void recite::ReciteControl(std::ostream& osout, std::istream& input){
                 reviewWord[i]->reviewDay=atoi(tmp);
                 reviewWord.erase(reviewWord.begin()+i);
                 i--;
-                if(i==reviewWord.size()) break;
-            }
-            if((huihe-reviewWord[i]->huiHe)*15>reviewWord.size()){
-                reviewWord[i]->zu=false;
             }
         }
         huihe++;

@@ -54,8 +54,7 @@ void Dictionary::ReadAndAdd (std::istream& load)
         if (temp == "*")
         {
             wordTemp = factory->create (wordString);
-            //cout << wordTemp->GetSpell() <<endl;
-            if (!WordExist (wordTemp->GetSpell()))
+            if (!WordExist (wordTemp->spell))
             {
                 Insert (*wordTemp);
             }

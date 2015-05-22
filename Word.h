@@ -51,5 +51,6 @@ public:
     friend int search(Set* m, int type);
     friend int* searchEntry(Word* m, int num, int type);
     friend class recite;
+    friend class Dictionary;
 };
 #endif

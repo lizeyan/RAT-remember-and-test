@@ -39,7 +39,7 @@ public:
             return 16-ReciteThisTime();
         }
     }
-    std::vector<int> SearchReview(std::vector<Word*> m, int num){//选择需要复习的单词，按照权重
+    std::vector<int> SearchReview(std::vector<Word*> &m, int num){//选择需要复习的单词，按照权重
         std::vector<int> choose;
         std::vector<int> lin;
         lin.clear();
@@ -47,17 +47,18 @@ public:
         for(int i=0; i<m.size(); i++){
             choose.push_back(m[i]->quanReview);
         }
-        for(int i=0; i<m.size()>num? num : m.size(); i++){
+        for(int i=0; i<(m.size()>num? num : m.size()); i++){
             int all=0;
             for(int k=0; k<choose.size(); k++){
                 all+=choose[k];
             }
-            int out=rand()%all+1;
+            if(all==0) all=1;
+            int output=rand()%all+1;
             int number=0;
             int j;
             for(j=0; j<choose.size(); j++){
                 number+=choose[j];
-                if(number>=out){
+                if(number>=output){
                     break;
                 }
             }
@@ -67,12 +68,13 @@ public:
         return lin;
     }
     void ReviewQuanUpdate(Word* m){
-        m->quanReview=10*m->wrong/(m->wrong+m->right+1);
+        m->quanReview=10*m->wrong/(m->wrong+m->right+1) > 0? 10*m->wrong/(m->wrong+m->right+1) : 1;
         if(m->zu){
             m->quanReview-=10;
         }else{
             m->quanReview+=10;
         }
+        m->quanReview=m->quanReview>0?m->quanReview:1;
     }
 };
 

@@ -374,11 +374,11 @@ void consoleInterface::normalAnalyse(string command)
     {
         Info();
     }
-    else if (kmp("test", command) == 0 || kmp("t", command) == 0)
+    else if (kmp("test", command) == 0 || kmp("t ", command) == 0)
     {
         Test(command);
     }
-    else if(kmp("recite", command)==0 || kmp("r", command)==0)
+    else if(kmp("recite", command)==0 || kmp("r ", command)==0)
     {
         Recite(command);
     }

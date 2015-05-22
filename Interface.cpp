@@ -32,10 +32,14 @@ int Interface::kmp(string a, string b)
 }
 void consoleInterface::ini()
 {
+    string source = "StandardSource.txt";
+    #ifdef _WIN32
+    source = "StandardSourceWin.txt";
+    #endif
     srand((unsigned int)time(NULL));
     int beginTime = clock();
     cout << "loading......" << endl;
-    ifstream fin("StandardSource.txt");
+    ifstream fin(source.c_str());
     dic->Read (fin);
     fin.close();
     fin.open("RAT.ini");

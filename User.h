@@ -19,5 +19,6 @@ public:
     int InsertSet (Set&);
     int GetLevel()  {return level;}
     void LevelUp();
+    void RemoveSet(int pos);
 };
 #endif

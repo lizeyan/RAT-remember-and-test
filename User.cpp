@@ -47,3 +47,7 @@ void User::LevelUp()
     if (level > 3)
         level = 3;
 }
+void User::RemoveSet(int pos)
+{
+    wordSets.erase(wordSets.begin() + pos);
+}

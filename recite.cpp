@@ -189,8 +189,9 @@ void recite::ReciteControl(std::ostream& osout, std::istream& input){
                 reviewWord[i]->zu=false;
             }
             int lin=true;
-            for(int j=reviewWord[i]->check.size()-1; j>=(reviewWord[i]->check.size()-ReciteNeedTime(reviewWord[i]))>=0?
-                reviewWord[i]->check.size()-ReciteNeedTime(reviewWord[i]): 0; j--){
+            int stupid=reviewWord[i]->check.size()>=ReciteNeedTime(reviewWord[i])>=0?
+            reviewWord[i]->check.size()-ReciteNeedTime(reviewWord[i]): 0;
+            for(int j=(int)reviewWord[i]->check.size()-1; j>=stupid; j--){
                 if(!reviewWord[i]->check[i]){
                     lin=false;
                     break;

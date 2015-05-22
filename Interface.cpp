@@ -508,6 +508,8 @@ void consoleInterface::Recite(std::string command)
     }
     else
     {
+        cout<<"In recite word mode, if you want to kill a word , if you want to quit,press q"<<endl;
+        cout<<"In review word mode, press Enter to go on reviewing, press q to exit"<<endl;
         recite* Recite = new recite(user->GetSet(linpos));
         Recite->ReciteControl(cout, cin);
     }

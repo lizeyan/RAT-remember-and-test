@@ -48,6 +48,7 @@ public:
     void Quanchange1();
     void Quanchange2();
     bool Familiar();
+    std::string sort();
     friend int search(Set* m, int type);
     friend int* searchEntry(Word* m, int num, int type);
     friend class recite;

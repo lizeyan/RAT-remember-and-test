@@ -2,8 +2,9 @@
 #include "Word.h"
 #include "Entry.h"
 #include <iostream>
+#include <sstream>
 #include <cstring>
-#include <stdlib.h>
+#include <cstdlib>
 #include <cmath>
 using namespace std;
 Word::Word ()
@@ -60,4 +61,31 @@ bool Word::Familiar()
             correct++;
     }
     return double(correct) / allNum > 0.6;
+}
+string Word::sort()
+{
+    if (!haveRecited)
+        return "hasn't recited yet";
+    else if (kill)
+        return "has been killed";
+    else
+    {
+        int all = 0, ri = 0;
+        for (int i = 0; i < check.size(); ++i)
+        {
+            all++;
+            if (check[i])
+                ri++;
+        }
+        stringstream ss;
+        string r, a;
+        ss << right;
+        ss >> r;
+        ss << (right + wrong);
+        ss >> a;
+        if ((double(ri) / all) > 0.5)
+            return "familiar:" + r+ "/" + a;
+        else
+            return  "unfamiliar:" + r + "/" + a;
+    }
 }

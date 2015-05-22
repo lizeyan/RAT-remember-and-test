@@ -28,6 +28,7 @@ class consoleInterface: public Interface
     bool modified;
     consoleInterface();
 protected:
+    void List(std::string);
     void RemoveSet (std::string);
     void RemoveUser();
     bool IsLetter(char);

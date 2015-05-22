@@ -7,6 +7,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <iomanip>
 using namespace std;
 consoleInterface* consoleInterface::instance = 0;
 consoleInterface* consoleInterface::GetInstance()
@@ -282,8 +283,8 @@ void consoleInterface::Save()
             for (int i = 0; i < users.size(); ++i)
             {
                 fout << users[i]->GetName() << endl << users[i]->GetPassword()
-                << endl << users[i]->GetLevel() << endl;
-                if (!i == users.size() - 1)
+                            << endl << users[i]->GetLevel();
+                if (!(i == users.size() - 1))
                     fout << endl;
             }
             fout.close();
@@ -297,7 +298,7 @@ void consoleInterface::Save()
             for (int i = 0; i < user->GetSize(); ++i)
             {
                 fout << user->GetSet(i)->GetName();
-                if (!i == user->GetSize() - 1)
+                if (!(i == user->GetSize() - 1))
                     fout << endl;
             }
             fout.close();
@@ -374,6 +375,10 @@ void consoleInterface::normalAnalyse(string command)
     {
         Info();
     }
+    else if (kmp("info ", command) == 0 || kmp("i ", command) == 0)
+    {
+        List(command);
+    }
     else if (kmp("test", command) == 0 || kmp("t ", command) == 0)
     {
         Test(command);
@@ -424,6 +429,49 @@ void consoleInterface::normalAnalyse(string command)
     {
         cout << "no command of " << command << ". Try \"help\"" << endl;
     }
+}
+void consoleInterface::List(string command)
+{
+    if (user == NULL)
+    {
+        cout << "please login" << endl;
+        return;
+    }
+    int begin = kmp("-t", command) + 1;
+    while (command[++begin] == 32);
+    string setName;
+    for (int i = begin; i < command.size(); ++i)
+    {
+        if (command[i] == 10 || command[i] == 13 || command[i] == 32 || command[i] == 9)
+            break;
+        setName += command[i];
+    }
+    int pos = user->FindSet(setName);
+    if (pos < 0 || pos >= user->GetSize() || setName != user->GetSet(pos)->GetName())
+    {
+        cout << "set not exist: " << setName << endl;
+    }
+    else
+    {
+        cout << setiosflags(ios::left);
+        int p = kmp("-d", command);
+        bool detailed = (p >= 0) && (p < command.size());
+        Set* s = user->GetSet(pos);
+        for (int i = 0; i < s->GetSize(); ++i)
+        {
+            if (detailed)
+                cout << "******************************************************************************" << endl;
+            cout <<setw(5) <<  i  + 1<< ": " << setw(25) << (*s)[i].GetSpell() << (*s)[i].sort() << endl;
+            if (detailed)
+            {
+                for (int j = 0; j < (*s)[i].EntrySize(); ++j)
+                {
+                    cout << "------------------------------------------------------------------------------" << endl;
+                    cout << *((*s)[i].GetEntry(j)) << endl;
+                }
+            }
+        }//~for
+    }//~else
 }
 void consoleInterface::RemoveUser()
 {
@@ -583,6 +631,11 @@ void consoleInterface::TestDo()
         }
         if(answer=="mode 0" || answer == "m 0")
             return;
+        else if (answer == "mode 1" || answer == "m 1")
+        {
+            mode = 1;
+            return;
+        }
         else if (answer == "exit")
         {
             Exit();
@@ -600,8 +653,17 @@ void consoleInterface::TestDo(Set* s, int le, int ttype)
         op->ope(cout);
         string answer;
         getline(cin,answer);
-        if(answer=="mode 0")
+        if(answer=="mode 0" || answer == "m 0")
             return;
+        else if (answer == "mode 1" || answer == "m 1")
+        {
+            mode = 1;
+            return;
+        }
+        else if (answer == "exit")
+        {
+            Exit();
+        }
         op->first(answer, cout);
     }
 }
@@ -862,8 +924,9 @@ void consoleInterface::outHelp()
     << "in mode 1:" << endl
     << "\t[-e] wordname --list all about this word,type -i to include all idioms" << endl
     << "\t-s [-i] wordname --list similar word" << endl
-    << "\t-f [-i] string -- list all words details contain this string,type -i to include all idioms" << endl
+    << "\t-f [-i] string -- list all words details contain this string,type -i \n\tto include all idioms" << endl
     << "i[nfo] --info about the current user" << endl
+    << "i[nfo] -t setname [-d] -- list all the word in the set, -d to list all details" << endl
     << "test -t setname testType --test words in this set" << endl
     << "in test:"<<endl
     << "\ttestType can only be 0,1 or 2"<<endl
@@ -871,7 +934,7 @@ void consoleInterface::outHelp()
     << "\tinput exit to exit, you can't simply use e here" << endl
     << "rm -t setname -- remove a set" << endl
     << "rm cuser -- remove current user, then switch to guest user" << endl
-    << "in order to remove user or set completely, you need to remove the file from your mass memory." << endl
+    << "in order to remove user or set completely, you need to remove the file \n\tfrom your mass memory." << endl
     << "add -t setname -w word -- add word to a set, and you can add many word to one\n\t set in one command." << endl
     << "add -t setname -f filename --add new words from a text file, \n\tRAT will recognize your unfamiliar word" << endl
     << "\tIn order to do this, end each word with \'.\'" << endl

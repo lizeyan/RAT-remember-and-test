@@ -29,6 +29,7 @@ public:
     std::string GetMeaningC()	const	{return meaningC;}
     std::string GetMeaningE()	const	{return meaningE;}
     std::string GetExample(int) const;
+    virtual ~Entry() {}
 };
 class NounEntry:public Entry
 {
@@ -55,7 +56,7 @@ public:
     std::string GetCompleteForm()	const {return completeForm;}
     std::string GetAbbrForm()	const {return abbrForm;}
     std::string GetPluralForm() const {return pluralForm;}
-    
+    ~NounEntry() {}
 };
 class VerbEntry:public Entry
 {
@@ -79,6 +80,7 @@ public:
     std::string GetPresentFoem(int)const;
     std::string GetPastForm(int)const;
     std::string GetPastParticle(int)const;
+    ~VerbEntry() {}
 };
 class AdjEntry:public Entry
 {
@@ -95,6 +97,7 @@ public:
     int GetPredOrAttr ()	const {return predOrAttr;}
     std::string GetComparative(int)const;
     std::string GetHighest(int)const;
+    ~AdjEntry() {}
 };
 class AdvEntry:public Entry
 {
@@ -109,6 +112,7 @@ public:
               std::vector<std::string>&, std::vector<std::string>&);
     std::string GetComparative(int)const;
     std::string GetHighest(int)const;
+    ~AdvEntry() {}
 };
 class PronEntry:public Entry
 {
@@ -123,6 +127,7 @@ public:
                int ,int);
     int GetPerson()	const{return person;}
     int GetSingle() const{return single;}
+    ~PronEntry() {}
 };
 class ConjEntry:public Entry
 {
@@ -134,6 +139,7 @@ public:
     ConjEntry();
     ConjEntry (std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&, std::string&);
     std::string GetCategory()	const {return category;}
+    ~ConjEntry() {}
 };
 
 class PrepEntry:public Entry
@@ -143,5 +149,6 @@ protected:
 public:
     PrepEntry ();
     PrepEntry (std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&);
+    ~PrepEntry() {}
 };
 #endif

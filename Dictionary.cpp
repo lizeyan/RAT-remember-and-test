@@ -64,7 +64,6 @@ void Dictionary::ReadAndAdd (std::istream& load)
         else
             wordString.push_back (temp);
     }
-    delete wordTemp;
     delete factory;
 }
 void Dictionary::Read(istream& load)

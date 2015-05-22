@@ -54,6 +54,7 @@ Word* WordFactory::create(vector<string>& source)
         }//end while
         p = p + i + 1;
         result->entries.push_back(ef->create(entry));
+        delete ef;
     }//end while
     result->quan0=result->EntrySize();
     result->quan1=result->EntrySize();

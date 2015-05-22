@@ -67,6 +67,7 @@ void consoleInterface::ini()
         }
     }
     while (!Login(cuser));
+    user = cuser;
 }
 void consoleInterface::operation()
 {
@@ -190,11 +191,11 @@ void consoleInterface::quiryModeAnalyse(string command)
     {
         FindWordFuzzy(command);
     }
-    else if (command == "mode 0")
+    else if (command == "mode 0" || command == "m 0")
     {
         mode = 0;
     }
-    else if (command == "mode 1")
+    else if (command == "mode 1" || command == "m 1")
     {
         mode = 1;
     }
@@ -325,14 +326,18 @@ void consoleInterface::Save()
 }
 void consoleInterface::Info()
 {
+    cout << "------------------------------------------------------------------------------" << endl;
+    cout << "current user: " << user->GetName() << endl;
     cout << "level: " << user->GetLevel() << endl;
-    cout << "set information:" << endl;
+    cout << "set information: " <<  endl;
     if (user != NULL)
         for (int i = 0; i < user->GetSize(); ++i)
         {
             cout << "\t" << i + 1 << ": " << user->GetSet(i)->GetName()
             << " size:" << user->GetSet(i)->GetSize() << endl;
         }
+    cout << user->GetSize() << " sets in all." << endl;
+    cout << "------------------------------------------------------------------------------" << endl;
 }
 void consoleInterface::Exit()
 {
@@ -341,27 +346,27 @@ void consoleInterface::Exit()
 }
 void consoleInterface::normalAnalyse(string command)
 {
-    if (command == "help")
+    if (command == "help" || command == "h")
     {
         outHelp();
     }
-    else if (command == "version")
+    else if (command == "version" || command == "v")
     {
         outVersion();
     }
-    else if (command == "exit")
+    else if (command == "exit" || command == "e")
     {
         Exit();
     }
-    else if (command == "mode 0")
+    else if (command == "mode 0" || command == "m 0")
     {
         mode = 0;
     }
-    else if (command == "mode 1")
+    else if (command == "mode 1" || command == "m 1")
     {
         mode = 1;
     }
-    else if (command == "info")
+    else if (command == "info" || command == "i")
     {
         Info();
     }
@@ -394,7 +399,15 @@ void consoleInterface::normalAnalyse(string command)
         else
             TouchUser (command);
     }
-    else if (kmp ("switch", command) == 0)
+    else if (command == "rm cuser")
+    {
+        RemoveUser();
+    }
+    else if (kmp("rm", command) == 0)
+    {
+        RemoveSet(command);
+    }
+    else if (kmp ("switch", command) == 0 || kmp ("s ",command) == 0)
     {
         Switch(command);
     }
@@ -406,6 +419,64 @@ void consoleInterface::normalAnalyse(string command)
     else
     {
         cout << "no command of " << command << ". Try \"help\"" << endl;
+    }
+}
+void consoleInterface::RemoveUser()
+{
+   if (Login(user))
+    {
+        User* oldUser = user;
+        User* guest;
+        for (int i = 0; i < users.size(); ++i)
+        {
+            if (users[i]->GetName() == "guest")
+            {
+                guest = users[i];
+                break;
+            }
+        }
+        user = guest;
+        for (int i = 0; i < users.size(); ++i)
+        {
+            if (users[i] == oldUser)
+            {
+                users.erase(users.begin() + i);
+                break;
+            }
+        }
+        modified = 1;
+        Save();
+    }
+    else
+    {
+        cout << "failed to confirm" << endl;
+    }
+}
+void consoleInterface::RemoveSet(string command)
+{
+    if (user == NULL)
+    {
+        cout << "please login" << endl;
+        return;
+    }
+    int begin = kmp("-t", command) + 1;
+    while (command[++begin] == 32);
+    string setName;
+    for (int i = begin; i < command.size(); ++i)
+    {
+        if (command[i] == 10 || command[i] == 13 || command[i] == 32 || command[i] == 9)
+            break;
+        setName += command[i];
+    }
+    int pos = user->FindSet(setName);
+    if (pos < 0 || pos >= user->GetSize() || setName != user->GetSet(pos)->GetName())
+    {
+        cout << "this set not exist: " << setName << endl;
+    }
+    else
+    {
+       user->RemoveSet(pos);
+       modified = 1;
     }
 }
 void consoleInterface::Recite(std::string command)
@@ -504,8 +575,12 @@ void consoleInterface::TestDo()
         while(answer==""){
             getline(cin,answer);
         }
-        if(answer=="mode 0")
+        if(answer=="mode 0" || answer == "m 0")
             return;
+        else if (answer == "exit")
+        {
+            Exit();
+        }
         op->first(answer, cout);
     }
 }
@@ -692,6 +767,9 @@ void consoleInterface::TouchSet(string command)
         user->InsertSet (*set);
         modified = true;
         cout << "successfully touch" << endl;
+        ifstream fin((user->GetName() + "/" + setName + ".txt").c_str());
+        set->Read(fin);
+        fin.close();
     }
     else
     {
@@ -742,6 +820,7 @@ void consoleInterface::Switch(string command)
             if (Login (users[i]))
             {
                 Save();
+                user = users[i];
             }
             return;
         }
@@ -759,47 +838,50 @@ bool consoleInterface::Login(User* u)
     char p;
     cout << "password:";
     cin >>tmp;
-    //cout << tmp << u->GetPassword() << endl;
-    cout << endl;
     if (tmp == u->GetPassword())
     {
-        user = u;
-        cout << "successfully login: " << u->GetName() << endl;
         return true;
     }
     else
     {
-        cout << "wrong password" << endl;
         return false;
     }
 }
 void consoleInterface::outHelp()
 {
+    cout << "------------------------------------------------------------------------------" << endl;
     cout << "List of commands" << endl << endl
-    << "mode 1 --step into quiry mode" << endl
-    << "mode 0 --step into normal mode" << endl
+    << "m[ode] 1 --step into quiry mode" << endl
+    << "m[ode] 0 --step into normal mode" << endl
     << "in mode 1:" << endl
     << "\t[-e] wordname --list all about this word,type -i to include all idioms" << endl
     << "\t-s [-i] wordname --list similar word" << endl
     << "\t-f [-i] string -- list all words details contain this string,type -i to include all idioms" << endl
-    << "info --info about the current user" << endl
+    << "i[nfo] --info about the current user" << endl
     << "test -t setname testType --test words in this set" << endl
     << "in test:"<<endl
     << "\ttestType can only be 0,1 or 2"<<endl
     << "\tinput mode0 to return normal mode"<<endl
+    << "\tinput exit to exit, you can't simply use e here" << endl
+    << "rm -t setname -- remove a set" << endl
+    << "rm cuser -- remove current user, then switch to guest user" << endl
+    << "in order to remove user or set completely, you need to remove the file from your mass memory." << endl
     << "add -t setname -w word -- add word to a set, and you can add many word to one\n\t set in one command." << endl
     << "add -t setname -f filename --add new words from a text file, \n\tRAT will recognize your unfamiliar word" << endl
     << "\tIn order to do this, end each word with \'.\'" << endl
     << "exam --exam for one higher level" << endl
     << "touch -t setname --new set, the name must be a constant string." << endl
     << "touch -u userName -p password-- new user" << endl
-    << "switch -u userName --switch user" << endl
-    << "exit --exit this program" << endl
-    << "help --view help document" << endl
-    << "version --view information about this program" << endl;
+    << "s[witch] -u userName --switch user" << endl
+    << "e[xit] --exit this program" << endl
+    << "h[elp] --view help document" << endl
+    << "v[ersion] --view information about this program" << endl;
+    cout << "------------------------------------------------------------------------------" << endl;
 }
 void consoleInterface::outVersion()
 {
+    cout << "------------------------------------------------------------------------------" << endl;
     cout << "RAT remember and test 0.1" << endl
     << "Author: Li Zeyan	Lv Xin" << endl;
+    cout << "------------------------------------------------------------------------------" << endl;
 }

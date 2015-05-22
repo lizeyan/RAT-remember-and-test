@@ -28,6 +28,8 @@ class consoleInterface: public Interface
     bool modified;
     consoleInterface();
 protected:
+    void RemoveSet (std::string);
+    void RemoveUser();
     bool IsLetter(char);
     bool Pass(int);
     bool FamiliarWord(std::string, Set*);

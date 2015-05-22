@@ -35,10 +35,14 @@ string Entry::GetExample(int rank) const
 }
 void Entry::OutputEle(ostream& out) const
 {
-    out << "/" << phonogram << "/\t"
-           << wordClass << endl
-           << meaningC
-           << "\t " << meaningE << endl;
+    if (phonogram != "")
+        out << "/" << phonogram << "/\t";
+    if (wordClass != "")
+        out << wordClass << endl;
+    if (meaningC != "")
+        out << meaningC << endl;
+    if (meaningE != "")
+        out << meaningE << endl;
     for (int i = 0; i < example.size(); ++i)
     {
         out << "\t" << example[i] << endl;

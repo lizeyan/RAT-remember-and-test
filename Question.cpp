@@ -495,7 +495,8 @@ opera::opera(Set* m, int k, int Type, bool exam): set(m), level(k), type(Type){
     }
 }
 
-opera::opera(Word* m, int k, int Type, bool exam): level(k), type(Type){
+opera::opera(Word* m, int k, int Type, Set* s, bool exam): level(k), type(Type){
+    set=s;
     Exam=exam;
     if(type==0){
         ques = new QuestionFirst(m, k, set);

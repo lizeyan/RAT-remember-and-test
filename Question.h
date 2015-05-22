@@ -79,7 +79,7 @@ class opera{
     bool Exam;
 public:
     opera(Set* m, int k, int Type, bool exam=false);
-    opera(Word* m, int k, int type, bool exam=false);
+    opera(Word* m, int k, int type, Set*, bool exam=false);
     ~opera();
     void ope(std::ostream& osout);
     void first(std::string ans, std::ostream& osout);

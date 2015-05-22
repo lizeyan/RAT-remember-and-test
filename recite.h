@@ -39,13 +39,15 @@ public:
             return 16-ReciteThisTime();
         }
     }
-    int* SearchReview(std::vector<Word*> m, int num){//选择需要复习的单词，按照权重
+    std::vector<int> SearchReview(std::vector<Word*> m, int num){//选择需要复习的单词，按照权重
         std::vector<int> choose;
-        int* lin =new int[num+1];
+        std::vector<int> lin;
+        lin.clear();
+        choose.clear();
         for(int i=0; i<m.size(); i++){
             choose.push_back(m[i]->quanReview);
         }
-        for(int i=0; i<num; i++){
+        for(int i=0; i<m.size()>num? num : m.size(); i++){
             int all=0;
             for(int k=0; k<choose.size(); k++){
                 all+=choose[k];
@@ -59,7 +61,7 @@ public:
                     break;
                 }
             }
-            lin[i]=j;
+            lin.push_back(j);
             choose[j]=0;
         }
         return lin;

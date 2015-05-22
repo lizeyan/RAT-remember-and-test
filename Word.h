@@ -32,7 +32,6 @@ public:
     friend std::ostream& operator<< (std::ostream&, Word&);
     std::string GetSpell()	const	{return spell;}
     Word ();
-    Word (const Word&);
     int EntrySize(){
         return entries.size();
     }

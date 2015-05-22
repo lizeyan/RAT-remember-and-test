@@ -11,12 +11,14 @@ recite::recite(Set* m): set(m){
     char tmp[5];
     strftime( tmp, sizeof(tmp), "%j",localtime(&t) );
     today=atoi(tmp);
+    std::cout<<m->GetUseDay()<<' '<<today<<' '<<m->GetBeginDay()<<std::endl;
     int dayleft=m->GetUseDay()-today+m->GetBeginDay();
     if(dayleft==0){
         exit(-1);
     }
     int wordleft=m->GetSize()-m->GetRecitedSize();
     reciteToday=wordleft/dayleft;
+    std::cout<<reciteToday<<std::endl;
     reviewToday=std::min(m->GetRecitedSize(), reciteToday);
     std::vector<Word*> lin;
     for(int i=0; i<m->GetSize(); i++){
@@ -97,7 +99,7 @@ void recite::DoReview(Word* m, std::ostream& osout, std::istream& input, int hui
     ReviewQuanUpdate(m);
     m->zu=true;
     osout<<"Test Word..."<<std::endl;
-    opera* op = new opera(m, 4, 0);
+    opera* op = new opera(m, 4, 0, set);
     op->ope(osout);
     std::string answer;
     getline(input, answer);
@@ -157,6 +159,7 @@ void recite::DoReview(Word* m, std::ostream& osout, std::istream& input, int hui
 }
 void recite::ReciteControl(std::ostream& osout, std::istream& input){
     int huihe=0;
+    std::cout<<reciteWord.size()<<std::endl;
     while(reviewWord.size()!=0||reciteWord.size()!=0){
         int upper=ReciteThisTime();
         reciteThis.clear();
@@ -176,8 +179,8 @@ void recite::ReciteControl(std::ostream& osout, std::istream& input){
             }
             reviewThis.push_back(reciteThis[i]);
         }
-        int* choose=SearchReview(reviewWord, ReviewThisTime()-reciteThis.size());//按照权重选择需要背诵的单词
-        for(int i=0; i<ReviewThisTime()-reciteThis.size(); i++){
+        std::vector<int> choose=SearchReview(reviewWord, ReviewThisTime()-reciteThis.size());//按照权重选择需要背诵的单词
+        for(int i=0; i<choose.size(); i++){
             reviewThis.push_back(reviewWord[choose[i]]);
         }
         for(int i=0; i<reciteThis.size(); i++){//刚学过的单词在这这一轮中一定要进行复习，所以在录入之后在push到reviewWord中

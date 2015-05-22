@@ -8,11 +8,9 @@
 using namespace std;
 Word::Word ()
 {
-    
-}
-Word::Word (const Word& w): spell(w.spell), entries(w.entries)
-{
-    //remember = new remember(w.remember);
+    quan0=EntrySize();
+    quan1=EntrySize();
+    quan2=EntrySize();
 }
 void Word::Quanchange0(){
     int lin=0;

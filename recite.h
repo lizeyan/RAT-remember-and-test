@@ -67,7 +67,7 @@ public:
         return lin;
     }
     void ReviewQuanUpdate(Word* m){
-        m->quanReview=10*m->wrong/(m->wrong+m->right);
+        m->quanReview=10*m->wrong/(m->wrong+m->right+1);
         if(m->zu){
             m->quanReview-=10;
         }else{

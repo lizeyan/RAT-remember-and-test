@@ -44,18 +44,11 @@ recite::recite(Set* m): set(m){
 void recite::DoRecite(Word* m, std::ostream& osout, std::istream& input){
     osout<<"Recite Word..."<<std::endl<<std::endl;
     osout<<*m<<std::endl;
-    osout<<"will you kill it? Y/N Or press q to exit"<<std::endl;
-    char s;
-    input>>s;
-    while(s!='N' && s!='Y' && s!='q'){
-        osout<<"input error, please input again!"<<std::endl;
-        input>>s;
-    }
-    if(s=='N'){
-        m->kill=false;
-    }else if(s=='Y'){
+    std::string s;
+    getline(input, s);
+    if(s=="Y"||s=="y"){
         m->kill=true;
-    }else{
+    }else if(s=="q"){
         Exit=true;
         return;
     }
@@ -110,7 +103,6 @@ void recite::DoReview(Word* m, std::ostream& osout, std::istream& input, int hui
     osout<<std::endl<<std::endl;
     osout<<"Review Word..."<<std::endl<<std::endl;
     osout<<*m<<std::endl<<std::endl;
-    osout<<"press Enter to go on reviewing, press q to exit"<<std::endl;
     std::string s;
     getline(input, s);
     if(s=="q"){
@@ -179,6 +171,7 @@ void recite::ReciteControl(std::ostream& osout, std::istream& input){
             }
             reviewThis.push_back(reciteThis[i]);
         }
+        if(Exit) break;
         std::vector<int> choose=SearchReview(reviewWord, ReviewThisTime()-reciteThis.size());//按照权重选择需要背诵的单词
         for(int i=0; i<choose.size(); i++){
             reviewThis.push_back(reviewWord[choose[i]]);
@@ -207,6 +200,7 @@ void recite::ReciteControl(std::ostream& osout, std::istream& input){
                 reviewWord[i]->reviewDay=atoi(tmp);
                 reviewWord.erase(reviewWord.begin()+i);
                 i--;
+                if(i==reviewWord.size()) break;
             }
             if((huihe-reviewWord[i]->huiHe)*15>reviewWord.size()){
                 reviewWord[i]->zu=false;

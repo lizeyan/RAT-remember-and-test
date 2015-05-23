@@ -611,7 +611,6 @@ void consoleInterface::Test(string command)
     stringstream ss;
     ss << testTypeString;
     ss >> testType;
-    cout << testType << endl;
     if(testType>2){
         cout<<"no this testType, please input again!"<<endl;
         return;

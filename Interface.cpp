@@ -1,6 +1,7 @@
 #include "Interface.h"
 #include "recite.h"
 #include <iostream>
+#include <sstream>
 #include <cstdlib>
 #include <ctime>
 #include <cstdlib>
@@ -579,22 +580,38 @@ void consoleInterface::Test(string command)
         cout<<"please type in set"<<endl;
         return;
     }
-    while (command[++begin] == 32);
+    while (command[++begin] == 32 && begin < command.size() - 1);
     string setName;
     int lin=0;
-    for (int i = begin; ; ++i)
+    for (int i = begin; i < command.size() && command[i] != ' ' ; ++i)
     {
-        lin=i;
-        if(i>=command.size()){
-            cout<<"input error"<<endl;
-            return;
-        }
-        if(command[i]==' ') break;
         setName += command[i];
+        lin = i;
     }
-    lin++;
-    char testtype=command[lin];
-    testType=testtype-'0';
+    string testTypeString;
+    int testType;
+    for (int i = ++lin; i < command.size(); ++i)
+    {
+        if (command[i] >= '0' && command[i] <= '9')
+        {
+            lin = i;
+            break;
+        }
+    }
+    for (int i = lin; i < command.size(); ++i)
+    {
+        if (command[i] >= '0' && command[i] <= '9')
+        {
+            testTypeString += command[i];
+        }
+        else
+        {
+            break;
+        }
+    }
+    stringstream ss;
+    ss << testTypeString;
+    ss >> testType;
     if(testType>2){
         cout<<"no this testType, please input again!"<<endl;
         return;

@@ -19,15 +19,15 @@ private:
     int quanReview;//背诵单词时复习的权重
     int quanSelect;//一天中在总的词库中挑选所需复习的词的权重，这里用排序，不用随机
     bool haveRecited;//是否已经背过
-    bool kill;//判断是否斩掉
-    std::vector<int*> reciteTime;//上次背诵的日期，用这一年的第几天表示,虽然就背过一次
-    std::vector<int*> reviewTime;//上次复习的日期
-    std::vector<bool> check;//统计最近十次的正确情况
+    bool kill;//判断是否斩
     int right;//总共正确的次数
     int wrong;//错误的次数
     int reviewDay;//复习过的天数
     bool zu;//分小组背诵时权重的分配；
     int huiHe;//背诵时回合的变量
+    std::vector<int*> reciteTime;//上次背诵的日期，用这一年的第几天表示,虽然就背过一次
+    std::vector<int*> reviewTime;//上次复习的日期
+    std::vector<bool> check;//统计最近十次的正确情况
 public:
     friend std::ostream& operator<< (std::ostream&, Word&);
     std::string GetSpell()	const	{return spell;}
@@ -53,5 +53,6 @@ public:
     friend int* searchEntry(Word* m, int num, int type);
     friend class recite;
     friend class Dictionary;
+    friend class consoleInterface;
 };
 #endif

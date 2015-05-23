@@ -589,7 +589,6 @@ void consoleInterface::Test(string command)
         lin = i;
     }
     string testTypeString;
-    int testType;
     for (int i = ++lin; i < command.size(); ++i)
     {
         if (command[i] >= '0' && command[i] <= '9')
@@ -612,6 +611,7 @@ void consoleInterface::Test(string command)
     stringstream ss;
     ss << testTypeString;
     ss >> testType;
+    cout << testType << endl;
     if(testType>2){
         cout<<"no this testType, please input again!"<<endl;
         return;

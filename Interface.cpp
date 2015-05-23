@@ -61,7 +61,7 @@ void consoleInterface::ini()
     {
         cout << "user name: ";
         string userName;
-        cin >> userName;
+        getline(cin, userName);
         for (int i = 0; i < users.size(); ++i)
         {
             if (users[i]->GetName() == userName)

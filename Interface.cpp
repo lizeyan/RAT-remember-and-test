@@ -894,9 +894,18 @@ void consoleInterface::TouchUser(string command)
     {
         password += command[i];
     }
-    users.push_back(new User(userName, password, "0"));
+    User* newUser =new User(userName, password, "0"); 
+    users.push_back(newUser);
     modified = true;
     cout << "successfully touch user:" << userName << endl;
+    //
+    ofstream exist((newUser->GetName()+"/"+newUser->GetName() + ".set").c_str());
+    if (!exist)
+    {
+        system(("mkdir " + newUser->GetName()).c_str());
+    }
+    else
+        exist.close();
 }
 void consoleInterface::Switch(string command)
 {

@@ -47,7 +47,7 @@ void consoleInterface::ini()
     string tmp1;
     string tmp2;
     string tmp3;
-    while(fin >> tmp1 >> tmp2 >> tmp3)
+    while(getline(fin, tmp1) && getline(fin, tmp2) && getline(fin, tmp3))
     {
         users.push_back(new User(tmp1, tmp2, tmp3));
     }
@@ -475,6 +475,11 @@ void consoleInterface::List(string command)
 }
 void consoleInterface::RemoveUser()
 {
+    if (user->GetName() == "guest")
+    {
+        cout << "You can't remove guest user." << endl;
+        return;
+    }
     if (Login(user))
     {
         User* oldUser = user;
@@ -649,7 +654,7 @@ void consoleInterface::TestDo(Set* s, int le, int ttype)
         le = -1;
     while(1)
     {
-        op=new opera(s, le, ttype);
+        op=new opera(s, le, ttype, true);
         op->ope(cout);
         string answer;
         getline(cin,answer);
@@ -847,6 +852,11 @@ void consoleInterface::TouchSet(string command)
 void consoleInterface::TouchUser(string command)
 {
     int begin = kmp("-u", command) + 1;
+    if (begin < 1 || begin >= command.size())
+    {
+        cout << "please input user name." << endl;
+        return;
+    }
     while (command[++begin] == 32);
     string userName;
     for (int i = begin; i < command.size() && command[i] != 32; ++i)
@@ -862,7 +872,7 @@ void consoleInterface::TouchUser(string command)
         }
     }
     begin = kmp ("-p", command) + 1;
-    while (command[++begin] == 32);
+    while (command[++begin] == 32 && begin < command.size() - 1);
     string password;
     for (int i = begin; i < command.size() && command[i] != 32; ++i)
     {
@@ -905,7 +915,7 @@ bool consoleInterface::Login(User* u)
     string tmp;
     char p;
     cout << "password:";
-    cin >>tmp;
+    getline (cin, tmp);
     if (tmp == u->GetPassword())
     {
         return true;

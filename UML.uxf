@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><umlet_diagram><help_text>--
+// Uncomment the following line to change the fontsize:
+// fontsize=14
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+// Welcome to UMLet!
+//
+// Double-click on UML elements to add them to the diagram, or to copy them
+// Edit elements by modifying the text in this panel
+// Hold Ctrl to select multiple elements
+// Use Ctrl+mouse to select via lasso
+//
+// Use ± or Ctrl+mouse wheel to zoom
+// Drag a whole relation at its central square icon
+//
+// Press Ctrl+C to copy the whole diagram to the system clipboard (then just paste it to, eg, Word)
+// Edit the files in the "palettes" directory to create your own element palettes
+//
+// Select "Custom Elements &gt; New..." to create new element types
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// This text will be stored with each diagram;  use it for notes.</help_text><zoom_level>10</zoom_level><element><type>com.umlet.element.base.Class</type><coordinates><x>2120</x><y>1310</y><w>460</w><h>360</h></coordinates><panel_attributes>Entry
+--
+-phonogram: string
+-wordClass:string
+-meaningC:string
+-meaningE:string
+-example:vector&lt;string&gt;
++test:Test*
+--
+/#Output(out:ostream&amp;)/
+/#OutputEle(out:ostream&amp;)/
++Entry(phonogram:string&amp;,wordClass:string&amp;,meaningC:string&amp;,
+        meaningE:string&amp;, example:vector&lt;string&gt;&amp;)
++Entry()
+&lt;&lt;friend&gt;&gt;operator&lt;&lt; (out:ostream&amp;, e:Entry&amp;):ostream&amp;
++GetPhonogram():string
++GetWordClass():string
++GetMeaningC():string
++GetMeaningE():string
++GetExample(rank:int):string
+/~Entry()/</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2720</x><y>0</y><w>460</w><h>390</h></coordinates><panel_attributes>NounEntry
+--
+-countable:int
+-aOrAn:int
+-proper:int
+-single:int
+-completeform:string
+-abbrForm:string
+-pluralForm:string
+--
+#Output(out:ostream&amp;)
++NounEntry()
++NounEntry(phonogram:string&amp;,wordClass:string&amp;,meaningC:string&amp;,
+         meaningE:string&amp;, example:vector&lt;string&gt;&amp;, countable:int,
+         aOrAn:int,proper:int,single:int, completeForm:stirng&amp;,
+         abbForm:string&amp;, pluralForm:string&amp;)
++GetCountable():int
++GetAOrAn():int
++GetProper():int
++GetSingle():int
++GetCompleteForm():string
++GetAbbrForm():string
++GetpluralForm():string
+~NounEntry()
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2710</x><y>410</y><w>550</w><h>330</h></coordinates><panel_attributes>VerbEntry
+--
+-viOrVt:int
+-tpsForm:string
+-pastTense:vector&lt;string&gt;
+-pastParticle:vector&lt;string&gt;
+-phrase:vector&lt;string&gt;
+--
+#Output(out:ostream&amp;)
++VerbEntry()
++VerbEntry(phonogram:string&amp;,wordClass:string&amp;,meaningC:string&amp;,
+          meaningE:string&amp;, example:vector&lt;string&gt;&amp;, tpsForm:string&amp;,
+          pastTense:vector&lt;string&gt;&amp;,pastParticle:vector&lt;string&gt;&amp;,phrase:vector&lt;string&gt;&amp;)
++GetViOrVt():int
++GetPhrase(rank:int):string
++GetTpsForm():string
++GetPresentForm(rank:int):string
++GetPastForm(rank:int):string
++GetPastParticle(rank:int):string
++~VerbEntry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2720</x><y>810</y><w>430</w><h>270</h></coordinates><panel_attributes>AdjEntry
+--
+-predOrAttr:int
+-comparative:vector&lt;string&gt;
+-highest:vector&lt;string&gt;
+--
+#Output(out:ostream&amp;)
++AdjEntry()
++AdjEntry(phonogram:string&amp;,wordClass:string&amp;,meaningC:string&amp;,
+          meaningE:string&amp;, example:vector&lt;string&gt;&amp;, predOrAttr:int,
+          comparative:vector&lt;string&gt;&amp;,highest:vector&lt;string&gt;&amp;)
++GetPredOrAttr():int
++GetComparative(rank:int):string
++GetHighest(rank:int):string
++~AdjEntry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2720</x><y>1110</y><w>430</w><h>270</h></coordinates><panel_attributes>AdvEntry
+--
+-comparative:vector&lt;string&gt;
+-highest:vector&lt;string&gt;
+--
+#Output(out:ostream&amp;)
++AdvEntry()
++AdvEntry(phonogram:string&amp;,wordClass:string&amp;,meaningC:string&amp;,
+          meaningE:string&amp;, example:vector&lt;string&gt;&amp;,
+          comparative:vector&lt;string&gt;&amp;,highest:vector&lt;string&gt;&amp;)
++GetComparative(rank:int):string
++GetHighest(rank:int):string
++~AdvEntry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2710</x><y>1690</y><w>440</w><h>280</h></coordinates><panel_attributes>PronEntry
+--
+-person:int
+-single:int
+--
+#Output(out:ostream&amp;)
++PronEntry()
++Pronentry(phonogram:string&amp;,wordClass:string&amp;,meaningC:string&amp;,
+          meaningE:string&amp;, example:vector&lt;string&gt;&amp;,person:int,
+          single:int)
++GetPerson():int
++GetSingle():int
++~PronEntry</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2700</x><y>2340</y><w>440</w><h>280</h></coordinates><panel_attributes>ConjEntry
+--
+-category:string
+--
+#OutPut(out:ostream&amp;)
++ConjEntry()
++Conjentry(phonogram:string&amp;,wordClass:string&amp;,meaningC:string&amp;,
+          meaningE:string&amp;, example:vector&lt;string&gt;&amp;,category:string&amp;)
++GetCategory():string
++~ConjEntry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2710</x><y>2000</y><w>380</w><h>290</h></coordinates><panel_attributes>PerpEntry
+--
+#OutPut(out:ostream&amp;)
++PrepEntry()
++PrepEntry(phonogram:string&amp;,wordClass:string&amp;,meaningC:string&amp;,
+          meaningE:string&amp;, example:vector&lt;string&gt;&amp;)
++~Prepentry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1510</x><y>1140</y><w>510</w><h>540</h></coordinates><panel_attributes>Word
+--
+-spell:string
+-entries:vector&lt;Entry*&gt;
+-quan0:int
+-quan1:int
+-quan2:int
+-quanReview:int
+-quanSelect:int
+-haveRecited:bool
+-kill:bool
+-reciteTime:vector&lt;int*&gt;
+-reviewtime:vector&lt;int*&gt;
+-check:vector&lt;bool&gt;
+-right:int
+-wrong:int
+-reviewDay:int
+-zu:bool
+-huiHe:int
+--
+&lt;&lt;friend&gt;&gt;operator&lt;&lt;(out:ostraem&amp;, w:Word&amp;)
++GetSpell():string
++GetEntry(rank:int):Entry*
++GetHaveRecited():bool
++GetQuanSelect():int
++QuanChange0()
++QuanChange1()
++QuanChange2()
++Familiar():bool
++sort():string
+&lt;&lt;friend&gt;&gt;search(m:Set*, type:int)
+&lt;&lt;friend&gt;&gt;searchEntry(m:Word*m num:int,type:int):int*
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>810</x><y>1410</y><w>610</w><h>350</h></coordinates><panel_attributes>Dictionary
+--
+-words:vector&lt;Word&gt;
+-instance:Dictionary*
+--
+-getNext(a:int*, w:string)
+-kmp(a:string, b:string)
+-Dictionary()
+-Dictionary(d:const Dictionary&amp;)
+-operator=(w:const dictionary&amp;):Dicitonary&amp;
+&lt;&lt;friend&gt;&gt;operator&lt;&lt;(out:ostream&amp;,dic:Dictionary&amp;):ostream&amp;
++GetInstance():Dictionary*
++FindwordFuzzy(s:string,result:vector&lt;Word*&gt;):bool
++Findword(s:string):int
++operator[](rank:int):word&amp;
++Insert(w:Word&amp;):int
++WordExist(s:string):bool
++GetSize():int
++ReadAndAdd(fin:istream&amp;)
++Read(fin:istream&amp;)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>490</x><y>920</y><w>440</w><h>270</h></coordinates><panel_attributes>User
+--
+-name:string
+-password:string
+-level:int
+-wordsSets:vector&lt;Set*&gt;
+--
++FindSet(name:string):int
++GetName():string
++GetPassWord():string
++User(n:string,p:string,l:string)
++GetSet(rank:int):Set*
++GetSize():int
++InsertSet(s:Set&amp;):int
++GetLevel():int
++LevelUp()
++RemoveSet(pos:int)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1030</x><y>900</y><w>310</w><h>390</h></coordinates><panel_attributes>Set
+--
+-setName:string
+-words:vector&lt;Word*&gt;
+-recited:vector&lt;Word*&gt;
+-useDay:int
+-beginDay:int
+--
+&lt;&lt;friend&gt;&gt;operator&lt;&lt;(out:ostream&amp;, s:Set&amp;)
++GetName():string
++Find(tar:string):int
++oerator[](rank:int):Word&amp;
++Insert(tar:Word&amp;):int
++WordExist(s:string):bool
++ReadAndAdd(fin:istream&amp;)
++Read(fin:istream&amp;)
++GetSize():int
++GetRecited():int
++GetWord(rank:int):Word*
++GetUseDay():int
++GetBeginDay():int
++Set()
++Set(n:string)
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1660</x><y>1800</y><w>250</w><h>90</h></coordinates><panel_attributes>WordFactory
+--
+#typeChoose(s:string&amp;):EntryFactory*
++create(s:vector&lt;string&gt;):Word*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3050</x><y>1500</y><w>220</w><h>60</h></coordinates><panel_attributes>EntryFactor
+--
+/+create(s:vector&lt;string&gt;&amp;):Entry*/
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3310</x><y>130</y><w>210</w><h>50</h></coordinates><panel_attributes>NounEntry
+--
++create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3370</x><y>580</y><w>210</w><h>50</h></coordinates><panel_attributes>VerbEntry
+--
++create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3380</x><y>910</y><w>210</w><h>50</h></coordinates><panel_attributes>AdjEntry
+--
++create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3370</x><y>1200</y><w>210</w><h>50</h></coordinates><panel_attributes>AdvEntry
+--
++create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3400</x><y>1790</y><w>210</w><h>50</h></coordinates><panel_attributes>PromEntry
+--
++create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3410</x><y>2440</y><w>210</w><h>50</h></coordinates><panel_attributes>ConjEntry
+--
++create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3410</x><y>2080</y><w>210</w><h>50</h></coordinates><panel_attributes>PrepEntry
+--
++create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>0</x><y>980</y><w>460</w><h>140</h></coordinates><panel_attributes>InterFace
+--
+-user:User*
+-users:vector&lt;User*&gt;
+-dic:Dictionary*
+--
+/+ini()/
+/+operate()/
++kmp(a:stirng,b:string)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>0</x><y>1220</y><w>460</w><h>700</h></coordinates><panel_attributes>consoleInterface
+--
+-instance:consoleInterface*
+-op:opera*
+-mode:int
+-pos:int
+-level:int
+-testType:int
+-modeified:bool
+--
+-consoleInterface()
+#List(c:string)
+#RemoveSet(c:string)
+#RemoveUser()
+#IsLetter(c:char):bool
+#Pass(type:int):bool
+#FamiliarWord(s:string,set:Set*):bool
+#AnalyseFile(fin:ifstream&amp;,res:Set*)
+#Exam()
+#Save()
+#Login(user:User*)
+#Switch(tar:string)
+#Exit()
+#Info()
+#TouchSet(name:string)
+#TouchUser(name:string)
+#FindWordFuzzy(name:string)
+#Test(c:string)
+#FindWordExact(c:string)
+#FindSimilarWord(c:string)
+#TestDo()
+#TestDo(set:Set*, l:int,t:int)
+#AddWord(c:string)
+#AddFile(c:string)
+#outHelp()
+#outVersion()
+#quiryModeAnalyse(c:string)
+#normalanalyse(c:string)
+#Recite(c:string)
++GetInstance()consoleInterface*
++ini()
++operate()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2550</x><y>180</y><w>190</w><h>1150</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>170;30;30;1130</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2550</x><y>1580</y><w>180</w><h>210</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>160;190;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2550</x><y>1190</y><w>190</w><h>260</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>170;30;30;240</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2550</x><y>910</y><w>190</w><h>520</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>170;30;30;500</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2550</x><y>570</y><w>180</w><h>830</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>160;30;30;810</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2550</x><y>1610</y><w>180</w><h>480</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>160;460;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2550</x><y>1640</y><w>170</w><h>810</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>150;790;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2550</x><y>1470</y><w>520</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+friend
+</panel_attributes><additional_attributes>30;50;500;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3150</x><y>110</y><w>180</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+friend
+</panel_attributes><additional_attributes>30;50;160;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3230</x><y>550</y><w>160</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+friend
+</panel_attributes><additional_attributes>30;50;140;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3120</x><y>890</y><w>280</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+friend
+</panel_attributes><additional_attributes>30;50;260;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3120</x><y>1190</y><w>270</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+friend
+</panel_attributes><additional_attributes>30;50;250;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3120</x><y>1760</y><w>300</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+friend
+</panel_attributes><additional_attributes>30;50;280;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3060</x><y>2070</y><w>370</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+friend
+</panel_attributes><additional_attributes>30;50;350;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3110</x><y>2420</y><w>320</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+friend
+</panel_attributes><additional_attributes>30;50;300;50</additional_attributes></element></umlet_diagram>

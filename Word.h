@@ -12,7 +12,6 @@ private:
     friend class WordFactory;
     std::string spell;
     std::vector<Entry*> entries;
-    Remember* remember;
     int quan0;//三种测试方法的抽签权重
     int quan1;
     int quan2;

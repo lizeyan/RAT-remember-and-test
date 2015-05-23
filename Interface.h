@@ -10,6 +10,9 @@ class Set;
 class Interface
 {
 public:
+    User* user;
+    Dictionary* dic;
+    std::vector<User*> users;
     virtual void operation() = 0;
     virtual void ini() = 0;
     int kmp(std::string a, std::string b);
@@ -17,9 +20,9 @@ public:
 class consoleInterface: public Interface
 {
     static consoleInterface* instance;
-    Dictionary* dic;
-    std::vector<User*> users;
-    User* user;
+    using Interface::dic;
+    using Interface::users;
+    using Interface::user;
     opera* op;
     int mode;
     int pos;
@@ -60,10 +63,5 @@ public:
     static consoleInterface* GetInstance();
     void operation();
     void ini();
-};
-struct operate
-{
-    std::string type;
-    std::string object;
 };
 #endif

@@ -16,7 +16,7 @@ Dictionary* Dictionary::GetInstance ()
         instance = new Dictionary;
     return instance;
 }
-int Dictionary::FindWord(string targetWord) const
+int Dictionary::FindWordExact(string targetWord) const
 {
     int lo = 0, hi = words.size();
     while (lo < hi)
@@ -25,6 +25,37 @@ int Dictionary::FindWord(string targetWord) const
         (targetWord < words[mi].GetSpell())? hi = mi: lo = mi + 1;
     }
     return --lo;
+}
+int Dictionary::FindWord(string targetWord) const
+{
+    int pos;
+    if (targetWord[targetWord.size() - 1] == 's')
+    {
+        pos = FindWordExact(targetWord.erase(targetWord.size() - 1, 1));
+        if (pos >= 0 && pos < words.size())
+            return pos;
+    }
+    else if (targetWord.substr(targetWord.size() - 2, 2) == "es"
+            || targetWord.substr(targetWord.size() - 2, 2) == "ed")
+    {
+        pos = FindWordExact(targetWord.erase(targetWord.size() - 2, 2));
+        if (pos >= 0 && pos < words.size())
+            return pos;
+    }
+    else if (targetWord.substr(targetWord.size() - 3, 3) == "ing")
+    {
+        if (targetWord[targetWord.size() - 4] == targetWord[targetWord.size() - 5])
+        {
+            pos = FindWordExact(targetWord.erase(targetWord.size() - 4, 4));
+        }
+        else
+        {
+            pos = FindWordExact(targetWord.erase(targetWord.size() - 3, 3)); 
+        }
+        if (pos >= 0 && pos < words.size())
+            return pos;
+    }
+    return FindWordExact(targetWord);
 }
 bool Dictionary::WordExist(string targetWord)
 {

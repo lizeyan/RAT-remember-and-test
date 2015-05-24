@@ -81,7 +81,7 @@ void consoleInterface::load()
     string s="";
     s+=user->GetName();
     s+="/source.txt";
-    ifstream fin(s);
+    ifstream fin(s.c_str());
     if(fin){
         string ans="";
         getline(fin, ans);
@@ -1196,7 +1196,7 @@ void consoleInterface::output(){
     string s="";
     s+=user->GetName();
     s+="/source.txt";
-    ofstream fout(s);
+    ofstream fout(s.c_str());
     for(int i=0; i<user->GetSize(); i++){
         fout<<user->GetSet(i)->GetName()<<' '<<user->GetSet(i)->GetUseDay()<<' '<<user->GetSet(i)->GetBeginDay()<<endl;
     }

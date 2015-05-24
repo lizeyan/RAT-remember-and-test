@@ -21,10 +21,11 @@ class Dictionary
 private:
     std::vector<Word> words;
     static Dictionary* instance;
-public:
+protected:
     friend class Interface;
     void getNext(int*, std::string);
     int kmp(std::string, std::string);
+    int FindWordExact(std::string) const;
     Dictionary ();
     Dictionary (const Dictionary&);
     Dictionary& operator=(const Dictionary&);

@@ -60,6 +60,9 @@ Word* WordFactory::create(vector<string>& source)
     result->quan0=result->EntrySize();
     result->quan1=result->EntrySize();
     result->quan2=result->EntrySize();
+    result->wrong=0;
+    result->right=0;
+    result->reviewDay=0;
     result->haveRecited=false;
     //remember = new remember;
     result->quanReview=1;

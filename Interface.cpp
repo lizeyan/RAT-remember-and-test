@@ -35,9 +35,9 @@ int Interface::kmp(string a, string b)
 void consoleInterface::ini()
 {
     string source = "StandardSource.txt";
-    #ifdef _WIN32
+#ifdef _WIN32
     source = "StandardSourceWin.txt";
-    #endif
+#endif
     srand((unsigned int)time(NULL));
     int beginTime = clock();
     cout << "loading......" << endl;
@@ -74,6 +74,205 @@ void consoleInterface::ini()
     }
     while (!Login(cuser));
     user = cuser;
+    load();
+}
+void consoleInterface::load()
+{
+    string s="";
+    s+=user->GetName();
+    s+="/source.txt";
+    ifstream fin(s);
+    if(fin){
+        string ans="";
+        getline(fin, ans);
+        while(ans!="*"){
+            string lin[3];
+            int i;
+            for(i=0; ; i++){
+                if(ans[i]!=' '){
+                    lin[0]+=ans[i];
+                }else{
+                    break;
+                }
+            }
+            int num=1;
+            i++;
+            for(;i<ans.size(); i++){
+                if(ans[i]==' '){
+                    num++;
+                    continue;
+                }else{
+                    lin[num]+=ans[i];
+                }
+            }
+            int po=user->FindSet(lin[0]);
+            Set* set=user->GetSet(po);
+            set->useDay=atoi(lin[1].c_str());
+            set->beginDay=atoi(lin[2].c_str());
+            getline(fin, ans);
+        }//set的两个数据都读进来了
+        for(int i=0; i<dic->GetSize(); i++){
+            string haved="";
+            getline(fin,haved);
+            if(haved=="0"){
+                getline(fin,haved);
+                continue;
+            }
+            string lin1[12];
+            int num=0;
+            getline(fin, ans);
+            for(int j=0; j<ans.size(); j++){
+                if(ans[j]==' '){
+                    num++;
+                    continue;
+                }else{
+                    lin1[num]+=ans[j];
+                }
+            }
+            Test::staticRightNum0=atoi(lin1[0].c_str());
+            Test::staticRightNum1=atoi(lin1[1].c_str());
+            Test::staticRightNum2=atoi(lin1[2].c_str());
+            Test::staticWrongNum0=atoi(lin1[3].c_str());
+            Test::staticWrongNum1=atoi(lin1[4].c_str());
+            Test::staticWrongNum2=atoi(lin1[5].c_str());
+            Test::rightRate0=atoi(lin1[6].c_str());
+            Test::rightRate1=atoi(lin1[7].c_str());
+            Test::rightRate2=atoi(lin1[8].c_str());//各种正确率读进来
+            
+            string lin2[14];
+            num=0;
+            getline(fin, ans);
+            for(int j=0; j<ans.size(); j++){
+                if(ans[j]==' '){
+                    num++;
+                    continue;
+                }else{
+                    lin2[num]+=ans[j];
+                }
+            }
+            (*dic)[i].quan0=atoi(lin2[0].c_str());
+            (*dic)[i].quan1=atoi(lin2[1].c_str());
+            (*dic)[i].quan2=atoi(lin2[2].c_str());
+            (*dic)[i].quanReview=atoi(lin2[3].c_str());
+            (*dic)[i].quanSelect=atoi(lin2[4].c_str());
+            (*dic)[i].haveRecited=atoi(lin2[5].c_str());
+            (*dic)[i].kill=atoi(lin2[6].c_str());
+            (*dic)[i].right=atoi(lin2[7].c_str());
+            (*dic)[i].wrong=atoi(lin2[8].c_str());
+            (*dic)[i].reviewDay=atoi(lin2[9].c_str());
+            (*dic)[i].zu=atoi(lin2[10].c_str());
+            (*dic)[i].huiHe=atoi(lin2[11].c_str());
+            
+            getline(fin, ans);
+            int size=0;
+            string number;
+            int j;
+            for(j=0; j<ans.size(); j++){
+                if(ans[j]==' '){
+                    break;
+                }else{
+                    number+=ans[j];
+                }
+            }
+            size=atoi(number.c_str());
+            string lin3[2000];
+            num=0;
+            for(; j<ans.size(); j++){
+                if(ans[j]==' '){
+                    num++;
+                    continue;
+                }else{
+                    lin3[num]+=ans[j];
+                }
+            }
+            (*dic)[i].reciteTime.clear();
+            int nu=-1;
+            for(int k=0; k<num; k++){
+                if(k%4==0){
+                    vector<int> linshi;
+                    for(int l=0; l<5; l++) linshi.push_back(1);
+                    (*dic)[i].reciteTime.push_back(linshi);
+                    nu++;
+                }
+                (*dic)[i].reciteTime[nu][k%4]=atoi(lin3[k].c_str());
+            }
+            
+            getline(fin, ans);
+            size=0;
+            number="";
+            for(j=0; j<ans.size(); j++){
+                if(ans[j]==' '){
+                    break;
+                }else{
+                    number+=ans[j];
+                }
+            }
+            size=atoi(number.c_str());
+            string lin4[2000];
+            num=0;
+            for(; j<ans.size(); j++){
+                if(ans[j]==' '){
+                    num++;
+                    continue;
+                }else{
+                    lin4[num]+=ans[j];
+                }
+            }
+            nu=-1;
+            (*dic)[i].reviewTime.clear();
+            for(int k=0; k<num; k++){
+                if(k%4==0 ){
+                    vector<int> linshi;
+                    for(int l=0; l<5; l++) linshi.push_back(1);
+                    (*dic)[i].reviewTime.push_back(linshi);
+                    nu++;
+                }
+                (*dic)[i].reviewTime[nu][k%4]=atoi(lin4[k].c_str());
+            }
+            
+            getline(fin,ans);
+            string lin5[2500];
+            num=0;
+            for(int j=0; j<ans.size(); j++){
+                if(ans[j]==' '){
+                    num++;
+                    continue;
+                }else{
+                    lin5[num]+=ans[j];
+                }
+            }
+            (*dic)[i].check.clear();
+            for(int k=1; k<=atoi(lin5[0].c_str()); k++){
+                int linshi=atoi(lin5[k].c_str());
+                (*dic)[i].check.push_back(linshi);
+            }
+            
+            for(int k=0; k<(*dic)[i].EntrySize(); k++){
+                getline(fin,ans);
+                string lin6[12];
+                num=0;
+                for(int q=0; q<ans.size(); q++){
+                    if(ans[q]==' '){
+                        num++;
+                        continue;
+                    }else{
+                        lin6[num]+=ans[q];
+                    }
+                }
+                (*dic)[i].GetEntry(k)->test->rightNum0=atoi(lin6[0].c_str());
+                (*dic)[i].GetEntry(k)->test->rightNum1=atoi(lin6[1].c_str());
+                (*dic)[i].GetEntry(k)->test->rightNum2=atoi(lin6[2].c_str());
+                (*dic)[i].GetEntry(k)->test->wrongNum0=atoi(lin6[3].c_str());
+                (*dic)[i].GetEntry(k)->test->wrongNum1=atoi(lin6[4].c_str());
+                (*dic)[i].GetEntry(k)->test->wrongNum2=atoi(lin6[5].c_str());
+                (*dic)[i].GetEntry(k)->test->quan0=atoi(lin6[6].c_str());
+                (*dic)[i].GetEntry(k)->test->quan1=atoi(lin6[7].c_str());
+                (*dic)[i].GetEntry(k)->test->quan2=atoi(lin6[8].c_str());
+            }
+            
+            getline(fin, ans);
+        }
+    }
 }
 void consoleInterface::operation()
 {
@@ -284,7 +483,7 @@ void consoleInterface::Save()
             for (int i = 0; i < users.size(); ++i)
             {
                 fout << users[i]->GetName() << endl << users[i]->GetPassword()
-                            << endl << users[i]->GetLevel();
+                << endl << users[i]->GetLevel();
                 if (!(i == users.size() - 1))
                     fout << endl;
             }
@@ -318,6 +517,7 @@ void consoleInterface::Save()
                     if (j != user->GetSet(i)->GetSize() - 1)
                         fout << endl;
                 }
+                output();
                 fout.close();
             }
             cout << "saved" << endl;
@@ -562,6 +762,7 @@ void consoleInterface::Recite(std::string command)
     }
     else
     {
+        modified=true;
         cout<<"In recite word mode, if you want to kill a word , if you want to quit,press q"<<endl;
         cout<<"In review word mode, press Enter to go on reviewing, press q to exit"<<endl;
         recite* Recite = new recite(user->GetSet(linpos));
@@ -641,6 +842,7 @@ void consoleInterface::Test(string command)
 }
 void consoleInterface::TestDo()
 {
+    modified=true;
     while(1)
     {
         op=new opera(user->GetSet(pos), level, testType, true);
@@ -666,6 +868,7 @@ void consoleInterface::TestDo()
 }
 void consoleInterface::TestDo(Set* s, int le, int ttype)
 {
+    modified=true;
     if (ttype == 2)
         le = -1;
     while(1)
@@ -894,7 +1097,7 @@ void consoleInterface::TouchUser(string command)
     {
         password += command[i];
     }
-    User* newUser =new User(userName, password, "0"); 
+    User* newUser =new User(userName, password, "0");
     users.push_back(newUser);
     modified = true;
     cout << "successfully touch user:" << userName << endl;
@@ -988,4 +1191,70 @@ void consoleInterface::outVersion()
     cout << "RAT remember and test 0.1" << endl
     << "Author: Li Zeyan	Lv Xin" << endl;
     cout << "------------------------------------------------------------------------------" << endl;
+}
+void consoleInterface::output(){
+    string s="";
+    s+=user->GetName();
+    s+="/source.txt";
+    ofstream fout(s);
+    for(int i=0; i<user->GetSize(); i++){
+        fout<<user->GetSet(i)->GetName()<<' '<<user->GetSet(i)->GetUseDay()<<' '<<user->GetSet(i)->GetBeginDay()<<endl;
+    }
+    fout<<"*"<<endl;
+    for(int i=0; i<dic->GetSize(); i++){
+        fout<<(*dic)[i].haveRecited<<endl;
+        if(!(*dic)[i].haveRecited){
+            fout<<"*"<<endl;
+            continue;
+        }
+        
+        fout<<(*dic)[i].GetEntry(0)->test->staticRightNum0<<' '
+        <<(*dic)[i].GetEntry(0)->test->staticRightNum1<<' '
+        <<(*dic)[i].GetEntry(0)->test->staticRightNum2<<' '
+        <<(*dic)[i].GetEntry(0)->test->staticWrongNum0<<' '
+        <<(*dic)[i].GetEntry(0)->test->staticWrongNum1<<' '
+        <<(*dic)[i].GetEntry(0)->test->staticWrongNum2<<' '
+        <<(*dic)[i].GetEntry(0)->test->rightRate0<<' '
+        <<(*dic)[i].GetEntry(0)->test->rightRate1<<' '
+        <<(*dic)[i].GetEntry(0)->test->rightRate2<<endl;//一行.............
+        
+        fout<<(*dic)[i].quan0<<' '<<(*dic)[i].quan1<<' '<<(*dic)[i].quan2<<' '
+        <<(*dic)[i].quanReview<<' '<<(*dic)[i].quanSelect<<' '
+        <<(*dic)[i].haveRecited<<' '<<(*dic)[i].kill<<' '
+        <<(*dic)[i].right<<' '<<(*dic)[i].wrong<<' '<<(*dic)[i].reviewDay<<' '
+        <<(*dic)[i].zu<<' '<<(*dic)[i].huiHe<<endl;//一行..............
+        fout<<(*dic)[i].reciteTime.size()<<' ';
+        for(int k=0; k<(*dic)[i].reciteTime.size(); k++){
+            for(int j=0; j<4; j++){
+                fout<<(*dic)[i].reciteTime[k][j]<<' ';
+            }
+        }
+        fout<<endl;//一行............
+        fout<<(*dic)[i].reviewTime.size()<<' ';
+        for(int k=0; k<(*dic)[i].reviewTime.size(); k++){
+            for(int j=0; j<4; j++){
+                fout<<(*dic)[i].reviewTime[k][j]<<' ';
+            }
+        }
+        fout<<endl;//一行............
+        fout<<(*dic)[i].check.size()<<' ';
+        for(int j=0; j<(*dic)[i].check.size(); j++){
+            fout<<(*dic)[i].check[j]<<' ';
+        }
+        fout<<endl;//一行............
+        
+        for(int j=0; j<(*dic)[i].EntrySize(); j++){
+            fout<<(*dic)[i].GetEntry(j)->test->rightNum0<<' '
+            <<(*dic)[i].GetEntry(j)->test->rightNum1<<' '
+            <<(*dic)[i].GetEntry(j)->test->rightNum2<<' '
+            <<(*dic)[i].GetEntry(j)->test->wrongNum0<<' '
+            <<(*dic)[i].GetEntry(j)->test->wrongNum1<<' '
+            <<(*dic)[i].GetEntry(j)->test->wrongNum2<<' '
+            <<(*dic)[i].GetEntry(j)->test->quan0<<' '
+            <<(*dic)[i].GetEntry(j)->test->quan1<<' '
+            <<(*dic)[i].GetEntry(j)->test->quan2<<endl;
+        }
+        fout<<"*"<<endl;//一行............
+    }
+    fout.close();
 }

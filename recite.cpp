@@ -11,14 +11,12 @@ recite::recite(Set* m): set(m){
     char tmp[5];
     strftime( tmp, sizeof(tmp), "%j",localtime(&t) );
     today=atoi(tmp);
-    std::cout<<m->GetUseDay()<<' '<<today<<' '<<m->GetBeginDay()<<std::endl;
     int dayleft=m->GetUseDay()-today+m->GetBeginDay();
     if(dayleft==0){
         exit(-1);
     }
     int wordleft=m->GetSize()-m->GetRecitedSize();
     reciteToday=wordleft/dayleft;
-    std::cout<<reciteToday<<std::endl;
     reviewToday=std::min(m->GetRecitedSize(), reciteToday);
     std::vector<Word*> lin;
     for(int i=0; i<m->GetSize(); i++){
@@ -85,7 +83,9 @@ void recite::DoRecite(Word* m, std::ostream& osout, std::istream& input){
         ss+=ttp[i];
     }
     lin[3]=atoi(ss.c_str());
-    m->reciteTime.push_back(lin);
+    std::vector<int> linshi;
+    for(int k=0; k<4; k++) linshi.push_back(lin[k]);
+    m->reciteTime.push_back(linshi);
 }
 void recite::DoReview(Word* m, std::ostream& osout, std::istream& input, int huihe){
     m->huiHe=huihe;
@@ -147,11 +147,12 @@ void recite::DoReview(Word* m, std::ostream& osout, std::istream& input, int hui
         ss+=ttp[i];
     }
     lin[3]=atoi(ss.c_str());
-    m->reviewTime.push_back(lin);
+    std::vector<int> linshi;
+    for(int k=0; k<4; k++) linshi.push_back(lin[k]);
+    m->reviewTime.push_back(linshi);
 }
 void recite::ReciteControl(std::ostream& osout, std::istream& input){
     int huihe=0;
-    std::cout<<reciteWord.size()<<std::endl;
     while(reviewWord.size()!=0||reciteWord.size()!=0){
         int upper=ReciteThisTime();
         reciteThis.clear();

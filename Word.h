@@ -4,7 +4,6 @@
 #include "Entry.h"
 #include <string>
 #include <vector>
-class Remember;
 class Set;
 class Word
 {
@@ -24,8 +23,8 @@ private:
     int reviewDay;//复习过的天数
     bool zu;//分小组背诵时权重的分配；
     int huiHe;//背诵时回合的变量
-    std::vector<int*> reciteTime;//上次背诵的日期，用这一年的第几天表示,虽然就背过一次
-    std::vector<int*> reviewTime;//上次复习的日期
+    std::vector<std::vector<int>> reciteTime;//上次背诵的日期，用这一年的第几天表示,虽然就背过一次
+    std::vector<std::vector<int>> reviewTime;//上次复习的日期
     std::vector<bool> check;//统计最近十次的正确情况
 public:
     friend std::ostream& operator<< (std::ostream&, Word&);

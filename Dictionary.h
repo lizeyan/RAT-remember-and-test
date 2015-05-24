@@ -21,6 +21,7 @@ class Dictionary
 private:
     std::vector<Word> words;
     static Dictionary* instance;
+public:
     friend class Interface;
     void getNext(int*, std::string);
     int kmp(std::string, std::string);

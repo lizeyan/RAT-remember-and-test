@@ -44,5 +44,6 @@ public:
         useDay=120;
     }
     friend class recite;
+    friend class consoleInterface;
 };
 #endif

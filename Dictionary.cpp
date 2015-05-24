@@ -2,6 +2,8 @@
 #include "Dictionary.h"
 #include "Factory.h"
 #include "Set.h"
+#include "Word.h"
+#include <algorithm>
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
@@ -29,28 +31,47 @@ int Dictionary::FindWordExact(string targetWord) const
 int Dictionary::FindWord(string targetWord) const
 {
     int pos;
-    if (targetWord[targetWord.size() - 1] == 's')
+    string tmp;
+    if (targetWord.size() > 1 && targetWord[targetWord.size() - 1] == 's')
     {
-        pos = FindWordExact(targetWord.erase(targetWord.size() - 1, 1));
+        tmp = targetWord;
+        pos = FindWordExact(tmp.erase(tmp.size() - 1, 1));
         if (pos >= 0 && pos < words.size())
             return pos;
     }
-    else if (targetWord.substr(targetWord.size() - 2, 2) == "es"
-            || targetWord.substr(targetWord.size() - 2, 2) == "ed")
+    else if (targetWord.size() > 2 && targetWord.substr(targetWord.size() - 2, 2) == "es")
     {
-        pos = FindWordExact(targetWord.erase(targetWord.size() - 2, 2));
+        tmp = targetWord;
+        pos = FindWordExact(tmp.erase(tmp.size() - 2, 2));
         if (pos >= 0 && pos < words.size())
             return pos;
     }
-    else if (targetWord.substr(targetWord.size() - 3, 3) == "ing")
+    else if (targetWord.size() > 2 && targetWord.substr(targetWord.size() - 2, 2) == "ed")
     {
-        if (targetWord[targetWord.size() - 4] == targetWord[targetWord.size() - 5])
+        if (targetWord.size() > 4 && targetWord[targetWord.size() - 3] == targetWord[targetWord.size() - 4])
         {
-            pos = FindWordExact(targetWord.erase(targetWord.size() - 4, 4));
+            tmp = targetWord;
+            pos = FindWordExact(tmp.erase(tmp.size() - 3, 3));
         }
         else
         {
-            pos = FindWordExact(targetWord.erase(targetWord.size() - 3, 3)); 
+            tmp = targetWord;
+            pos = FindWordExact(tmp.erase(tmp.size() - 2, 2)); 
+        }
+        if (pos >= 0 && pos < words.size())
+            return pos;
+    }
+    else if (targetWord.size() > 3 && targetWord.substr(targetWord.size() - 3, 3) == "ing")
+    {
+        if (targetWord.size() >4 && targetWord[targetWord.size() - 4] == targetWord[targetWord.size() - 5])
+        {
+            tmp = targetWord;
+            pos = FindWordExact(tmp.erase(tmp.size() - 4, 4));
+        }
+        else
+        {
+            tmp = targetWord;
+            pos = FindWordExact(tmp.erase(tmp.size() - 3, 3)); 
         }
         if (pos >= 0 && pos < words.size())
             return pos;
@@ -62,7 +83,20 @@ bool Dictionary::WordExist(string targetWord)
     int pos = FindWord (targetWord);
     if (pos < 0 || pos >= words.size())
         return false;
-    return words[pos].GetSpell() == targetWord;
+    if (targetWord == words[pos].GetSpell())
+        return true;
+    string diff = "false";
+    for (int i = 0; i <targetWord.size() ;++i)
+    {
+        if (targetWord[i] != words[pos].GetSpell()[i] && i >= words[pos].GetSpell().size() - 1)
+        {
+            diff = targetWord.substr(i, targetWord.size() - i);
+            if (diff[0] == targetWord[i - 1])
+                diff = diff.substr(1, diff.size() - 1);
+            break;
+        }
+    }
+    return diff == "" || diff == "ing" || diff == "es" || diff == "s" || diff == "ed";
 }
 Word& Dictionary::operator[](int rank)
 {
@@ -73,6 +107,10 @@ int Dictionary::Insert(Word& targetWord)
     int pos = FindWord(targetWord.GetSpell());
     words.insert(words.begin() + pos + 1, targetWord);
     return pos;
+}
+void Dictionary::Sort()
+{
+    sort (words.begin(), words.end());
 }
 void Dictionary::ReadAndAdd (std::istream& load)
 {

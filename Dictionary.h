@@ -40,5 +40,6 @@ public:
     int GetSize() {return words.size();}
     void ReadAndAdd (std::istream& load);
     void Read (std::istream& load);
+    void Sort();
 };
 #endif

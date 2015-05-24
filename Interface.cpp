@@ -43,6 +43,7 @@ void consoleInterface::ini()
     cout << "loading......" << endl;
     ifstream fin(source.c_str());
     dic->Read (fin);
+    dic->Sort();
     fin.close();
     fin.open("RAT.ini");
     string tmp1;

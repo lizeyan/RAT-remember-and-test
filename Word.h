@@ -27,6 +27,7 @@ private:
     std::vector<std::vector<int> > reviewTime;//上次复习的日期
     std::vector<bool> check;//统计最近十次的正确情况
 public:
+    bool operator < (const Word& a) {return this->spell < a.GetSpell();}
     friend std::ostream& operator<< (std::ostream&, Word&);
     std::string GetSpell()	const	{return spell;}
     Word ();

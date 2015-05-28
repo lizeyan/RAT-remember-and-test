@@ -20,6 +20,7 @@ protected:
     void OutputEle(std::ostream&) const;
     
 public:
+    virtual bool Match(std::string&) const = 0;
     Entry (std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&);
     Entry ();
     friend std::ostream& operator << (std::ostream&, const Entry&);
@@ -45,6 +46,7 @@ private:
 protected:
     void Output(std::ostream&) const;
 public:
+    bool Match(std::string&) const;
     NounEntry ();
     NounEntry (std::string&, std::string&, std::string&, std::string&,
                std::vector<std::string>&,
@@ -70,6 +72,7 @@ private:
 protected:
     void Output(std::ostream&) const;
 public:
+    bool Match(std::string&) const;
     VerbEntry ();
     VerbEntry (std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&,
                int, std::string&, std::vector<std::string>&, std::vector<std::string>&,
@@ -91,6 +94,7 @@ private:
 protected:
     void Output(std::ostream&) const;
 public:
+    bool Match(std::string&) const;
     AdjEntry();
     AdjEntry(std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&,
              int, std::vector<std::string>&, std::vector<std::string>&);
@@ -107,6 +111,7 @@ private:
 protected:
     void Output(std::ostream&) const;
 public:
+    bool Match(std::string&) const;
     AdvEntry();
     AdvEntry (std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&,
               std::vector<std::string>&, std::vector<std::string>&);
@@ -122,11 +127,12 @@ private:
 protected:
     void Output(std::ostream&) const;
 public:
+    bool Match(std::string&) const;
     PronEntry();
     PronEntry (std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&,
                int ,int);
-    int GetPerson()	const{return person;}
-    int GetSingle() const{return single;}
+    int GetPerson()     const{return person;}
+    int GetSingle()     const{return single;}
     ~PronEntry() {}
 };
 class ConjEntry:public Entry
@@ -136,6 +142,7 @@ private:
 protected:
     void Output(std::ostream&) const;
 public:
+    bool Match(std::string&) const;
     ConjEntry();
     ConjEntry (std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&, std::string&);
     std::string GetCategory()	const {return category;}
@@ -147,6 +154,7 @@ class PrepEntry:public Entry
 protected:
     void Output (std::ostream&) const;
 public:
+    bool Match(std::string&) const;
     PrepEntry ();
     PrepEntry (std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&);
     ~PrepEntry() {}

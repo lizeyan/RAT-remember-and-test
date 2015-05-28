@@ -28,59 +28,30 @@ int Dictionary::FindWordExact(string targetWord) const
     }
     return --lo;
 }
-int Dictionary::FindWord(string targetWord) const
+int Dictionary::FindWord(string targetWord, bool insert) const
 {
-    int pos;
-    string tmp;
-    if (targetWord.size() > 1 && targetWord[targetWord.size() - 1] == 's')
+    //exact search
+    int x = FindWordExact(targetWord);
+    //when we are trying to insert a word, 
+    //  we also need the postion even it is illegal.
+    if ((x >= 0 && x < words.size()) || insert == 1)
+        return x;
+    //other forms
+    for (int i = 0; i < words.size(); ++i)
     {
-        tmp = targetWord;
-        pos = FindWordExact(tmp.erase(tmp.size() - 1, 1));
-        if (pos >= 0 && pos < words.size())
-            return pos;
-    }
-    else if (targetWord.size() > 2 && targetWord.substr(targetWord.size() - 2, 2) == "es")
-    {
-        tmp = targetWord;
-        pos = FindWordExact(tmp.erase(tmp.size() - 2, 2));
-        if (pos >= 0 && pos < words.size())
-            return pos;
-    }
-    else if (targetWord.size() > 2 && targetWord.substr(targetWord.size() - 2, 2) == "ed")
-    {
-        if (targetWord.size() > 4 && targetWord[targetWord.size() - 3] == targetWord[targetWord.size() - 4])
+        for (int j = 0 ; j < words[i].EntrySize(); ++j)
         {
-            tmp = targetWord;
-            pos = FindWordExact(tmp.erase(tmp.size() - 3, 3));
-        }
-        else
-        {
-            tmp = targetWord;
-            pos = FindWordExact(tmp.erase(tmp.size() - 2, 2)); 
-        }
-        if (pos >= 0 && pos < words.size())
-            return pos;
-    }
-    else if (targetWord.size() > 3 && targetWord.substr(targetWord.size() - 3, 3) == "ing")
-    {
-        if (targetWord.size() >4 && targetWord[targetWord.size() - 4] == targetWord[targetWord.size() - 5])
-        {
-            tmp = targetWord;
-            pos = FindWordExact(tmp.erase(tmp.size() - 4, 4));
-        }
-        else
-        {
-            tmp = targetWord;
-            pos = FindWordExact(tmp.erase(tmp.size() - 3, 3)); 
-        }
-        if (pos >= 0 && pos < words.size())
-            return pos;
-    }
-    return FindWordExact(targetWord);
+            if (words[i].GetEntry(j)->Match(targetWord))
+            {
+                return i;
+            }
+        }//end entry
+    }//end worrd
+    return -1;
 }
-bool Dictionary::WordExist(string targetWord)
+bool Dictionary::WordExist(string targetWord, bool insert)
 {
-    int pos = FindWord (targetWord);
+    int pos = FindWord (targetWord, insert);
     if (pos < 0 || pos >= words.size())
         return false;
     if (targetWord == words[pos].GetSpell())
@@ -104,7 +75,7 @@ Word& Dictionary::operator[](int rank)
 }
 int Dictionary::Insert(Word& targetWord)
 {
-    int pos = FindWord(targetWord.GetSpell());
+    int pos = FindWord(targetWord.GetSpell(), true);
     words.insert(words.begin() + pos + 1, targetWord);
     return pos;
 }
@@ -123,7 +94,7 @@ void Dictionary::ReadAndAdd (std::istream& load)
         if (temp == "*")
         {
             wordTemp = factory->create (wordString);
-            if (!WordExist (wordTemp->spell))
+            if (!WordExist (wordTemp->spell, true))
             {
                 Insert (*wordTemp);
             }

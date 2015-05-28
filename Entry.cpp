@@ -1,5 +1,6 @@
 //:Entry.cpp
 #include "Entry.h"
+#include <algorithm>
 #include <string>
 #include <vector>
 #include <iostream>
@@ -239,3 +240,49 @@ PrepEntry::PrepEntry ()
     //
 }
 void PrepEntry::Output(ostream& out) const	{}
+bool NounEntry::Match(string& str) const
+{
+    if (str == completeForm || str == abbrForm || str == pluralForm)
+        return true;
+    return false;
+}
+bool VerbEntry::Match(string& str) const
+{
+    if (binary_search(presentForm.begin(), presentForm.end(), str))
+        return true;
+    if (binary_search(pastTense.begin(), pastTense.end(), str))
+        return true;
+    if (binary_search(pastParticle.begin(), pastParticle.end(), str))
+        return true;
+    if (binary_search(phrase.begin(), phrase.end(), str))
+        return true;
+    return false;
+}
+bool AdjEntry::Match(string& str) const
+{
+    if (binary_search(comparative.begin(), comparative.end(), str))
+        return true;
+    if (binary_search(highest.begin(), highest.end(), str))
+        return true;
+    return false;
+}
+bool AdvEntry::Match(string& str) const
+{
+    if (binary_search(comparative.begin(), comparative.end(), str))
+        return true;
+    if (binary_search(highest.begin(), highest.end(), str))
+        return true;
+    return false;
+}
+bool  PronEntry::Match(string& str) const
+{
+    return false;
+}
+bool ConjEntry::Match(string& str) const
+{
+    return str == category;
+}
+bool PrepEntry::Match(string& str) const
+{
+    return false;
+}

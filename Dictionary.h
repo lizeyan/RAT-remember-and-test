@@ -33,11 +33,11 @@ public:
     friend std::ostream& operator<< (std::ostream&, Dictionary&);
     static Dictionary* GetInstance ();
     bool FindWordFuzzy(std::string, std::vector<Word*>&);
-    int FindWord(std::string targetWord) const;
+    int FindWord(std::string targetWord, bool = false) const;
     Word& operator[](int rank);
     int Insert(Word&);
-    bool WordExist (std::string targetWord);
-    int GetSize() {return words.size();}
+    bool WordExist (std::string targetWord, bool = false);
+    int GetSize() const {return words.size();}
     void ReadAndAdd (std::istream& load);
     void Read (std::istream& load);
     void Sort();

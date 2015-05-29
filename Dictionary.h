@@ -29,6 +29,7 @@ protected:
     Dictionary ();
     Dictionary (const Dictionary&);
     Dictionary& operator=(const Dictionary&);
+    bool particalFind(int, int, std::vector<Word*>&, std::string&);
 public:
     friend std::ostream& operator<< (std::ostream&, Dictionary&);
     static Dictionary* GetInstance ();

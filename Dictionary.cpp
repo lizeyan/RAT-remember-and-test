@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <fstream>
 using namespace std;
+const int MaxFuzzyResult = 100;
 Dictionary* Dictionary::instance = NULL;
 Dictionary::Dictionary()	{}
 Dictionary::Dictionary(const Dictionary& s)
@@ -173,13 +174,38 @@ bool Dictionary::FindWordFuzzy(string s, vector<Word*>& target)
 {
     bool res = false;
     target.clear();
-    for (int i = 0; i < words.size(); ++i)
+    int limit = min (4, int(s.size()) / 3 + 1);
+    for (int i = 0; i < limit;  ++i)
     {
-        if (kmp(s, words[i].GetSpell()) >= 0)
+        bool tmp = particalFind(0,i,target,s);
+        if (!res)
+            res = tmp;
+    }
+    return res;
+}
+bool Dictionary::particalFind(int level, int maxLevel, vector<Word*>& target, string& s)
+{
+    if (level == maxLevel)
+    {
+        bool res = false;
+        for (int i = 0; i < words.size(); ++i)
         {
-            target.push_back(&words[i]);
-            res = true;
+            if (kmp(s, words[i].GetSpell()) >= 0)
+            {
+                target.push_back(&words[i]);
+                res = true;
+            }
         }
+        return res;
+    }
+    bool res;
+    for (int i = 0; i < s.size(); ++i)
+    {
+        string tmp = s;
+        tmp.erase(tmp.begin() + i);
+        bool r = particalFind(level + 1, maxLevel, target, tmp);
+        if (!res)
+            res = r;
     }
     return res;
 }

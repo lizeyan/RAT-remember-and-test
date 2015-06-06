@@ -2,10 +2,13 @@
 #include "Dictionary.h"
 #include "WordFactory.h"
 #include "Set.h"
+#include "Word.h"
+#include <algorithm>
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
 using namespace std;
+const int MaxFuzzyResult = 100;
 Dictionary* Dictionary::instance = NULL;
 Dictionary::Dictionary()	{}
 Dictionary::Dictionary(const Dictionary& s)
@@ -16,7 +19,7 @@ Dictionary* Dictionary::GetInstance ()
         instance = new Dictionary;
     return instance;
 }
-int Dictionary::FindWord(string targetWord) const
+int Dictionary::FindWordExact(string targetWord) const
 {
     int lo = 0, hi = words.size();
     while (lo < hi)
@@ -26,12 +29,46 @@ int Dictionary::FindWord(string targetWord) const
     }
     return --lo;
 }
-bool Dictionary::WordExist(string targetWord)
+int Dictionary::FindWord(string targetWord, bool insert) const
 {
-    int pos = FindWord (targetWord);
+    //exact search
+    int x = FindWordExact(targetWord);
+    //when we are trying to insert a word, 
+    //  we also need the postion even it is illegal.
+    if ((x >= 0 && x < words.size()) || insert == 1)
+        return x;
+    //other forms
+    for (int i = 0; i < words.size(); ++i)
+    {
+        for (int j = 0 ; j < words[i].EntrySize(); ++j)
+        {
+            if (words[i].GetEntry(j)->Match(targetWord))
+            {
+                return i;
+            }
+        }//end entry
+    }//end worrd
+    return -1;
+}
+bool Dictionary::WordExist(string targetWord, bool insert)
+{
+    int pos = FindWord (targetWord, insert);
     if (pos < 0 || pos >= words.size())
         return false;
-    return words[pos].GetSpell() == targetWord;
+    if (targetWord == words[pos].GetSpell())
+        return true;
+    string diff = "false";
+    for (int i = 0; i <targetWord.size() ;++i)
+    {
+        if (targetWord[i] != words[pos].GetSpell()[i] && i >= words[pos].GetSpell().size() - 1)
+        {
+            diff = targetWord.substr(i, targetWord.size() - i);
+            if (diff[0] == targetWord[i - 1])
+                diff = diff.substr(1, diff.size() - 1);
+            break;
+        }
+    }
+    return diff == "" || diff == "ing" || diff == "es" || diff == "s" || diff == "ed";
 }
 Word& Dictionary::operator[](int rank)
 {
@@ -39,9 +76,13 @@ Word& Dictionary::operator[](int rank)
 }
 int Dictionary::Insert(Word& targetWord)
 {
-    int pos = FindWord(targetWord.GetSpell());
+    int pos = FindWord(targetWord.GetSpell(), true);
     words.insert(words.begin() + pos + 1, targetWord);
     return pos;
+}
+void Dictionary::Sort()
+{
+    sort (words.begin(), words.end());
 }
 void Dictionary::ReadAndAdd (std::istream& load)
 {
@@ -54,7 +95,7 @@ void Dictionary::ReadAndAdd (std::istream& load)
         if (temp == "*")
         {
             wordTemp = factory->create (wordString);
-            if (!WordExist (wordTemp->spell))
+            if (!WordExist (wordTemp->spell, true))
             {
                 Insert (*wordTemp);
             }
@@ -133,13 +174,38 @@ bool Dictionary::FindWordFuzzy(string s, vector<Word*>& target)
 {
     bool res = false;
     target.clear();
-    for (int i = 0; i < words.size(); ++i)
+    int limit = min (4, int(s.size()) / 3 + 1);
+    for (int i = 0; i < limit;  ++i)
     {
-        if (kmp(s, words[i].GetSpell()) >= 0)
+        bool tmp = particalFind(0,i,target,s);
+        if (!res)
+            res = tmp;
+    }
+    return res;
+}
+bool Dictionary::particalFind(int level, int maxLevel, vector<Word*>& target, string& s)
+{
+    if (level == maxLevel)
+    {
+        bool res = false;
+        for (int i = 0; i < words.size(); ++i)
         {
-            target.push_back(&words[i]);
-            res = true;
+            if (kmp(s, words[i].GetSpell()) >= 0)
+            {
+                target.push_back(&words[i]);
+                res = true;
+            }
         }
+        return res;
+    }
+    bool res;
+    for (int i = 0; i < s.size(); ++i)
+    {
+        string tmp = s;
+        tmp.erase(tmp.begin() + i);
+        bool r = particalFind(level + 1, maxLevel, target, tmp);
+        if (!res)
+            res = r;
     }
     return res;
 }

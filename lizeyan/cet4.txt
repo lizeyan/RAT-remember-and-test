@@ -404,7 +404,7 @@ chamber
 champion
 change
 channel
-chaos
+chao
 chap
 chapter
 character
@@ -587,7 +587,6 @@ content
 contest
 continual
 continuity
-continuous
 contract
 contradiction
 contrary
@@ -904,7 +903,7 @@ engine
 engineering
 enhance
 enlarge
-enormous
+enormity
 enquire
 enquiry
 enrich
@@ -1013,7 +1012,7 @@ fantastic
 fantasy
 fare
 farewell
-fascinating
+fascinate
 fashion
 fashionable
 fasten
@@ -1103,7 +1102,7 @@ frown
 frustrate
 fry
 fuel
-fulfill
+fulfil
 function
 fund
 fundamental
@@ -1216,7 +1215,7 @@ hazard
 head
 heading
 headline
-headquarters
+headquarter
 heal
 heap
 hear
@@ -1816,12 +1815,12 @@ poem
 poet
 poetry
 poison
-poisonous
+poisoning
 pole
 policy
 polish
 politician
-politics
+politico
 poll
 pollute
 pollution
@@ -1926,7 +1925,6 @@ proposal
 propose
 prospect
 prosperity
-prosperous
 protection
 protein
 protest
@@ -2236,7 +2234,7 @@ sharp
 shave
 shed
 sheer
-shell
+shelf
 shelter
 shield
 shift
@@ -2249,7 +2247,7 @@ shrink
 shrug
 sideways
 sigh
-sightseeing
+sightsee
 signal
 signature
 significance
@@ -2316,7 +2314,7 @@ spare
 spark
 specialist
 specialize
-species
+specie
 specific
 specifically
 specify
@@ -2326,7 +2324,7 @@ speculate
 spelling
 sphere
 spider
-spill
+spile
 spin
 spiritual
 spit

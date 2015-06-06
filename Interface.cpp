@@ -43,20 +43,19 @@ void consoleInterface::ini()
     cout << "loading......" << endl;
     ifstream fin(source.c_str());
     dic->Read (fin);
+    dic->Sort();
     fin.close();
     fin.open("RAT.ini");
-    string tmp1;
-    string tmp2;
-    string tmp3;
+    string tmp1, tmp2, tmp3;
     while(getline(fin, tmp1) && getline(fin, tmp2) && getline(fin, tmp3))
     {
         users.push_back(new User(tmp1, tmp2, tmp3));
     }
     fin.close();
     cout << "succefullly load." << endl
-    << "time expend: "
-    << (double)(clock() - beginTime) / CLOCKS_PER_SEC
-    << "seconds" << endl;
+            << "time expend: "
+            << (double)(clock() - beginTime) / CLOCKS_PER_SEC
+            << "seconds" << endl;
     User* cuser = NULL;
     do
     {
@@ -81,7 +80,7 @@ void consoleInterface::load()
     string s="";
     s+=user->GetName();
     s+="/source.txt";
-    ifstream fin(s);
+    ifstream fin(s.c_str());
     if(fin){
         string ans="";
         getline(fin, ans);
@@ -320,19 +319,6 @@ void consoleInterface::FindSimilarWord(string command)
     }
     vector<Word*> result;
     dic->FindWordFuzzy(targetWord, result);
-    int idioms = kmp ("-i", command);
-    if (idioms < 0 || idioms >= result.size())
-    {
-        for (int i = 0; i < result.size(); ++i)
-        {
-            int isIdiom = kmp (" ", result[i]->GetSpell());
-            if (isIdiom >= 0 && isIdiom < result[i]->GetSpell().size())
-            {
-                result.erase(result.begin() + i);
-                --i;
-            }
-        }
-    }
     if (result.size() == 0)
     {
         cout << "no similar word in current dictionary found" << endl;
@@ -357,19 +343,6 @@ void consoleInterface::FindWordFuzzy(string command)
     }
     vector<Word*> result;
     dic->FindWordFuzzy(targetWord, result);
-    int idioms = kmp ("-i", command);
-    if (idioms < 0 || idioms >= result.size())
-    {
-        for (int i = 0; i < result.size(); ++i)
-        {
-            int isIdiom = kmp (" ", result[i]->GetSpell());
-            if (isIdiom >= 0 && isIdiom < result[i]->GetSpell().size())
-            {
-                result.erase(result.begin() + i);
-                --i;
-            }
-        }
-    }
     if (result.size() == 0)
     {
         cout << "no matched word in current dictionary found" << endl;
@@ -1160,9 +1133,9 @@ void consoleInterface::outHelp()
     << "m[ode] 1 --step into quiry mode" << endl
     << "m[ode] 0 --step into normal mode" << endl
     << "in mode 1:" << endl
-    << "\t[-e] wordname --list all about this word,type -i to include all idioms" << endl
-    << "\t-s [-i] wordname --list similar word" << endl
-    << "\t-f [-i] string -- list all words details contain this string,type -i \n\tto include all idioms" << endl
+    << "\t[-e] wordname --list all about this word" << endl
+    << "\t-s wordname --list similar word" << endl
+    << "\t-f string -- list all words details contain this string" << endl
     << "i[nfo] --info about the current user" << endl
     << "i[nfo] -t setname [-d] -- list all the word in the set, -d to list all details" << endl
     << "test -t setname testType --test words in this set" << endl
@@ -1196,7 +1169,7 @@ void consoleInterface::output(){
     string s="";
     s+=user->GetName();
     s+="/source.txt";
-    ofstream fout(s);
+    ofstream fout(s.c_str());
     for(int i=0; i<user->GetSize(); i++){
         fout<<user->GetSet(i)->GetName()<<' '<<user->GetSet(i)->GetUseDay()<<' '<<user->GetSet(i)->GetBeginDay()<<endl;
     }

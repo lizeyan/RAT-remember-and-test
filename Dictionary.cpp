@@ -1,6 +1,6 @@
 //:dictionary.cpp
 #include "Dictionary.h"
-#include "Factory.h"
+#include "WordFactory.h"
 #include "Set.h"
 #include <iostream>
 #include <cstdlib>

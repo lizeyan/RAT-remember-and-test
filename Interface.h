@@ -2,7 +2,7 @@
 #ifndef ___INTERFACE___
 #define ___INTERFACE___
 #include "Dictionary.h"
-#include "Question.h"
+#include "operation.h"
 #include "User.h"
 #include <string>
 #include <vector>

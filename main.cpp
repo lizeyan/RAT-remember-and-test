@@ -3,7 +3,6 @@
 #include "Set.h"
 #include "Word.h"
 #include "Entry.h"
-#include "Factory.h"
 #include "Interface.h"
 #include <ctime>
 #include <iostream>

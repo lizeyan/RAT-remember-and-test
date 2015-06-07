@@ -457,7 +457,7 @@ eternal
 evaporate
 even
 evenly
-everlasting
+evergreen
 evil
 evolution
 excel
@@ -600,7 +600,6 @@ garage
 garlic
 garment
 gather
-gathering
 gear
 generalization
 generalize
@@ -690,7 +689,7 @@ hike
 hindrance
 hinge
 hip
-hiss
+his
 historic
 hit
 hitherto
@@ -1164,7 +1163,7 @@ printer
 priority
 prism
 probe
-proceeding
+proceed
 producer
 productivity
 proficiency
@@ -1236,7 +1235,7 @@ reef
 referee
 refinery
 refrain
-refugee
+refuge
 regime
 regiment
 regularity
@@ -1496,7 +1495,7 @@ torment
 torpedo
 torque
 tow
-towards
+toward
 trader
 tradesman
 tragic
@@ -1582,7 +1581,7 @@ wardrobe
 ware
 warehouse
 warfare
-warning
+warn
 warrant
 wasp
 wasteful
@@ -1602,7 +1601,7 @@ wholesome
 wield
 willow
 winding
-windmill
+windlass
 windy
 wink
 wither

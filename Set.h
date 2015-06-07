@@ -38,6 +38,7 @@ public:
     int GetBeginDay(){
         return beginDay;
     }
+    int removeWord(int rank);
     Set();
     Set (std::string n): setName(n)	{
         beginDay=177;

@@ -6,7 +6,6 @@
 #include <string>
 #include <cstdio>//exit
 #include <cstdlib>//atoi
-#include <cmath>
 using namespace std;
 EntryFactory* WordFactory::typeChoose (string& typeString)
 {

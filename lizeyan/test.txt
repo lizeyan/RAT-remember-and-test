@@ -9,7 +9,7 @@ clock
 close
 command
 continue
-detailed
+detail
 do
 double
 e

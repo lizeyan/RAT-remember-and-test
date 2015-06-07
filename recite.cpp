@@ -46,7 +46,7 @@ void recite::DoRecite(Word* m, std::ostream& osout, std::istream& input){
     getline(input, s);
     if(s=="Y"||s=="y"){
         m->kill=true;
-    }else if(s=="q"){
+    }else if(s=="q" || s == "quit"){
         Exit=true;
         return;
     }

@@ -69,7 +69,12 @@ Set::Set ()	{
     beginDay=177;
     useDay=120;
 }
-
+int Set::removeWord(int rank)
+{
+    if (rank >= 0 && rank < words.size())
+        words.erase(words.begin() + rank);
+    return words.size();
+}
 ostream& operator<< (ostream& out, Set& s)
 {
     out << s.setName << ":" << endl;

@@ -121,7 +121,6 @@ annual
 anticipate
 antique
 anxiety
-anxious
 anyhow
 anyway
 apart
@@ -249,7 +248,7 @@ barrel
 barrier
 baseball
 basically
-basis
+basin
 bat
 bathe
 battery
@@ -273,7 +272,7 @@ belt
 beneath
 beneficial
 benefit
-besides
+beside
 bet
 beyond
 bid
@@ -509,7 +508,7 @@ competition
 complain
 complaint
 complex
-complicated
+complicacy
 component
 compose
 composition
@@ -525,7 +524,6 @@ concentrate
 concentration
 concept
 concern
-concerning
 concert
 concession
 concise
@@ -900,7 +898,7 @@ energetic
 enforce
 engage
 engine
-engineering
+engineer
 enhance
 enlarge
 enormity
@@ -977,7 +975,7 @@ explosive
 export
 expose
 exposure
-express
+expound
 expression
 extend
 extension
@@ -1474,7 +1472,7 @@ leading
 leak
 lean
 leap
-learned
+learn
 learning
 lease
 leather
@@ -1689,7 +1687,7 @@ nerve
 nest
 network
 neutral
-nevertheless
+never-ending
 next
 niece
 nightmare
@@ -1815,7 +1813,6 @@ poem
 poet
 poetry
 poison
-poisoning
 pole
 policy
 polish
@@ -1896,7 +1893,6 @@ prize
 probable
 procedure
 proceed
-process
 procession
 product
 productivity
@@ -2024,7 +2020,7 @@ reflexion
 reform
 refresh
 refrigerator
-refugee
+refuge
 refusal
 regarding
 regardless
@@ -2187,7 +2183,7 @@ scheme
 scholar
 scholarship
 school
-scissors
+scissor
 scold
 scope
 score
@@ -2245,7 +2241,7 @@ shortly
 shoulder
 shrink
 shrug
-sideways
+sideway
 sigh
 sightsee
 signal
@@ -2262,7 +2258,7 @@ single
 singular
 site
 sketch
-skilled
+skill
 skillful
 skim
 skirt
@@ -2391,7 +2387,7 @@ stroke
 structure
 student
 studio
-stuff
+study
 subject
 subjective
 submerge
@@ -2434,7 +2430,6 @@ surgery
 surplus
 surrender
 surround
-surrounding
 survey
 survival
 survive
@@ -2715,7 +2710,7 @@ whisper
 whistle
 whoever
 wholly
-wicked
+wick
 widen
 widespread
 widow

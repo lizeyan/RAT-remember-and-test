@@ -1,0 +1,4 @@
+1.test 类型2 应该还要输出wordclass
+2.exam 类型2， 没有通过但是修改了modified，询问是否保存
+3.consoleInterface::load太长了，好几百行
+

@@ -3,6 +3,7 @@
 
 #include "Entry.h"
 #include <iostream>
+#include <algorithm>
 
 class AdvEntry:public Entry
 {
@@ -12,6 +13,7 @@ private:
 protected:
     void Output(std::ostream&) const;
 public:
+    bool Match(std::string&) const;
     AdvEntry();
     AdvEntry (std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&,
               std::vector<std::string>&, std::vector<std::string>&);

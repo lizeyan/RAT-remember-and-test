@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <cmath>
 using namespace std;
+bool operator < (const Word& a, const Word& b) {return a.GetSpell() < b.GetSpell();}
 Word::Word ()
 {
     quan0=EntrySize();

@@ -3,6 +3,7 @@
 
 #include "Entry.h"
 #include <iostream>
+#include <algorithm>
 
 class NounEntry:public Entry
 {
@@ -18,6 +19,7 @@ private:
 protected:
     void Output(std::ostream&) const;
 public:
+    bool Match(std::string&) const;
     NounEntry ();
     NounEntry (std::string&, std::string&, std::string&, std::string&,
                std::vector<std::string>&,

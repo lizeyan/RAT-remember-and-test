@@ -30,3 +30,10 @@ void NounEntry::Output(ostream& out) const
     OutputString (out, "abbrForm", abbrForm);
     OutputString (out, "pluralForm", pluralForm);
 }
+
+bool NounEntry::Match(string& str) const
+{
+    if (str == completeForm || str == abbrForm || str == pluralForm)
+        return true;
+    return false;
+}

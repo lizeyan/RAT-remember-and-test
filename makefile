@@ -1,4 +1,4 @@
-﻿main.exe:Dictionary.cpp User.cpp recite.cpp Interface.cpp Set.cpp Word.cpp Entry.cpp Factory.cpp main.cpp Test.cpp Question.cpp
-	g++ Dictionary.cpp Set.cpp Interface.cpp recite.cpp User.cpp Word.cpp Entry.cpp Factory.cpp Test.cpp Question.cpp main.cpp -g -o main.exe
+﻿main.exe:Dictionary.cpp User.cpp recite.cpp Interface.cpp Set.cpp Word.cpp Entry.cpp Test.cpp Question.cpp  main.cpp AdjEntry.cpp AdjEntryFactory.cpp AdvEntry.cpp AdvEntryFactory.cpp ConjEntryFactory.cpp ConjEntry.cpp EntryFactory.cpp NounEntry.cpp NounEntryFactory.cpp PrepEntry.cpp PrepEntryFactory.cpp PronEntry.cpp PronEntryFactory.cpp QuestionFirst.cpp QuestionSecondChoose.cpp QuestionSecondFillBlank.cpp VerbEntry.cpp VerbEntryFactory.cpp WordFactory.cpp operation.cpp
+	g++ Dictionary.cpp User.cpp recite.cpp Interface.cpp Set.cpp Word.cpp Entry.cpp Test.cpp Question.cpp  main.cpp AdjEntry.cpp AdjEntryFactory.cpp AdvEntry.cpp AdvEntryFactory.cpp ConjEntryFactory.cpp ConjEntry.cpp EntryFactory.cpp NounEntry.cpp NounEntryFactory.cpp PrepEntry.cpp PrepEntryFactory.cpp PronEntry.cpp PronEntryFactory.cpp QuestionFirst.cpp QuestionSecondChoose.cpp QuestionSecondFillBlank.cpp VerbEntry.cpp VerbEntryFactory.cpp WordFactory.cpp operation.cpp -g -o main.exe
 clean:
 	del *.exe *.o *.out

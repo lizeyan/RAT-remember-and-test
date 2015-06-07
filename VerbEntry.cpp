@@ -59,3 +59,16 @@ string VerbEntry::GetPastParticle(int rank) const
 {
     return GetMember(pastParticle, rank);
 }
+
+bool VerbEntry::Match(string& str) const
+{
+    if (binary_search(presentForm.begin(), presentForm.end(), str))
+        return true;
+    if (binary_search(pastTense.begin(), pastTense.end(), str))
+        return true;
+    if (binary_search(pastParticle.begin(), pastParticle.end(), str))
+        return true;
+    if (binary_search(phrase.begin(), phrase.end(), str))
+        return true;
+    return false;
+}

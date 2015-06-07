@@ -8,6 +8,9 @@
 #include <cstdlib>
 #include <fstream>
 using namespace std;
+bool cmp(Word a, Word b){
+    return a.GetSpell()<b.GetSpell();
+}
 const int MaxFuzzyResult = 100;
 Dictionary* Dictionary::instance = NULL;
 Dictionary::Dictionary()	{}
@@ -33,7 +36,7 @@ int Dictionary::FindWord(string targetWord, bool insert) const
 {
     //exact search
     int x = FindWordExact(targetWord);
-    //when we are trying to insert a word, 
+    //when we are trying to insert a word,
     //  we also need the postion even it is illegal.
     if ((x >= 0 && x < words.size()) || insert == 1)
         return x;
@@ -82,7 +85,7 @@ int Dictionary::Insert(Word& targetWord)
 }
 void Dictionary::Sort()
 {
-    sort (words.begin(), words.end());
+    sort (words.begin(), words.end(), cmp);
 }
 void Dictionary::ReadAndAdd (std::istream& load)
 {

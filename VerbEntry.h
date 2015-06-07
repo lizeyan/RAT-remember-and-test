@@ -3,6 +3,7 @@
 
 #include "Entry.h"
 #include <iostream>
+#include <algorithm>
 
 class VerbEntry:public Entry
 {
@@ -16,6 +17,7 @@ private:
 protected:
     void Output(std::ostream&) const;
 public:
+    bool Match(std::string&) const;
     VerbEntry ();
     VerbEntry (std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&,
                int, std::string&, std::vector<std::string>&, std::vector<std::string>&,

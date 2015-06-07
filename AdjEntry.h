@@ -3,6 +3,7 @@
 
 #include "Entry.h"
 #include <iostream>
+#include <algorithm>
 
 class AdjEntry:public Entry
 {
@@ -13,6 +14,7 @@ private:
 protected:
     void Output(std::ostream&) const;
 public:
+    bool Match(std::string&) const;
     AdjEntry();
     AdjEntry(std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&,
              int, std::vector<std::string>&, std::vector<std::string>&);

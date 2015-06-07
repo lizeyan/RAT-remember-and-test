@@ -3,6 +3,7 @@
 
 #include "EntryFactory.h"
 #include <iostream>
+#include <cstdlib>
 
 class PrepEntryFactory:public EntryFactory
 {

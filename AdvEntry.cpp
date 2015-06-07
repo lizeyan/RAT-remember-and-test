@@ -27,3 +27,12 @@ void AdvEntry::Output(ostream& out) const
         out << "\t" << highest[i] << endl;
     }
 }
+
+bool AdvEntry::Match(string& str) const
+{
+    if (binary_search(comparative.begin(), comparative.end(), str))
+        return true;
+    if (binary_search(highest.begin(), highest.end(), str))
+        return true;
+    return false;
+}

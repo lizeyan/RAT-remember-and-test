@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "Test.h"
 class Test;
 class Entry
@@ -20,6 +21,7 @@ protected:
     void OutputEle(std::ostream&) const;
     
 public:
+    virtual bool Match(std::string&) const = 0;
     Entry (std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&);
     Entry ();
     friend std::ostream& operator << (std::ostream&, const Entry&);

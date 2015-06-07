@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <algorithm>
+
 using namespace std;
 void OutputString(ostream& out, string tips, const string source)
 {

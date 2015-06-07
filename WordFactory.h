@@ -11,6 +11,7 @@
 #include "VerbEntryFactory.h"
 #include "NounEntryFactory.h"
 #include <iostream>
+#include <cstdlib>
 
 class WordFactory
 {

@@ -18,3 +18,7 @@ void ConjEntry::Output (ostream& out) const
 {
     OutputString (out, "category", category);
 }
+bool ConjEntry::Match(string& str) const
+{
+    return str == category;
+}

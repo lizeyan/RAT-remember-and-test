@@ -11,3 +11,8 @@ PrepEntry::PrepEntry ()
     //
 }
 void PrepEntry::Output(ostream& out) const	{}
+
+bool PrepEntry::Match(string& str) const
+{
+    return false;
+}

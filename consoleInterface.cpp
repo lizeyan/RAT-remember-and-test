@@ -887,7 +887,7 @@ void consoleInterface::TestDo()
     modified=true;
     while(1)
     {
-        op=new opera(user->GetSet(pos), level, testType, true);
+        op=new opera(user->GetSet(pos), level, testType, false);
         op->ope(cout);
         string answer;
         getline(cin,answer);
@@ -915,7 +915,7 @@ void consoleInterface::TestDo(Set* s, int le, int ttype)
         le = -1;
     while(1)
     {
-        op=new opera(s, le, ttype, true);
+        op=new opera(s, le, ttype, false);
         op->ope(cout);
         string answer;
         getline(cin,answer);

@@ -10,6 +10,7 @@
 #include "VerbEntry.h"
 #include "NounEntry.h"
 #include <iostream>
+#include <cstdlib>
 
 class EntryFactory
 {

@@ -1138,7 +1138,7 @@ void consoleInterface::TouchUser(string command)
     {
         if (userName == users[i]->GetName())
         {
-            cout << userName << "already exist" << endl;
+            cout << userName << " already exist" << endl;
             return;
         }
     }

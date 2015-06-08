@@ -1,4 +1,4 @@
-﻿RAT = Dictionary.o User.o recite.o Interface.o \
+﻿link=Dictionary.o User.o recite.o Interface.o \
 	consoleInterface.o Set.o Word.o Entry.o Test.o \
 	Question.o  main.o AdjEntry.o AdjEntryFactory.o \
 	AdvEntry.o AdvEntryFactory.o ConjEntryFactory.o \
@@ -7,10 +7,26 @@
 	PronEntry.o PronEntryFactory.o QuestionFirst.o \
 	QuestionSecondChoose.o QuestionSecondFillBlank.o \
 	VerbEntry.o VerbEntryFactory.o WordFactory.o operation.o
-REMOVE = rm
-TYPE = -g
-main.exe:$(RAT)
-	g++ -o main.exe $(RAT) $(TYPE)
+REMOVE=rm
+TYPE=-g
+main.exe:Dictionary.o User.o recite.o Interface.o \
+	consoleInterface.o Set.o Word.o Entry.o Test.o \
+	Question.o  main.o AdjEntry.o AdjEntryFactory.o \
+	AdvEntry.o AdvEntryFactory.o ConjEntryFactory.o \
+	ConjEntry.o EntryFactory.o NounEntry.o \
+	NounEntryFactory.o PrepEntry.o PrepEntryFactory.o \
+	PronEntry.o PronEntryFactory.o QuestionFirst.o \
+	QuestionSecondChoose.o QuestionSecondFillBlank.o \
+	VerbEntry.o VerbEntryFactory.o WordFactory.o operation.o
+	g++ -o main.exe Dictionary.o User.o recite.o Interface.o \
+	consoleInterface.o Set.o Word.o Entry.o Test.o \
+	Question.o  main.o AdjEntry.o AdjEntryFactory.o \
+	AdvEntry.o AdvEntryFactory.o ConjEntryFactory.o \
+	ConjEntry.o EntryFactory.o NounEntry.o \
+	NounEntryFactory.o PrepEntry.o PrepEntryFactory.o \
+	PronEntry.o PronEntryFactory.o QuestionFirst.o \
+	QuestionSecondChoose.o QuestionSecondFillBlank.o \
+	VerbEntry.o VerbEntryFactory.o WordFactory.o operation.o $(TYPE)
 AdjEntry.o:AdjEntry.cpp AdjEntry.h
 	g++ AdjEntry.cpp -c $(TYPE)
 AdjEntryFactory.o:AdjEntryFactory.cpp AdjEntryFactory.h

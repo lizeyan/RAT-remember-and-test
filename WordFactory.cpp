@@ -1,4 +1,5 @@
 #include "WordFactory.h"
+#include <ctime>
 #include <cmath>
 using namespace std;
 

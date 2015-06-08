@@ -272,6 +272,7 @@ void consoleInterface::load()
             getline(fin, ans);
         }
     }
+    fin.close();
 }
 void consoleInterface::operation()
 {
@@ -478,6 +479,7 @@ void consoleInterface::Save()
         {
             cout << "saving...." << endl;
             //rewrite user
+            cout << "rewrite RAT.ini" << endl;
             fout.open("RAT.ini");
             for (int i = 0; i < users.size(); ++i)
             {
@@ -488,6 +490,7 @@ void consoleInterface::Save()
             }
             fout.close();
             //rewrite .set
+            cout << "rewrite " << (user->GetName() + "/" + user->GetName() + ".set").c_str() << endl;
             fout.open((user->GetName() + "/" + user->GetName() + ".set").c_str());
             if (!fout)
             {
@@ -684,6 +687,7 @@ void consoleInterface::RemoveUser()
         cout << "You can't remove guest user." << endl;
         return;
     }
+    cout << "confirm password....." << endl;
     if (Login(user))
     {
         User* oldUser = user;
@@ -696,7 +700,6 @@ void consoleInterface::RemoveUser()
                 break;
             }
         }
-        user = guest;
         for (int i = 0; i < users.size(); ++i)
         {
             if (users[i] == oldUser)
@@ -707,6 +710,7 @@ void consoleInterface::RemoveUser()
         }
         modified = 1;
         Save();
+        user = guest;
     }
     else
     {
@@ -1134,11 +1138,16 @@ void consoleInterface::TouchUser(string command)
     {
         if (userName == users[i]->GetName())
         {
-            cout << userName << ": exist" << endl;
+            cout << userName << "already exist" << endl;
             return;
         }
     }
     begin = kmp ("-p", command) + 1;
+    if (begin <= 0 || begin > command.size())
+    {
+        cout << "please set password" << endl;
+        return;
+    }
     while (command[++begin] == 32 && begin < command.size() - 1);
     string password;
     for (int i = begin; i < command.size() && command[i] != 32; ++i)
@@ -1150,13 +1159,12 @@ void consoleInterface::TouchUser(string command)
     modified = true;
     cout << "successfully touch user:" << userName << endl;
     //
-    ofstream exist((newUser->GetName()+"/"+newUser->GetName() + ".set").c_str());
+    ifstream exist((newUser->GetName()+"/"+newUser->GetName() + ".set").c_str());
     if (!exist)
     {
         system(("mkdir " + newUser->GetName()).c_str());
     }
-    else
-        exist.close();
+    exist.close();
 }
 void consoleInterface::Switch(string command)
 {

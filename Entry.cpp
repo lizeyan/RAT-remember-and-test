@@ -6,6 +6,13 @@
 #include <algorithm>
 
 using namespace std;
+ostream& operator<< (ostream& out, vector<string> v)
+{
+    for (int i = 0; i < v.size(); ++i)
+        out << v[i] << endl;
+    out << "." << endl;
+    return out;
+};
 void OutputString(ostream& out, string tips, const string source)
 {
     if (tips != "")
@@ -49,6 +56,14 @@ void Entry::OutputEle(ostream& out) const
     {
         out << "\t" << example[i] << endl;
     }
+}
+void Entry::OutputEleSource(ostream& fout) const
+{
+    fout << phonogram << endl
+            << wordClass << endl
+            << meaningC << endl
+            << meaningE << endl
+            << example;
 }
 ostream& operator<< (ostream& out, const Entry& e)
 {

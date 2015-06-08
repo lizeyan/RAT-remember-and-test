@@ -59,7 +59,11 @@ string VerbEntry::GetPastParticle(int rank) const
 {
     return GetMember(pastParticle, rank);
 }
-
+ostream& operator<< (ostream& out, vector<string> v);
+void VerbEntry::OutputSource(ostream& fout) const
+{
+    fout << viOrVt << endl << tpsForm << endl << presentForm << pastTense << pastParticle << phrase;
+}
 bool VerbEntry::Match(string& str) const
 {
     if (binary_search(presentForm.begin(), presentForm.end(), str))

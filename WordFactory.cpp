@@ -1,4 +1,12 @@
 #include "WordFactory.h"
+#include "Entry.h"
+#include "NounEntry.h"
+#include "VerbEntry.h"
+#include "AdjEntry.h"
+#include "AdvEntry.h"
+#include "PronEntry.h"
+#include "PrepEntry.h"
+#include "ConjEntry.h"
 #include <ctime>
 #include <cmath>
 using namespace std;
@@ -89,4 +97,70 @@ Word* WordFactory::create(vector<string>& source)
         result->quanSelect=0;
     }
     return result;
+}
+
+Word* WordFactory::youdaoCreate(vector<string>& source)
+{
+    string sp;
+    int begin = 0;
+    while (begin < source[0].size() && source[0][begin] != ',')
+        begin++;
+    begin += 2;
+    int end = begin;
+    while (end < source[0].size() && source[0][end] != ' ')
+        end++;
+    for (int i = begin; i < end; ++i)
+        sp += source[0][i];
+    while (begin < source[0].size() && source[0][begin] != '[')
+        begin++;
+    while (end < source[0].size() && source[0][end] != ']')
+        end++;
+    if (end >= source[0].size() || source[0][end] != ']')
+        return NULL;
+    string phono;
+    Word* w = new Word;
+    w->spell = sp;
+    for (int i = begin + 1; i < end; ++i)
+        phono += source[0][i];
+    source.erase(source.begin());
+    for (int i = 0; i < source.size(); ++i)
+    {
+        string wordClass;
+        int a = 0;
+        while (a < source[i].size() && source[i][a] != '.')
+            a++;
+        for (int j = 0; j < a; ++j)
+            wordClass += source[i][j];
+        string m;
+        for (int j = a + 2; j < source[i].size(); ++j)
+            m += source[i][j];
+        vector<string> tmp;
+        string empty;
+        if (wordClass == "n")
+        {
+            string wc = "noun";
+            w->entries.push_back(new NounEntry(phono,wc , m, empty, tmp,-1,-1,-1,-1,empty, empty,empty));
+        }
+        else if (wordClass == "vi")
+        {
+            string wc = "verb";
+            w->entries.push_back(new VerbEntry(phono,wc, m, empty,tmp, 0,empty,tmp,tmp,tmp,tmp));
+        }
+        else if (wordClass == "vt")
+         {
+            string wc = "verb";
+            w->entries.push_back(new VerbEntry(phono,wc, m, empty,tmp,1,empty,tmp,tmp,tmp,tmp));
+         }
+        else if (wordClass == "adj")
+            w->entries.push_back(new AdjEntry(phono, wordClass, m, empty, tmp,-1,tmp, tmp));
+        else if (wordClass == "adv")
+            w->entries.push_back(new AdvEntry(phono, wordClass, m, empty,tmp,tmp,tmp));
+        else if (wordClass == "pron")
+            w->entries.push_back(new PronEntry(phono, wordClass, m, empty,tmp,-1,-1));
+        else if (wordClass == "prep")
+            w->entries.push_back(new PrepEntry(phono, wordClass, m, empty,tmp));
+        else if (wordClass == "conj")
+            w->entries.push_back(new ConjEntry(phono, wordClass, m, empty,tmp,empty));
+    }
+    return w;
 }

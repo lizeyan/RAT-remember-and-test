@@ -3,7 +3,7 @@
 using namespace std;
 
 std::string GetMember(const std::vector<string>& ve, int rank);
-
+ostream& operator<< (ostream& out, vector<string> v);
 AdjEntry::AdjEntry (string& ph, string& wo, string& mec, string& mee,
                     std::vector<string>& ex, int pre, std::vector<string>& co, std::vector<string>& hi):
 Entry(ph, wo, mec, mee, ex), predOrAttr(pre), comparative(co), highest(hi)
@@ -46,4 +46,9 @@ bool AdjEntry::Match(string& str) const
     if (binary_search(highest.begin(), highest.end(), str))
         return true;
     return false;
+}
+void AdjEntry::OutputSource(ostream& fout) const
+{
+    fout << predOrAttr << endl
+            << comparative << highest;
 }

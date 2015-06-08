@@ -21,6 +21,8 @@ protected:
     void OutputEle(std::ostream&) const;
     
 public:
+    virtual void OutputSource(std::ostream&) const = 0;
+    void OutputEleSource(std::ostream&) const;
     virtual bool Match(std::string&) const = 0;
     Entry (std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&);
     Entry ();

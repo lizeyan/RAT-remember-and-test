@@ -31,6 +31,7 @@ public:
     std::string GetCompleteForm()	const {return completeForm;}
     std::string GetAbbrForm()	const {return abbrForm;}
     std::string GetPluralForm() const {return pluralForm;}
+    void OutputSource(std::ostream&) const;    
     ~NounEntry() {}
 };
 

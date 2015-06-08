@@ -22,3 +22,7 @@ bool ConjEntry::Match(string& str) const
 {
     return str == category;
 }
+void ConjEntry::OutputSource(ostream& fout) const
+{
+	fout << category << endl;
+}

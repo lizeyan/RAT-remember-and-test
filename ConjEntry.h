@@ -17,6 +17,7 @@ public:
     ConjEntry (std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&, std::string&);
     std::string GetCategory()	const {return category;}
     ~ConjEntry() {}
+    void OutputSource(std::ostream&) const;
 };
 
 #endif /* defined(_______ConjEntry__) */

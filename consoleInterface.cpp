@@ -2,6 +2,7 @@
 #include "Interface.h"
 #include "consoleInterface.h"
 #include "recite.h"
+#include "WordFactory.h"
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
@@ -615,6 +616,10 @@ void consoleInterface::normalAnalyse(string command)
     {
         RemoveUser();
     }
+    else if (kmp("convert", command) == 0)
+    {
+        convert(command);
+    }
     else if (kmp("rm", command) == 0)
     {
         int w = kmp ("-w", command);
@@ -679,6 +684,83 @@ void consoleInterface::List(string command)
             }
         }//~for
     }//~else
+}
+void consoleInterface::Write(ostream& fout, const Word* w)
+{
+    if (w == NULL)
+        return;
+    fout << w->GetSpell() << endl;
+    for (int i = 0; i < w->EntrySize(); ++i)
+    {
+        w->GetEntry(i)->OutputEleSource(fout);
+        w->GetEntry(i)->OutputSource(fout);
+        fout << "#" << endl;
+    }
+    fout << "*" << endl;
+}
+void consoleInterface::convert(string command)
+{
+    int begin = kmp("-s", command);
+    if (begin < 0 || begin >= command.size())
+    {
+        cout << "please input source file name" << endl;
+        return;
+    }
+    begin += 2;
+    while (begin < command.size() && command[begin] == ' ')
+        begin++;
+    int end = begin;
+    while (end < command.size() && command[end] != ' ')
+        end++;
+    string source;
+    for (int i = begin; i < end; ++i)
+    {
+        source += command[i];
+    }
+    begin = kmp("-t", command);
+    if (begin < 0 || begin >= command.size())
+    {
+        cout << "please input target file name" << endl;
+        return;
+    }
+    begin += 2;
+    while (begin < command.size() && command[begin] == ' ')
+        begin++;
+    end = begin;
+    while (end < command.size() && command[end] != ' ')
+        end++;
+    string target;
+    for (int i = begin; i < end; ++i)
+    {
+        target += command[i];
+    }
+    ifstream fin(source.c_str());
+    if (!fin)
+    {
+        cout << "fail to open the file: " << source << endl;
+        return;
+    }
+    ofstream fout(target.c_str(), ios::app);
+    string tmp;
+    vector<string> unit;
+    WordFactory* fac = new WordFactory;
+    while (getline(fin, tmp))
+    {
+        if (tmp == "")
+        {
+            if (unit.size() == 0)
+                continue;
+            Word* w = fac->youdaoCreate(unit);
+            Write(fout, w);
+            delete w;
+            unit.clear(); 
+        }
+        else
+            unit.push_back(tmp);
+    }
+    delete fac;
+    fout.close();
+    fin.close();
 }
 void consoleInterface::RemoveUser()
 {
@@ -1235,6 +1317,7 @@ void consoleInterface::outHelp()
     << "add -t setname -f filename --add new words from a text file, \n\tRAT will recognize your unfamiliar word" << endl
     << "\tIn order to do this, end each word with \'.\'" << endl
     << "exam --exam for one higher level" << endl
+    << "convert -s source -t target -- convert form youdao to RAT" << endl
     << "touch -t setname --new set, the name must be a constant string." << endl
     << "touch -u userName -p password-- new user" << endl
     << "s[witch] -u userName --switch user" << endl

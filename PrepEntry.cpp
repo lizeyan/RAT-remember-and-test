@@ -16,3 +16,4 @@ bool PrepEntry::Match(string& str) const
 {
     return false;
 }
+void PrepEntry::OutputSource(ostream&) const	{}

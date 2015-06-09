@@ -1074,7 +1074,7 @@ void consoleInterface::Test(string command)
     stringstream ss;
     ss << testTypeString;
     ss >> testType;
-    if(testType>2){
+    if(testType>2 || testType < 0){
         cout<<"no this testType, please input again!"<<endl;
         return;
     }

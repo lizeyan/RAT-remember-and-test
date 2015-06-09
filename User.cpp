@@ -20,6 +20,7 @@ User::User(string n, string p, string level):name(n), password(p)
         ifstream finSet ((pre + setName + ".txt").c_str());
         Set* tmp = new Set(setName);
         tmp->Read (finSet);
+        
         finSet.close();
         wordSets.push_back(tmp);
     }

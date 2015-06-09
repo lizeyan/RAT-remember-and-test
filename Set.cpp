@@ -66,8 +66,7 @@ void Set::Read(std::istream& load)
 }
 
 Set::Set ()	{
-    beginDay=177;
-    useDay=120;
+    
 }
 int Set::removeWord(int rank)
 {

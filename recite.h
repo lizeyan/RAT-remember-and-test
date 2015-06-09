@@ -21,9 +21,15 @@ public:
     void DoReview(Word* m, std::ostream& osout, std::istream& input, int huihe);
     void ReciteControl(std::ostream& osout, std::istream& input);
     int ReciteNeedTime(Word* m){//返回一个单词需要连续背会几次才能够算是会了
-        if(m->reviewDay>10){
+        int lin = 0;
+        time_t t = time(0);
+        char tmp[5];
+        strftime( tmp, sizeof(tmp), "%j",localtime(&t) );
+        int today = atoi(tmp);
+        lin = today - m->reviewDay;
+        if(lin>10){
             return 1;
-        }else if(m->reviewDay>4){
+        }else if(lin>4){
             return 2;
         }else{
             return 3;

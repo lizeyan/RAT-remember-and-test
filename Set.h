@@ -15,7 +15,10 @@ private:
     std::vector <Word*> words;
     std::vector <Word*> recited;
     int useDay;//背完这个set设定的时间
-    int beginDay;//开始的时间
+    int beginDay[2];//开始的时间
+    int lastRecite[2];//上次背诵时间
+    int reciteToday;//今天已经背诵过的单词数量
+    int reviewToday;//今天已经复习过的单词数量
 public:
     friend std::ostream& operator<< (std::ostream&, Set&);
     std::string GetName()	const {return setName;}
@@ -35,14 +38,12 @@ public:
     int GetUseDay(){
         return useDay;
     }
-    int GetBeginDay(){
+    int* GetBeginDay(){
         return beginDay;
     }
     int removeWord(int rank);
     Set();
     Set (std::string n): setName(n)	{
-        beginDay=177;
-        useDay=120;
     }
     friend class recite;
     friend class consoleInterface;

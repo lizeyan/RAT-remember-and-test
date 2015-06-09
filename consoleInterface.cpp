@@ -13,6 +13,7 @@
 #include <vector>
 #include <iomanip>
 using namespace std;
+bool judge(int n);
 consoleInterface* consoleInterface::instance = 0;
 consoleInterface* consoleInterface::GetInstance()
 {
@@ -34,9 +35,9 @@ consoleInterface::consoleInterface()
 void consoleInterface::ini()
 {
     string source = "StandardSource.txt";
-    #ifdef _WIN32
+#ifdef _WIN32
     source = "StandardSourceWin.txt";
-    #endif
+#endif
     srand((unsigned int)time(NULL));
     int beginTime = clock();
     cout << "loading......" << endl;
@@ -74,6 +75,13 @@ void consoleInterface::ini()
     while (!Login(cuser));
     user = cuser;
     load();
+    for(int i=0; i<user->GetSize(); i++){//初始化set中的一些东西
+        for(int j=0; j<user->GetSet(i)->GetSize(); j++){
+            if(user->GetSet(i)->GetWord(j)->haveRecited){
+                user->GetSet(i)->recited.push_back(user->GetSet(i)->GetWord(j));
+            }
+        }
+    }
 }
 void consoleInterface::load()
 {
@@ -85,7 +93,7 @@ void consoleInterface::load()
         string ans="";
         getline(fin, ans);
         while(ans!="*"){
-            string lin[3];
+            string lin[10];
             int i;
             for(i=0; ; i++){
                 if(ans[i]!=' '){
@@ -107,7 +115,23 @@ void consoleInterface::load()
             int po=user->FindSet(lin[0]);
             Set* set=user->GetSet(po);
             set->useDay=atoi(lin[1].c_str());
-            set->beginDay=atoi(lin[2].c_str());
+            set->beginDay[0]=atoi(lin[2].c_str());
+            set->beginDay[1]=atoi(lin[3].c_str());
+            time_t t = time(0);
+            char tmp[5],tmp1[8];
+            strftime( tmp1, sizeof(tmp), "%Y",localtime(&t) );
+            int year=atoi(tmp1);
+            strftime( tmp, sizeof(tmp), "%j",localtime(&t) );
+            int day=atoi(tmp);
+            set->lastRecite[0]=atoi(lin[4].c_str());
+            set->lastRecite[1]=atoi(lin[5].c_str());
+            if(year == set->lastRecite[0] && day == set->lastRecite[1]){
+                set->reciteToday=atoi(lin[6].c_str());
+                set->reviewToday=atoi(lin[7].c_str());
+            }else{
+                set->reciteToday=0;
+                set->reviewToday=0;
+            }
             getline(fin, ans);
         }//set的两个数据都读进来了
         for(int i=0; i<dic->GetSize(); i++){
@@ -134,9 +158,9 @@ void consoleInterface::load()
             Test::staticWrongNum0=atoi(lin1[3].c_str());
             Test::staticWrongNum1=atoi(lin1[4].c_str());
             Test::staticWrongNum2=atoi(lin1[5].c_str());
-            Test::rightRate0=atoi(lin1[6].c_str());
-            Test::rightRate1=atoi(lin1[7].c_str());
-            Test::rightRate2=atoi(lin1[8].c_str());//各种正确率读进来
+            Test::rightRate0=atof(lin1[6].c_str());
+            Test::rightRate1=atof(lin1[7].c_str());
+            Test::rightRate2=atof(lin1[8].c_str());//各种正确率读进来
             
             string lin2[14];
             num=0;
@@ -187,13 +211,13 @@ void consoleInterface::load()
             (*dic)[i].reciteTime.clear();
             int nu=-1;
             for(int k=0; k<num; k++){
-                if(k%4==0){
+                if(k%5==0){
                     vector<int> linshi;
-                    for(int l=0; l<5; l++) linshi.push_back(1);
+                    for(int l=0; l<6; l++) linshi.push_back(1);
                     (*dic)[i].reciteTime.push_back(linshi);
                     nu++;
                 }
-                (*dic)[i].reciteTime[nu][k%4]=atoi(lin3[k].c_str());
+                (*dic)[i].reciteTime[nu][k%5]=atoi(lin3[k].c_str());
             }
             
             getline(fin, ans);
@@ -220,13 +244,13 @@ void consoleInterface::load()
             nu=-1;
             (*dic)[i].reviewTime.clear();
             for(int k=0; k<num; k++){
-                if(k%4==0 ){
+                if(k%5==0 ){
                     vector<int> linshi;
-                    for(int l=0; l<5; l++) linshi.push_back(1);
+                    for(int l=0; l<6; l++) linshi.push_back(1);
                     (*dic)[i].reviewTime.push_back(linshi);
                     nu++;
                 }
-                (*dic)[i].reviewTime[nu][k%4]=atoi(lin4[k].c_str());
+                (*dic)[i].reviewTime[nu][k%5]=atoi(lin4[k].c_str());
             }
             
             getline(fin,ans);
@@ -588,7 +612,16 @@ void consoleInterface::normalAnalyse(string command)
     }
     else if(kmp("recite", command)==0 || kmp("r ", command)==0)
     {
-        Recite(command);
+        int file = kmp ("-t", command);
+        if (file >= 0 && file < command.size())
+            Recite(command);
+        else{
+            file = kmp("-c", command);
+            if (file >= 0 && file < command.size())
+                Change(command);
+            else
+                Look(command);
+        }
     }
     else if (kmp("add", command) == 0)
     {
@@ -771,14 +804,14 @@ void consoleInterface::RemoveWord(string command)
     while (begin < command.size())
     {
         int end = begin - 1;
-        while (++end < command.size() && command[end] != ' ');        
+        while (++end < command.size() && command[end] != ' ');
         string tmp;
         for (int i = begin; i < end; ++i)
             tmp += command[i];
         stringstream ss;
         int res;
         ss << tmp;
-        ss >> res; 
+        ss >> res;
         cset->removeWord(res - 1);
         begin = end + 1;
     }
@@ -813,6 +846,106 @@ void consoleInterface::Recite(std::string command)
         cout<<"In review word mode, press Enter to go on reviewing, press q to exit"<<endl;
         recite* Recite = new recite(user->GetSet(linpos));
         Recite->ReciteControl(cout, cin);
+    }
+}
+void consoleInterface::Change(std::string command)
+{
+    if (user == NULL)
+    {
+        cout << "please login" << endl;
+        return;
+    }
+    int begin = kmp("-c", command) + 1;
+    if(begin<3 || begin>=command.size()){
+        cout<<"please type in set"<<endl;
+        return;
+    }
+    while (command[++begin] == 32);
+    string setName;int i;
+    for(i=begin; ; ++i)
+    {
+        if(command[i]==' ') break;
+        setName += command[i];
+    }
+    int linpos = user->FindSet(setName);
+    if (linpos < 0 || linpos >= user->GetSize())
+    {
+        cout << "no such set. Try \"toch\"" << endl;
+    }
+    else
+    {
+        while(command[++i] == 32);
+        string targetDay = "";
+        for( ; i<command.size(); i++){
+            targetDay += command[i];
+        }
+        if(targetDay == ""){
+            cout<<"please type in day."<<endl;
+            return;
+        }
+        int today[2];
+        time_t t = time(0);
+        char tmp[5],tmp1[8];
+        strftime( tmp1, sizeof(tmp), "%Y",localtime(&t) );
+        today[0]=atoi(tmp1);
+        strftime( tmp, sizeof(tmp), "%j",localtime(&t) );
+        today[1]=atoi(tmp);
+        int plus=0;//因为年数差异产生的天数差异
+        for(int i=user->GetSet(linpos)->GetBeginDay()[0]; i<today[0]; i++){
+            plus+=365;
+            if(judge(i)){
+                plus++;
+            }
+        }
+        int dayuse=today[1]-user->GetSet(linpos)->GetBeginDay()[1]+plus;
+        user->GetSet(linpos)->useDay=atoi(targetDay.c_str())+dayuse;
+        cout<<"success!"<<endl;
+        modified=true;
+    }
+}
+void consoleInterface::Look(std::string command)
+{
+    if (user == NULL)
+    {
+        cout << "please login" << endl;
+        return;
+    }
+    int begin = kmp("-l", command) + 1;
+    if(begin<3 || begin>=command.size()){
+        cout<<"please type in set"<<endl;
+        return;
+    }
+    while (command[++begin] == 32);
+    string setName;
+    for(int i=begin; i<command.size(); ++i)
+    {
+        setName += command[i];
+    }
+    int linpos = user->FindSet(setName);
+    if (linpos < 0 || linpos >= user->GetSize())
+    {
+        cout << "no such set. Try \"toch\"" << endl;
+    }
+    else
+    {
+        cout<<user->GetSet(linpos)->recited.size()<<" words recited."<<endl;
+        cout<<user->GetSet(linpos)->words.size()-user->GetSet(linpos)->recited.size()<<" words left."<<endl;
+        int today[2];
+        time_t t = time(0);
+        char tmp[5],tmp1[8];
+        strftime( tmp1, sizeof(tmp), "%Y",localtime(&t) );
+        today[0]=atoi(tmp1);
+        strftime( tmp, sizeof(tmp), "%j",localtime(&t) );
+        today[1]=atoi(tmp);
+        int plus=0;
+        for(int i=user->GetSet(linpos)->GetBeginDay()[0]; i<today[0]; i++){
+            plus+=365;
+            if(judge(i)){
+                plus++;
+            }
+        }
+        int dayleft=user->GetSet(linpos)->GetUseDay()-today[1]+user->GetSet(linpos)->GetBeginDay()[1]+plus;
+        cout<<dayleft<<" days left"<<endl;
     }
 }
 void consoleInterface::Test(string command)
@@ -1110,6 +1243,22 @@ void consoleInterface::TouchSet(string command)
         Set* set = new Set(setName);
         user->InsertSet (*set);
         modified = true;
+        cout<<"please input how many days you want to use to recite the word of this set."<<endl;
+        int dayUse;
+        cin>>dayUse;
+        set->useDay=dayUse;
+        time_t t = time(0);
+        char tmp[5],tmp1[8];
+        strftime( tmp1, sizeof(tmp), "%Y",localtime(&t) );
+        int year=atoi(tmp1);
+        strftime( tmp, sizeof(tmp), "%j",localtime(&t) );
+        int day=atoi(tmp);
+        set->beginDay[0]=year;
+        set->beginDay[1]=day;
+        set->lastRecite[0]=year;
+        set->lastRecite[1]=day;
+        set->reciteToday=0;
+        set->reviewToday=0;
         cout << "successfully touch" << endl;
         ifstream fin((user->GetName() + "/" + setName + ".txt").c_str());
         set->Read(fin);
@@ -1257,7 +1406,7 @@ void consoleInterface::output(){
     s+="/source.txt";
     ofstream fout(s.c_str());
     for(int i=0; i<user->GetSize(); i++){
-        fout<<user->GetSet(i)->GetName()<<' '<<user->GetSet(i)->GetUseDay()<<' '<<user->GetSet(i)->GetBeginDay()<<endl;
+        fout<<user->GetSet(i)->GetName()<<' '<<user->GetSet(i)->GetUseDay()<<' '<<user->GetSet(i)->GetBeginDay()[0]<<' '<<user->GetSet(i)->GetBeginDay()[1]<<' '<<user->GetSet(i)->lastRecite[0]<<' '<<user->GetSet(i)->lastRecite[1]<<' '<<user->GetSet(i)->reciteToday<<' '<<user->GetSet(i)->reviewToday<<endl;
     }
     fout<<"*"<<endl;
     for(int i=0; i<dic->GetSize(); i++){
@@ -1284,14 +1433,14 @@ void consoleInterface::output(){
         <<(*dic)[i].zu<<' '<<(*dic)[i].huiHe<<endl;//一行..............
         fout<<(*dic)[i].reciteTime.size()<<' ';
         for(int k=0; k<(*dic)[i].reciteTime.size(); k++){
-            for(int j=0; j<4; j++){
+            for(int j=0; j<5; j++){
                 fout<<(*dic)[i].reciteTime[k][j]<<' ';
             }
         }
         fout<<endl;//一行............
         fout<<(*dic)[i].reviewTime.size()<<' ';
         for(int k=0; k<(*dic)[i].reviewTime.size(); k++){
-            for(int j=0; j<4; j++){
+            for(int j=0; j<5; j++){
                 fout<<(*dic)[i].reviewTime[k][j]<<' ';
             }
         }

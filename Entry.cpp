@@ -60,10 +60,10 @@ void Entry::OutputEle(ostream& out) const
 void Entry::OutputEleSource(ostream& fout) const
 {
     fout << phonogram << endl
-            << wordClass << endl
-            << meaningC << endl
-            << meaningE << endl
-            << example;
+    << wordClass << endl
+    << meaningC << endl
+    << meaningE << endl
+    << example;
 }
 ostream& operator<< (ostream& out, const Entry& e)
 {

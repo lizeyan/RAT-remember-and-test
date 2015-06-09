@@ -40,5 +40,5 @@ bool NounEntry::Match(string& str) const
 void NounEntry::OutputSource(ostream& fout) const
 {
     fout << countable << endl << aOrAn << endl << proper << endl << single << endl << completeForm << endl
-            << abbrForm << endl << pluralForm << endl;
+    << abbrForm << endl << pluralForm << endl;
 }

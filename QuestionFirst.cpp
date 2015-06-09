@@ -15,7 +15,10 @@ QuestionFirst::QuestionFirst(Word* m, int Level, Set* n){
 void QuestionFirst::AddQuestion(){
     int* chooseEntry=searchEntry(wordFirst, right, 0);
     for(int i=0; i<10; i++) chooseEntry[i]=i;
-    std::random_shuffle(chooseEntry, chooseEntry+num);
+    int tmp2 = rand()%50 +1;
+    for(int i=0; i<tmp2; i++){
+        std::random_shuffle(chooseEntry, chooseEntry+num);
+    }
     for(int i=0; i<right; i++){
         question[i].s+=(wordFirst->GetEntry(chooseEntry[i]))->GetMeaningC();
         question[i].s+="  ";
@@ -25,7 +28,10 @@ void QuestionFirst::AddQuestion(){
     }
     int dos[5000];
     for(int i=0; i<5000; i++) dos[i]=i;
-    std::random_shuffle(dos, dos+setFirst->GetSize());
+    int tmp3 = rand()%50 +1;
+    for(int i=0; i<tmp3; i++){
+        std::random_shuffle(dos, dos+setFirst->GetSize());
+    }
     bool plus=false;
     int lef=right, rig=level;
     for(int i=right; i<level; i++){
@@ -50,8 +56,10 @@ void QuestionFirst::AddQuestion(){
 }
 
 void QuestionFirst::DisorganizeQuestion(){
-    srand(time(0));
-    std::random_shuffle(question, question+level);
+    int tmp3 = rand()%50 +1;
+    for(int i=0; i<tmp3; i++){
+        std::random_shuffle(question, question+level);
+    }
     int lin=0;
     for(int i=0; i<level; i++){
         if(question[i].num<right){

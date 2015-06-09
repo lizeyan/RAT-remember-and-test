@@ -22,7 +22,10 @@ void QuestionSecondChoose::AddQuestion(){
     question[0].num=0;
     int dos[5000];
     for(int i=0; i<5000; i++) dos[i]=i;
-    std::random_shuffle(dos, dos+setSecond->GetSize());
+    int tmp3 = rand()%50 +1;
+    for(int i=0; i<tmp3; i++){
+        std::random_shuffle(dos, dos+setSecond->GetSize());
+    }
     int lef=1, rig=level;
     bool plus=false;
     for(int i=1; i<level; i++){
@@ -52,7 +55,10 @@ void QuestionSecondChoose::AddQuestion(){
 }
 
 void QuestionSecondChoose::DisorganizeQuestion(){
-    std::random_shuffle(question, question+level);
+    int tmp3 = rand()%50 +1;
+    for(int i=0; i<tmp3; i++){
+        std::random_shuffle(question, question+level);
+    }
     for(int i=0; i<level; i++){
         if(question[i].num==0){
             answer=i;

@@ -24,5 +24,5 @@ bool ConjEntry::Match(string& str) const
 }
 void ConjEntry::OutputSource(ostream& fout) const
 {
-	fout << category << endl;
+    fout << category << endl;
 }

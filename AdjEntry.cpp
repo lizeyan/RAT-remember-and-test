@@ -50,5 +50,5 @@ bool AdjEntry::Match(string& str) const
 void AdjEntry::OutputSource(ostream& fout) const
 {
     fout << predOrAttr << endl
-            << comparative << highest;
+    << comparative << highest;
 }

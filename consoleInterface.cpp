@@ -178,7 +178,8 @@ void consoleInterface::load()
             (*dic)[i].quan1=atoi(lin2[1].c_str());
             (*dic)[i].quan2=atoi(lin2[2].c_str());
             (*dic)[i].quanReview=atoi(lin2[3].c_str());
-            (*dic)[i].quanSelect=atoi(lin2[4].c_str());
+            (*dic)[i].quanSelect[0]=atoi(lin2[4].c_str());
+            (*dic)[i].quanSelect[1]=rand()%100000;
             (*dic)[i].haveRecited=atoi(lin2[5].c_str());
             (*dic)[i].kill=atoi(lin2[6].c_str());
             (*dic)[i].right=atoi(lin2[7].c_str());
@@ -786,7 +787,7 @@ void consoleInterface::convert(string command)
             Word* w = fac->youdaoCreate(unit);
             Write(fout, w);
             delete w;
-            unit.clear(); 
+            unit.clear();
         }
         else
             unit.push_back(tmp);
@@ -924,7 +925,7 @@ void consoleInterface::Recite(std::string command)
     else
     {
         modified=true;
-        cout<<"In recite word mode, if you want to kill a word , if you want to quit,press q"<<endl;
+        cout<<"In recite word mode, if you want to kill a word ,press k,  if you want to quit,press q"<<endl;
         cout<<"In review word mode, press Enter to go on reviewing, press q to exit"<<endl;
         recite* Recite = new recite(user->GetSet(linpos));
         Recite->ReciteControl(cout, cin);
@@ -1510,7 +1511,7 @@ void consoleInterface::output(){
         <<(*dic)[i].GetEntry(0)->test->rightRate2<<endl;//一行.............
         
         fout<<(*dic)[i].quan0<<' '<<(*dic)[i].quan1<<' '<<(*dic)[i].quan2<<' '
-        <<(*dic)[i].quanReview<<' '<<(*dic)[i].quanSelect<<' '
+        <<(*dic)[i].quanReview<<' '<<(*dic)[i].quanSelect[0]<<' '
         <<(*dic)[i].haveRecited<<' '<<(*dic)[i].kill<<' '
         <<(*dic)[i].right<<' '<<(*dic)[i].wrong<<' '<<(*dic)[i].reviewDay<<' '
         <<(*dic)[i].zu<<' '<<(*dic)[i].huiHe<<endl;//一行..............

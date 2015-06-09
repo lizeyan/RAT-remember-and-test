@@ -64,7 +64,6 @@ Word* WordFactory::create(vector<string>& source)
     result->quan0=result->EntrySize();
     result->quan1=result->EntrySize();
     result->quan2=result->EntrySize();
-    result->wrong=0;
     result->right=0;
     result->reviewDay=0;
     result->haveRecited=false;
@@ -86,15 +85,16 @@ Word* WordFactory::create(vector<string>& source)
         int have=result->reviewDay;
         i-=have;
         zhiShuDian=i>=0?i:0;
-        result->quanSelect=1;
+        result->quanSelect[0]=1;
+        result->quanSelect[1]=rand()%100000;
         for(int i=0; i<zhiShuDian; i++){
-            result->quanSelect*=2;
+            result->quanSelect[0]*=2;
         }
-        result->quanSelect*=(result->wrong/(result->right+1)+1)>8? 8: result->wrong/(result->right+1)+1;
-        result->quanSelect-=result->reviewDay;
-        result->quanSelect=result->quanSelect>=1? result->quanSelect : 1;
+        result->quanSelect[0]*=(result->wrong/(result->right+1)+1)>8? 8: result->wrong/(result->right+1)+1;
+        result->quanSelect[0]-=result->reviewDay;
+        result->quanSelect[0]=result->quanSelect[0]>=1? result->quanSelect[0] : 1;
     }else{
-        result->quanSelect=0;
+        result->quanSelect[0]=0;
     }
     return result;
 }
@@ -147,10 +147,10 @@ Word* WordFactory::youdaoCreate(vector<string>& source)
             w->entries.push_back(new VerbEntry(phono,wc, m, empty,tmp, 0,empty,tmp,tmp,tmp,tmp));
         }
         else if (wordClass == "vt")
-         {
+        {
             string wc = "verb";
             w->entries.push_back(new VerbEntry(phono,wc, m, empty,tmp,1,empty,tmp,tmp,tmp,tmp));
-         }
+        }
         else if (wordClass == "adj")
             w->entries.push_back(new AdjEntry(phono, wordClass, m, empty, tmp,-1,tmp, tmp));
         else if (wordClass == "adv")

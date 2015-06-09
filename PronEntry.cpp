@@ -21,7 +21,7 @@ void PronEntry::Output (ostream& out) const
 }
 void PronEntry::OutputSource(ostream& fout) const
 {
-	fout << person << endl << single << endl;
+    fout << person << endl << single << endl;
 }
 bool  PronEntry::Match(string& str) const
 {

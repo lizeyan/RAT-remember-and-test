@@ -1,11 +1,10 @@
 #include "recite.h"
 
 bool cmp(Word* a, Word* b){
-    if(a->GetQuanSelect()==b->GetQuanSelect()){
-        int m = rand()%2;
-        return m;
+    if(a->GetQuanSelect()[0]==b->GetQuanSelect()[0]){
+        return a->GetQuanSelect()[1]>b->GetQuanSelect()[1];
     }else{
-        return a->GetQuanSelect()>b->GetQuanSelect();
+        return a->GetQuanSelect()[0]>b->GetQuanSelect()[0];
     }
 }
 
@@ -49,7 +48,13 @@ recite::recite(Set* m): set(m){
     for(int i=0; i<m->GetSize(); i++){
         lin.push_back(m->GetWord(i));
     }
-    std::random_shuffle(lin.begin(), lin.begin()+m->GetSize());
+    
+    int tmp2 = rand()%50 +1;
+    
+    for(int i=0; i<tmp2; i++){
+        std::random_shuffle(lin.begin(), lin.begin()+m->GetSize());
+    }
+    
     int num=0;
     for(int i=0; i<lin.size(); i++){
         if(num>=reciteToday) break;
@@ -220,7 +225,10 @@ void recite::ReciteControl(std::ostream& osout, std::istream& input){
         for(int i=0; i<reciteThis.size(); i++){//刚学过的单词在这这一轮中一定要进行复习，所以在录入之后在push到reviewWord中
             reviewWord.push_back(reciteThis[i]);
         }
-        std::random_shuffle(reviewThis.begin(), reviewThis.end());
+        int tmp2 = rand()%50 +1;
+        for(int i=0; i<tmp2; i++){
+            std::random_shuffle(reviewThis.begin(), reviewThis.end());
+        }
         for(int i=0; i<reviewThis.size(); i++){
             DoReview(reviewThis[i], osout, input, huihe);
             if(Exit) return;

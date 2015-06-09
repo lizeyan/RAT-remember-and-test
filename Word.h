@@ -15,7 +15,7 @@ private:
     int quan1;
     int quan2;
     int quanReview;//背诵单词时复习的权重
-    int quanSelect;//一天中在总的词库中挑选所需复习的词的权重，这里用排序，不用随机
+    int quanSelect[2];//一天中在总的词库中挑选所需复习的词的权重，这里用排序，不用随机
     bool haveRecited;//是否已经背过
     bool kill;//判断是否斩
     int right;//总共正确的次数
@@ -40,7 +40,7 @@ public:
     {
         return haveRecited;
     }
-    int GetQuanSelect() const
+    int* GetQuanSelect()
     {
         return quanSelect;
     }

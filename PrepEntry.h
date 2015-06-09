@@ -14,6 +14,7 @@ public:
     PrepEntry ();
     PrepEntry (std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&);
     ~PrepEntry() {}
+    void OutputSource(std::ostream&) const;
 };
 
 #endif /* defined(_______PrepEntry__) */

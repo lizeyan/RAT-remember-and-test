@@ -19,7 +19,10 @@ void PronEntry::Output (ostream& out) const
     if (single >= 0)
         out << (single?"single form":"plural form") << endl;
 }
-
+void PronEntry::OutputSource(ostream& fout) const
+{
+	fout << person << endl << single << endl;
+}
 bool  PronEntry::Match(string& str) const
 {
     return false;

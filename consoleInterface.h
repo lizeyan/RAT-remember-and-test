@@ -6,6 +6,7 @@
 #include "Dictionary.h"
 #include "operation.h"
 #include "User.h"
+#include "Word.h"
 #include <string>
 #include <vector>
 class Set;
@@ -14,6 +15,8 @@ class consoleInterface: public Interface
     static consoleInterface* instance;
     consoleInterface();
 protected:
+    void Write (std::ostream&, const Word*);
+    void convert(std::string);
     void List(std::string);
     void RemoveSet (std::string);
     void RemoveUser();

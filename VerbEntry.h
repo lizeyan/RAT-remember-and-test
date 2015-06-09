@@ -28,6 +28,7 @@ public:
     std::string GetPresentFoem(int)const;
     std::string GetPastForm(int)const;
     std::string GetPastParticle(int)const;
+    void OutputSource(std::ostream&) const;
     ~VerbEntry() {}
 };
 

@@ -19,6 +19,7 @@ protected:
     EntryFactory* typeChoose (std::string&);
 public:
     Word* create (std::vector<std::string>&);//new 一个word*,传出去
+    Word* youdaoCreate(std::vector<std::string>&);
 };
 
 #endif /* defined(_______WordFactory__) */

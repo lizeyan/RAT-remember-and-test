@@ -15,6 +15,7 @@ protected:
     void Output(std::ostream&) const;
 public:
     bool Match(std::string&) const;
+    void OutputSource(std::ostream&) const;
     AdjEntry();
     AdjEntry(std::string&, std::string&, std::string&, std::string&, std::vector<std::string>&,
              int, std::vector<std::string>&, std::vector<std::string>&);

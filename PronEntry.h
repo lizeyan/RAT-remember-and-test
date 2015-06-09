@@ -20,6 +20,7 @@ public:
     int GetPerson()     const{return person;}
     int GetSingle()     const{return single;}
     ~PronEntry() {}
+    void OutputSource(std::ostream&) const;
 };
 
 #endif /* defined(_______PronEntry__) */

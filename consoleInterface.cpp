@@ -84,6 +84,35 @@ void consoleInterface::ini()
             }
         }
     }
+    for(int i=0; i<user->GetSize(); i++){
+        Remind(user->GetSet(i));
+    }
+}
+void consoleInterface::Remind(Set* m){
+    cout<<m->GetName()<<" :"<<endl;
+    int today[2];
+    time_t t = time(0);
+    char tmp[5],tmp1[8];
+    strftime( tmp1, sizeof(tmp), "%Y",localtime(&t) );
+    today[0]=atoi(tmp1);
+    strftime( tmp, sizeof(tmp), "%j",localtime(&t) );
+    today[1]=atoi(tmp);
+    int plus=0;//因为年数差异产生的天数差异
+    for(int i=m->GetBeginDay()[0]; i<today[0]; i++){
+        plus+=365;
+        if(judge(i)){
+            plus++;
+        }
+    }
+    int dayleft=m->GetUseDay()-today[1]+m->GetBeginDay()[1]+plus;//还剩下多少天可以背单词
+    
+    if(dayleft<=0){
+        std::cout<<"No Day Left! Please add days."<<std::endl;
+    }else{
+        int wordleft=m->GetSize()-m->GetRecitedSize();//还有多少单词没有背
+        int reciteToday=wordleft/dayleft-m->reciteToday;//今天需要背多少单词
+        cout<<"\t"<<reciteToday<<" words need to be recited today."<<endl;
+    }
 }
 void consoleInterface::load()
 {
@@ -546,9 +575,9 @@ void consoleInterface::Save()
                     if (j != user->GetSet(i)->GetSize() - 1)
                         fout << endl;
                 }
-                output();
                 fout.close();
             }
+            output();
             cout << "saved" << endl;
             break;
         }
@@ -918,7 +947,7 @@ void consoleInterface::Recite(std::string command)
     int linpos = user->FindSet(setName);
     if (linpos < 0 || linpos >= user->GetSize())
     {
-        cout << "no such set. Try \"toch\"" << endl;
+        cout << "no such set. Try \"touch\"" << endl;
     }
     else
     {
@@ -927,7 +956,9 @@ void consoleInterface::Recite(std::string command)
         cout<<"In review word mode, press Enter to go on reviewing, press q to exit"<<endl;
         recite* Recite = new recite(user->GetSet(linpos));
         Recite->ReciteControl(cout, cin);
-        cout<<"Congratulations!! You have finished today's task!"<<endl;
+        if(Recite->GetDone()){
+            cout<<"Congratulations! You have finished today's task!"<<endl;
+        }
     }
 }
 void consoleInterface::Change(std::string command)
@@ -952,7 +983,7 @@ void consoleInterface::Change(std::string command)
     int linpos = user->FindSet(setName);
     if (linpos < 0 || linpos >= user->GetSize())
     {
-        cout << "no such set. Try \"toch\"" << endl;
+        cout << "no such set. Try \"touch\"" << endl;
     }
     else
     {
@@ -1056,7 +1087,7 @@ void consoleInterface::Test(string command)
     pos = user->FindSet(setName);
     if (pos < 0 || pos >= user->GetSize())
     {
-        cout << "no such set. Try \"toch\"" << endl;
+        cout << "no such set. Try \"touch\"" << endl;
     }
     else
     {
@@ -1304,6 +1335,10 @@ void consoleInterface::TouchSet(string command)
         cout<<"please input how many days you want to use to recite the word of this set."<<endl;
         int dayUse;
         cin>>dayUse;
+        while(dayUse<=0){
+            cout<<"please input corret day."<<endl;
+            cin>>dayUse;
+        }
         set->useDay=dayUse;
         time_t t = time(0);
         char tmp[5],tmp1[8];

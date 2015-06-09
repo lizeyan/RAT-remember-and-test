@@ -21,6 +21,7 @@ bool judge(int n){
 recite::recite(Set* m): set(m){
     int today[2];
     Exit=false;
+    done=false;
     time_t t = time(0);
     char tmp[5],tmp1[8];
     strftime( tmp1, sizeof(tmp), "%Y",localtime(&t) );
@@ -36,7 +37,7 @@ recite::recite(Set* m): set(m){
     }
     int dayleft=m->GetUseDay()-today[1]+m->GetBeginDay()[1]+plus;//还剩下多少天可以背单词
     
-    if(dayleft==0){
+    if(dayleft<=0){
         std::cout<<"No Day Left!"<<std::endl;
         exit(-1);
     }
@@ -260,5 +261,8 @@ void recite::ReciteControl(std::ostream& osout, std::istream& input){
             }
         }
         huihe++;
+    }
+    if(reviewWord.size()==0 && reciteWord.size()==0){
+        done = true;
     }
 }

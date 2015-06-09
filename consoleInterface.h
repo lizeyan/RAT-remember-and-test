@@ -50,6 +50,7 @@ protected:
     void Change(std::string);
     void Look(Set*);
     void output();
+    void Remind(Set*);
 public:
     static consoleInterface* GetInstance();
     void operation();

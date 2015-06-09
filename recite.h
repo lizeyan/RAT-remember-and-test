@@ -9,6 +9,7 @@
 class recite{
     Set* set;//背诵的set
     bool Exit;
+    bool done;//完成今日背诵任务了吗
     int reciteToday;//今日需要背得单词的数量
     int reviewToday;//今日需要复习的单词的数量
     std::vector<Word*> reciteWord;//所需背诵的单词
@@ -20,6 +21,7 @@ public:
     void DoRecite(Word* m, std::ostream& osout, std::istream& input);
     void DoReview(Word* m, std::ostream& osout, std::istream& input, int huihe);
     void ReciteControl(std::ostream& osout, std::istream& input);
+    bool GetDone(){return done;}
     int ReciteNeedTime(Word* m){//返回一个单词需要连续背会几次才能够算是会了
         int lin = 0;
         time_t t = time(0);

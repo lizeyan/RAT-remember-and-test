@@ -48,7 +48,7 @@ protected:
     void normalAnalyse(std::string command);
     void Recite(std::string);
     void Change(std::string);
-    void Look(std::string);
+    void Look(Set*);
     void output();
 public:
     static consoleInterface* GetInstance();

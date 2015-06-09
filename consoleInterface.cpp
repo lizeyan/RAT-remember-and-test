@@ -77,6 +77,7 @@ void consoleInterface::ini()
     user = cuser;
     load();
     for(int i=0; i<user->GetSize(); i++){//初始化set中的一些东西
+        user->GetSet(i)->lastRecite[0]=0;
         for(int j=0; j<user->GetSet(i)->GetSize(); j++){
             if(user->GetSet(i)->GetWord(j)->haveRecited){
                 user->GetSet(i)->recited.push_back(user->GetSet(i)->GetWord(j));
@@ -567,8 +568,9 @@ void consoleInterface::Info()
     if (user != NULL)
         for (int i = 0; i < user->GetSize(); ++i)
         {
-            cout << "\t" << i + 1 << ": " << user->GetSet(i)->GetName()
-            << " size:" << user->GetSet(i)->GetSize() << endl;
+            cout << "\t" << i + 1 << ": " << user->GetSet(i)->GetName()<<endl;
+            cout<<"\t"<<"   "<<user->GetSet(i)->GetSize()<< " size" << endl;
+            Look(user->GetSet(i));
         }
     cout << user->GetSize() << " sets in all." << endl;
     cout << "------------------------------------------------------------------------------" << endl;
@@ -618,11 +620,7 @@ void consoleInterface::normalAnalyse(string command)
         if (file >= 0 && file < command.size())
             Recite(command);
         else{
-            file = kmp("-c", command);
-            if (file >= 0 && file < command.size())
-                Change(command);
-            else
-                Look(command);
+            Change(command);
         }
     }
     else if (kmp("add", command) == 0)
@@ -929,6 +927,7 @@ void consoleInterface::Recite(std::string command)
         cout<<"In review word mode, press Enter to go on reviewing, press q to exit"<<endl;
         recite* Recite = new recite(user->GetSet(linpos));
         Recite->ReciteControl(cout, cin);
+        cout<<"Congratulations!! You have finished today's task!"<<endl;
     }
 }
 void consoleInterface::Change(std::string command)
@@ -986,50 +985,26 @@ void consoleInterface::Change(std::string command)
         modified=true;
     }
 }
-void consoleInterface::Look(std::string command)
+void consoleInterface::Look(Set* m)
 {
-    if (user == NULL)
-    {
-        cout << "please login" << endl;
-        return;
-    }
-    int begin = kmp("-l", command) + 1;
-    if(begin<3 || begin>=command.size()){
-        cout<<"please type in set"<<endl;
-        return;
-    }
-    while (command[++begin] == 32);
-    string setName;
-    for(int i=begin; i<command.size(); ++i)
-    {
-        setName += command[i];
-    }
-    int linpos = user->FindSet(setName);
-    if (linpos < 0 || linpos >= user->GetSize())
-    {
-        cout << "no such set. Try \"toch\"" << endl;
-    }
-    else
-    {
-        cout<<user->GetSet(linpos)->recited.size()<<" words recited."<<endl;
-        cout<<user->GetSet(linpos)->words.size()-user->GetSet(linpos)->recited.size()<<" words left."<<endl;
-        int today[2];
-        time_t t = time(0);
-        char tmp[5],tmp1[8];
-        strftime( tmp1, sizeof(tmp), "%Y",localtime(&t) );
-        today[0]=atoi(tmp1);
-        strftime( tmp, sizeof(tmp), "%j",localtime(&t) );
-        today[1]=atoi(tmp);
-        int plus=0;
-        for(int i=user->GetSet(linpos)->GetBeginDay()[0]; i<today[0]; i++){
-            plus+=365;
-            if(judge(i)){
-                plus++;
-            }
+    cout<<"\t"<<"   "<<m->recited.size()<<" words recited."<<endl;
+    cout<<"\t"<<"   "<<m->words.size()-m->recited.size()<<" words left."<<endl;
+    int today[2];
+    time_t t = time(0);
+    char tmp[5],tmp1[8];
+    strftime( tmp1, sizeof(tmp), "%Y",localtime(&t) );
+    today[0]=atoi(tmp1);
+    strftime( tmp, sizeof(tmp), "%j",localtime(&t) );
+    today[1]=atoi(tmp);
+    int plus=0;
+    for(int i=m->GetBeginDay()[0]; i<today[0]; i++){
+        plus+=365;
+        if(judge(i)){
+            plus++;
         }
-        int dayleft=user->GetSet(linpos)->GetUseDay()-today[1]+user->GetSet(linpos)->GetBeginDay()[1]+plus;
-        cout<<dayleft<<" days left"<<endl;
     }
+    int dayleft=m->GetUseDay()-today[1]+m->GetBeginDay()[1]+plus;
+    cout<<"\t"<<"   "<<dayleft<<" days left"<<endl;
 }
 void consoleInterface::Test(string command)
 {
@@ -1342,10 +1317,11 @@ void consoleInterface::TouchSet(string command)
         set->lastRecite[1]=day;
         set->reciteToday=0;
         set->reviewToday=0;
-        cout << "successfully touch" << endl;
+        set->recited.clear();
         ifstream fin((user->GetName() + "/" + setName + ".txt").c_str());
         set->Read(fin);
         fin.close();
+        cout << "successfully touch" << endl;
     }
     else
     {

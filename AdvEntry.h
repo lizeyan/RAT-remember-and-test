@@ -19,7 +19,7 @@ public:
               std::vector<std::string>&, std::vector<std::string>&);
     std::string GetComparative(int)const;
     std::string GetHighest(int)const;
-    void OutputSource(std::ostream&) const; 
+    void OutputSource(std::ostream&) const;
     ~AdvEntry() {}
 };
 

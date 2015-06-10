@@ -116,14 +116,17 @@ void consoleInterface::Remind(Set* m){
 }
 void consoleInterface::load()
 {
+    cout << "loading user's information......" << endl;
     string s="";
     s+=user->GetName();
     s+="/source.txt";
     ifstream fin(s.c_str());
-    if(fin){
+    if(fin)
+    {
         string ans="";
         getline(fin, ans);
-        while(ans!="*"){
+        while(ans!="*")
+        {
             string lin[10];
             int i;
             for(i=0; ; i++){
@@ -329,6 +332,8 @@ void consoleInterface::load()
         }
     }
     fin.close();
+    cout << "successfully load user's information." << endl;
+    cout << "current user is " << user->GetName() << endl;
 }
 void consoleInterface::operation()
 {
@@ -376,19 +381,6 @@ void consoleInterface::FindSimilarWord(string command)
     }
     vector<Word*> result;
     dic->FindWordFuzzy(targetWord, result);
-    int idioms = kmp ("-i", command);
-    if (idioms < 0 || idioms >= result.size())
-    {
-        for (int i = 0; i < result.size(); ++i)
-        {
-            int isIdiom = kmp (" ", result[i]->GetSpell());
-            if (isIdiom >= 0 && isIdiom < result[i]->GetSpell().size())
-            {
-                result.erase(result.begin() + i);
-                --i;
-            }
-        }
-    }
     if (result.size() == 0)
     {
         cout << "no similar word in current dictionary found" << endl;
@@ -413,19 +405,6 @@ void consoleInterface::FindWordFuzzy(string command)
     }
     vector<Word*> result;
     dic->FindWordFuzzy(targetWord, result);
-    int idioms = kmp ("-i", command);
-    if (idioms < 0 || idioms >= result.size())
-    {
-        for (int i = 0; i < result.size(); ++i)
-        {
-            int isIdiom = kmp (" ", result[i]->GetSpell());
-            if (isIdiom >= 0 && isIdiom < result[i]->GetSpell().size())
-            {
-                result.erase(result.begin() + i);
-                --i;
-            }
-        }
-    }
     if (result.size() == 0)
     {
         cout << "no matched word in current dictionary found" << endl;

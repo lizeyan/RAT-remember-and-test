@@ -1,7 +1,0 @@
-cat
-dog
-here
-jump
-like
-we
-you

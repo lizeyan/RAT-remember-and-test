@@ -42,6 +42,7 @@ public:
     friend class QuestionSecondChoose;
     friend class QuestionSecondFillBlank;
     friend class Word;
+    friend class Interface;
     friend class consoleInterface;
 };
 

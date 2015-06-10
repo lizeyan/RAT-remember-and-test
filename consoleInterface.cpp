@@ -22,6 +22,49 @@ consoleInterface* consoleInterface::GetInstance()
         instance = new consoleInterface;
     return instance;
 }
+bool consoleInterface::End(string a, int pos)
+{
+    return a[pos] == 32 || a[pos] ==10 || a[pos] == 13 || a[pos] == '\t';
+}
+void consoleInterface::TakeArg(string a, string b, string& r)
+{
+    r = "";
+    int begin = kmp(a,b);
+    if (begin < 0 || begin >= b.size())
+    {
+        return;
+    }
+    int e1 = begin;
+    while (++e1 < b.size() && !End(b,e1));
+    int e2 = e1;
+    while (++e2 < b.size() && !End(b,e2));
+    if (e1 >= b.size() || e2 > b.size())
+        return;
+    for (int i = e1 + 1; i < e2; ++i)
+        r += b[i];
+    return;
+}
+void consoleInterface::TakeArg(string a, string b, vector<string>& r)
+{
+    r.clear();
+    int p = kmp(a, b);
+    if (p < 0 || p >= b.size())
+        return;
+    int q = p;
+    while (p <= b.size() && q <= b.size())
+    {
+        while (p < b.size() && !End(b, p))
+            p++;
+        q = p + 1;
+        while (q <= b.size() && !End(b, q))
+            q++;
+        string tmp;
+        for (int i = p + 1; i < q; ++i)
+            tmp += b[i];
+        r.push_back(tmp);
+        p = q + 1;
+    }
+}
 consoleInterface::consoleInterface()
 {
     dic = Dictionary::GetInstance();
@@ -36,9 +79,9 @@ consoleInterface::consoleInterface()
 void consoleInterface::ini()
 {
     string source = "StandardSource.txt";
-#ifdef _WIN32
+    #ifdef _WIN32
     source = "StandardSourceWin.txt";
-#endif
+    #endif
     srand((unsigned int)time(NULL));
     int beginTime = clock();
     cout << "loading......" << endl;
@@ -361,14 +404,12 @@ void consoleInterface::operation()
         }
     }
 }
-void consoleInterface::FindWordExact(string command)
+void consoleInterface::FindWordExact(string targetWord)
 {
-    int begin = 1;
-    string targetWord;
-    while (command[++begin] == 32);
-    for (int i = begin; i < command.size(); ++i)
+    if (targetWord == "")
     {
-        targetWord += command[i];
+        cout << "please input word." << endl;
+        return;
     }
     int pos = dic->FindWord(targetWord);
     if (pos < 0 || pos >= dic->GetSize() || !dic->WordExist(targetWord))
@@ -380,14 +421,12 @@ void consoleInterface::FindWordExact(string command)
         cout << (*dic)[pos];
     }
 }
-void consoleInterface::FindSimilarWord(string command)
+void consoleInterface::FindSimilarWord(string targetWord)
 {
-    int begin = 1;
-    string targetWord;
-    while (command[++begin] == 32 || command[begin] == '-' || command[begin] == 'i');
-    for (int i = begin; i < command.size(); ++i)
+    if (targetWord == "")
     {
-        targetWord += command[i];
+        cout << "please input word." << endl;
+        return;
     }
     vector<Word*> result;
     dic->FindWordFuzzy(targetWord, result);
@@ -404,14 +443,12 @@ void consoleInterface::FindSimilarWord(string command)
         }
     }
 }
-void consoleInterface::FindWordFuzzy(string command)
+void consoleInterface::FindWordFuzzy(string targetWord)
 {
-    int begin = 1;
-    string targetWord;
-    while (command[++begin] == 32 || command[begin] == '-' || command[begin] == 'i');
-    for (int i = begin; i < command.size(); ++i)
+    if (targetWord == "")
     {
-        targetWord += command[i];
+        cout << "please input word." << endl;
+        return;
     }
     vector<Word*> result;
     dic->FindWordFuzzy(targetWord, result);
@@ -429,17 +466,21 @@ void consoleInterface::FindWordFuzzy(string command)
 }
 void consoleInterface::quiryModeAnalyse(string command)
 {
+    string targetWord;
     if (kmp("-e", command) == 0)
     {
-        FindWordExact(command);
+        TakeArg("-e", command, targetWord);
+        FindWordExact(targetWord);
     }
     else if (kmp("-s", command) == 0)
     {
-        FindSimilarWord(command);
+        TakeArg("-s", command, targetWord);
+        FindSimilarWord(targetWord);
     }
     else if (kmp("-f", command) == 0)
     {
-        FindWordFuzzy(command);
+        TakeArg("-f", command, targetWord);
+        FindWordFuzzy(targetWord);
     }
     else if (command == "mode 0" || command == "m 0")
     {
@@ -451,33 +492,7 @@ void consoleInterface::quiryModeAnalyse(string command)
     }
     else
     {
-        FindWordExact(string ("-e") + command);
-    }
-}
-bool consoleInterface::Pass(int testType)
-{
-    if (testType == 0)
-    {
-        if (Test::rightRate0 >= 0.95)
-            return true;
-        return false;
-    }
-    else if (testType == 1)
-    {
-        if (Test::rightRate1 >= 0.80)
-            return true;
-        return false;
-    }
-    else if (testType == 2)
-    {
-        if (Test::rightRate2 >= 0.75)
-            return true;
-        return false;
-    }
-    else
-    {
-        cout << "wrong testType:" << testType;
-        return false;
+        FindWordExact(command);
     }
 }
 void consoleInterface::Exam()
@@ -626,49 +641,93 @@ void consoleInterface::normalAnalyse(string command)
     }
     else if (kmp("info ", command) == 0 || kmp("i ", command) == 0)
     {
-        List(command);
+        string setName;
+        TakeArg ("-t", command, setName);
+        int p = kmp("-d", command);
+        bool d = (p >= 0 && p < command.size());
+        List(setName, d);
     }
     else if (kmp("test", command) == 0 || kmp("t ", command) == 0)
     {
-        Test(command);
+        string setName, testTypeString;
+        TakeArg("-t", command, setName);
+        TakeArg("-l", command, testTypeString);
+        Test(setName, testTypeString);
     }
     else if(kmp("recite", command)==0 || kmp("r ", command)==0)
     {
+        string setName;
         int file = kmp ("-t", command);
         if (file >= 0 && file < command.size())
-            Recite(command);
+        {
+            TakeArg("-t", command, setName);
+            Recite(setName);
+        }
         else{
             file = kmp ("-c", command);
             if(file >= 0 && file < command.size()){
-                Change(command);
+                TakeArg("-c", command, setName);
+                string targetDay;
+                TakeArg("-d", command, targetDay);
+                Change(setName, targetDay);
             }else{
                 file = kmp ("-p", command);
                 if(file >= 0 && file < command.size()){
-                    Plus(command);
+                    TakeArg("-p", command, setName);
+                    string targetDay;
+                    TakeArg("-d", command, targetDay);
+                    Plus(setName, targetDay);
                 }
             }
         }
     }
     else if (kmp("add", command) == 0)
     {
+        string setName;
+        TakeArg("-t", command, setName);
         int file = kmp ("-f", command);
         if (file >= 0 && file < command.size())
-            AddFile (command);
+        {
+            string fileName;
+            TakeArg("-f", command, fileName);
+            AddFile (setName, fileName);
+        }
         else
-            AddWord (command);
+        {
+            vector<string> words;
+            TakeArg("-w", command, words);
+            AddWord (setName, words);
+        }
     }
     else if (kmp("touch", command) == 0)
     {
         int a = kmp ("-t", command);
         int b = kmp ("-u", command);
+        string name;
         if (b < 0 || b >= command.size())
-            TouchSet(command);
+        {
+            TakeArg("-t", command, name);
+            TouchSet(name);
+        }
         else if (a < 0 || a >= command.size())
-            TouchUser(command);
+        {
+            TakeArg("-u", command, name);
+            string password;
+            TakeArg("-p", command, password);
+            TouchUser(name,password);
+         }
         else if (a < b)
-            TouchSet (command);
+        {
+            TakeArg("-t", command, name);
+            TouchSet(name);
+        }
         else
-            TouchUser (command);
+        {
+            TakeArg("-u", command, name);
+            string password;
+            TakeArg("-p", command, password);
+            TouchUser(name,password);
+         }
     }
     else if (command == "rm cuser")
     {
@@ -676,19 +735,30 @@ void consoleInterface::normalAnalyse(string command)
     }
     else if (kmp("convert", command) == 0)
     {
-        convert(command);
+        string source, target;
+        TakeArg("-s", command, source);
+        TakeArg("-t", command, target);
+        convert(source, target);
     }
     else if (kmp("rm", command) == 0)
     {
+        string setName;
+        TakeArg("-t", command, setName);
         int w = kmp ("-w", command);
         if (w < 0 || w >= command.size())
-            RemoveSet(command);
+            RemoveSet(setName);
         else
-            RemoveWord(command);
+        {
+            vector<string> words;
+            TakeArg("-w", command, words);
+            RemoveWord(setName, words);
+        }
     }
     else if (kmp ("switch", command) == 0 || kmp ("s ",command) == 0)
     {
-        Switch(command);
+        string userName;
+        TakeArg("-u", command, userName);
+        Switch(userName);
     }
     else if (kmp("exam", command) == 0)
     {
@@ -700,21 +770,17 @@ void consoleInterface::normalAnalyse(string command)
         cout << "no command of " << command << ". Try \"help\"" << endl;
     }
 }
-void consoleInterface::List(string command)
+void consoleInterface::List(string setName, bool detailed)
 {
     if (user == NULL)
     {
         cout << "please login" << endl;
         return;
     }
-    int begin = kmp("-t", command) + 1;
-    while (command[++begin] == 32);
-    string setName;
-    for (int i = begin; i < command.size(); ++i)
+    if (setName == "")
     {
-        if (command[i] == 10 || command[i] == 13 || command[i] == 32 || command[i] == 9)
-            break;
-        setName += command[i];
+        cout << "please input word." << endl;
+        return;
     }
     int pos = user->FindSet(setName);
     if (pos < 0 || pos >= user->GetSize() || setName != user->GetSet(pos)->GetName())
@@ -724,8 +790,6 @@ void consoleInterface::List(string command)
     else
     {
         cout << setiosflags(ios::left);
-        int p = kmp("-d", command);
-        bool detailed = (p >= 0) && (p < command.size());
         Set* s = user->GetSet(pos);
         for (int i = 0; i < s->GetSize(); ++i)
         {
@@ -756,46 +820,22 @@ void consoleInterface::Write(ostream& fout, const Word* w)
     }
     fout << "*" << endl;
 }
-void consoleInterface::convert(string command)
+void consoleInterface::convert(string source, string target)
 {
-    int begin = kmp("-s", command);
-    if (begin < 0 || begin >= command.size())
-    {
-        cout << "please input source file name" << endl;
-        return;
-    }
-    begin += 2;
-    while (begin < command.size() && command[begin] == ' ')
-        begin++;
-    int end = begin;
-    while (end < command.size() && command[end] != ' ')
-        end++;
-    string source;
-    for (int i = begin; i < end; ++i)
-    {
-        source += command[i];
-    }
-    begin = kmp("-t", command);
-    if (begin < 0 || begin >= command.size())
-    {
-        cout << "please input target file name" << endl;
-        return;
-    }
-    begin += 2;
-    while (begin < command.size() && command[begin] == ' ')
-        begin++;
-    end = begin;
-    while (end < command.size() && command[end] != ' ')
-        end++;
-    string target;
-    for (int i = begin; i < end; ++i)
-    {
-        target += command[i];
-    }
     ifstream fin(source.c_str());
     if (!fin)
     {
         cout << "fail to open the file: " << source << endl;
+        return;
+    }
+    if (source == "")
+    {
+        cout << "please input source file." << endl;
+        return;
+    }
+    if (target == "")
+    {
+        cout << "please input target file." << endl;
         return;
     }
     ofstream fout(target.c_str(), ios::app);
@@ -857,21 +897,17 @@ void consoleInterface::RemoveUser()
         cout << "failed to confirm" << endl;
     }
 }
-void consoleInterface::RemoveSet(string command)
+void consoleInterface::RemoveSet(string setName)
 {
     if (user == NULL)
     {
         cout << "please login" << endl;
         return;
     }
-    int begin = kmp("-t", command) + 1;
-    while (command[++begin] == 32);
-    string setName;
-    for (int i = begin; i < command.size(); ++i)
+    if (setName == "")
     {
-        if (command[i] == 10 || command[i] == 13 || command[i] == 32 || command[i] == 9)
-            break;
-        setName += command[i];
+        cout << "please input word." << endl;
+        return;
     }
     int pos = user->FindSet(setName);
     if (pos < 0 || pos >= user->GetSize() || setName != user->GetSet(pos)->GetName())
@@ -884,62 +920,49 @@ void consoleInterface::RemoveSet(string command)
         modified = 1;
     }
 }
-void consoleInterface::RemoveWord(string command)
+void consoleInterface::RemoveWord(string setName,vector<string>& words)
 {
     if (user == NULL)
     {
         cout << "please login" << endl;
         return;
     }
-    int begin = kmp("-t", command) + 1;
-    while (command[++begin] == 32);
-    string setName;
-    for (int i = begin; i < command.size() && command[i] != 32; ++i)
+    if (setName == "")
     {
-        setName += command[i];
+        cout << "please input word." << endl;
+        return;
+    }
+    if (words.size() == 0)
+    {
+        cout << "please input words." << endl;
+        return;
     }
     int pos = user->FindSet(setName);
     if (pos < 0 || pos >= user->GetSize())
     {
-        cout << "no such set: " << setName << endl;
+        cout << "wrong set: " << setName << endl;
         return;
     }
-    Set* cset = user->GetSet(pos);
-    vector<string> words;
-    begin = kmp("-w", command) + 1;
-    while (command[++begin] == 32);
-    while (begin < command.size())
+    Set* s = user->GetSet(pos);
+    for (int i = 0; i < words.size(); ++i)
     {
-        int end = begin - 1;
-        while (++end < command.size() && command[end] != ' ');
-        string tmp;
-        for (int i = begin; i < end; ++i)
-            tmp += command[i];
-        stringstream ss;
-        int res;
-        ss << tmp;
-        ss >> res;
-        cset->removeWord(res - 1);
-        begin = end + 1;
+        int p = s->Find(words[i]);
+        if (p < 0 || p >= s->GetSize())
+            continue;
+        s->removeWord(p);
     }
 }
-void consoleInterface::Recite(std::string command)
+void consoleInterface::Recite(std::string setName)
 {
     if (user == NULL)
     {
         cout << "please login" << endl;
         return;
     }
-    int begin = kmp("-t", command) + 1;
-    if(begin<3 || begin>=command.size()){
-        cout<<"please type in set"<<endl;
-        return;
-    }
-    while (command[++begin] == 32);
-    string setName;
-    for(int i=begin; i<command.size(); ++i)
+    if (setName == "")
     {
-        setName += command[i];
+        cout << "please input word." << endl;
+        return;
     }
     int linpos = user->FindSet(setName);
     if (linpos < 0 || linpos >= user->GetSize())
@@ -969,24 +992,17 @@ void consoleInterface::Recite(std::string command)
         }
     }
 }
-void consoleInterface::Change(std::string command)
+void consoleInterface::Change(std::string setName, string targetDay)
 {
     if (user == NULL)
     {
         cout << "please login" << endl;
         return;
     }
-    int begin = kmp("-c", command) + 1;
-    if(begin<3 || begin>=command.size()){
-        cout<<"please type in set"<<endl;
-        return;
-    }
-    while (command[++begin] == 32);
-    string setName;int i;
-    for(i=begin; ; ++i)
+    if (setName == "")
     {
-        if(command[i]==' ') break;
-        setName += command[i];
+        cout << "please input word." << endl;
+        return;
     }
     int linpos = user->FindSet(setName);
     if (linpos < 0 || linpos >= user->GetSize())
@@ -995,11 +1011,6 @@ void consoleInterface::Change(std::string command)
     }
     else
     {
-        while(command[++i] == 32);
-        string targetDay = "";
-        for( ; i<command.size(); i++){
-            targetDay += command[i];
-        }
         if(targetDay == ""){
             cout<<"please type in day."<<endl;
             return;
@@ -1028,24 +1039,17 @@ void consoleInterface::Change(std::string command)
         modified=true;
     }
 }
-void consoleInterface::Plus(std::string command)
+void consoleInterface::Plus(std::string setName, string targetDay)
 {
     if (user == NULL)
     {
         cout << "please login" << endl;
         return;
     }
-    int begin = kmp("-p", command) + 1;
-    if(begin<3 || begin>=command.size()){
-        cout<<"please type in set"<<endl;
-        return;
-    }
-    while (command[++begin] == 32);
-    string setName;int i;
-    for(i=begin; ; ++i)
+    if (setName == "")
     {
-        if(command[i]==' ') break;
-        setName += command[i];
+        cout << "please input word." << endl;
+        return;
     }
     int linpos = user->FindSet(setName);
     if (linpos < 0 || linpos >= user->GetSize())
@@ -1054,11 +1058,6 @@ void consoleInterface::Plus(std::string command)
     }
     else
     {
-        while(command[++i] == 32);
-        string targetDay = "";
-        for( ; i<command.size(); i++){
-            targetDay += command[i];
-        }
         if(targetDay == ""){
             cout<<"please type in day."<<endl;
             return;
@@ -1093,45 +1092,22 @@ void consoleInterface::Look(Set* m)
     int dayleft=m->GetUseDay()-today[1]+m->GetBeginDay()[1]+plus;
     cout<<"\t"<<"   "<<dayleft<<" days left"<<endl;
 }
-void consoleInterface::Test(string command)
+void consoleInterface::Test(string setName, string testTypeString)
 {
     if (user == NULL)
     {
         cout << "please login" << endl;
         return;
     }
-    int begin = kmp("-t", command) + 1;
-    if(begin<3 || begin>=command.size()){
-        cout<<"please type in set"<<endl;
+    if (setName == "")
+    {
+        cout << "please input word." << endl;
         return;
     }
-    while (command[++begin] == 32 && begin < command.size() - 1);
-    string setName;
-    int lin=0;
-    for (int i = begin; i < command.size() && command[i] != ' ' ; ++i)
+    if (testTypeString == "")
     {
-        setName += command[i];
-        lin = i;
-    }
-    string testTypeString;
-    for (int i = ++lin; i < command.size(); ++i)
-    {
-        if (command[i] >= '0' && command[i] <= '9')
-        {
-            lin = i;
-            break;
-        }
-    }
-    for (int i = lin; i < command.size(); ++i)
-    {
-        if (command[i] >= '0' && command[i] <= '9')
-        {
-            testTypeString += command[i];
-        }
-        else
-        {
-            break;
-        }
+        cout << "please input type." << endl;
+        return;
     }
     stringstream ss;
     ss << testTypeString;
@@ -1215,84 +1191,57 @@ void consoleInterface::TestDo(Set* s, int le, int ttype)
         op->first(answer, cout);
     }
 }
-void consoleInterface::AddWord(string command)
+void consoleInterface::AddWord(string setName, vector<string>& words)
 {
     if (user == NULL)
     {
         cout << "please login" << endl;
         return;
     }
-    int begin = kmp("-t", command) + 1;
-    while (command[++begin] == 32);
-    string setName;
-    for (int i = begin; i < command.size() && command[i] != 32; ++i)
+    if (setName == "")
     {
-        setName += command[i];
+        cout << "please input word." << endl;
+        return;
+    }
+    if (words.size() == 0)
+    {
+        cout << "please input words." << endl;
+        return;
     }
     int pos = user->FindSet(setName);
     if (pos < 0 || pos >= user->GetSize())
     {
-        cout << "no such set: " << setName << endl;
+        cout << "wrong set: " << setName << endl;
         return;
     }
-    vector<string> words;
-    begin = kmp("-w", command) + 1;
-    while (command[++begin] == 32);
-    while (begin < command.size())
-    {
-        int end = begin - 1;
-        while (++end < command.size() && command[end] != '.');
-        if (end < command.size())
-        {
-            string tmp;
-            for (int i = begin; i < end; ++i)
-                tmp += command[i];
-            words.push_back(tmp);
-        }
-        begin = end;
-        while (++begin < command.size() && command[begin] == 32);
-    }
-    bool res = false;
+    Set* s = user->GetSet(pos);
     for (int i = 0; i < words.size(); ++i)
     {
-        int p = dic->FindWord(words[i]);
-        if (p < 0 || p >= dic->GetSize())
-        {
-            cout << words[i] << " not exist in Dictionary" << endl;
+        if (s->WordExist(words[i]))
             continue;
-        }
-        res = true;
-        user->GetSet(pos)->Insert ((*dic)[p]);
-        modified = true;
+        int p = dic->FindWordExact(words[i]);
+        if (p < 0 || p > dic->GetSize())
+            continue;
+        Word* w = &(*dic)[p];
+        s->Insert(*w);
     }
-    if (res)
-        cout << "successfully add" << endl;
 }
-void consoleInterface::AddFile(string command)
+void consoleInterface::AddFile(string setName, string fileName)
 {
     if (user == NULL)
     {
         cout << "please login" << endl;
         return;
     }
-    int begin = kmp("-t", command) + 1;
-    while (command[++begin] == 32);
-    string setName;
-    for (int i = begin; i < command.size() && command[i] != 32; ++i)
+    if (setName == "")
     {
-        setName += command[i];
-    }
-    int pos = user->FindSet(setName);
-    if (pos < 0 || pos >= user->GetSize())
-    {
-        cout << "no such set: " << setName << endl;
+        cout << "please input word." << endl;
         return;
     }
-    begin = kmp ("-f", command) + 3;
-    string fileName;
-    for (int i = begin; i < command.size(); ++i)
+    if (fileName == "")
     {
-        fileName += command[i];
+        cout << "please input file name." << endl;
+        return;
     }
     ifstream fin(fileName.c_str());
     if (!fin)
@@ -1303,15 +1252,6 @@ void consoleInterface::AddFile(string command)
     AnalyseFile(fin, user->GetSet(pos));
     fin.close();
     cout << "Finished" << endl;
-}
-bool consoleInterface::IsLetter (char x)
-{
-    if (x <= 'z' && x >= 'a')
-        return true;
-    else if (x <= 'Z' && x >= 'A')
-        return true;
-    else
-        return false;
 }
 bool consoleInterface::FamiliarWord(string word, Set* levelSet)
 {
@@ -1366,21 +1306,17 @@ void consoleInterface::AnalyseFile(ifstream& fin, Set* s)
     }
     delete examSet;
 }
-void consoleInterface::TouchSet(string command)
+void consoleInterface::TouchSet(string setName)
 {
     if (user == NULL)
     {
         cout << "please login" << endl;
         return;
     }
-    int begin = kmp("-t", command) + 1;
-    while (command[++begin] == 32);
-    string setName;
-    for (int i = begin; i < command.size(); ++i)
+    if (setName == "")
     {
-        if (command[i] == 10 || command[i] == 13 || command[i] == 32 || command[i] == 9)
-            break;
-        setName += command[i];
+        cout << "please input word." << endl;
+        return;
     }
     int pos = user->FindSet(setName);
     if (pos < 0 || pos >= user->GetSize() || setName != user->GetSet(pos)->GetName())
@@ -1422,39 +1358,17 @@ void consoleInterface::TouchSet(string command)
         cout << "this set exist." << endl;
     }
 }
-void consoleInterface::TouchUser(string command)
+void consoleInterface::TouchUser(string userName, string password)
 {
-    int begin = kmp("-u", command) + 1;
-    if (begin < 1 || begin >= command.size())
+    if (userName == "")
     {
         cout << "please input user name." << endl;
         return;
     }
-    while (command[++begin] == 32);
-    string userName;
-    for (int i = begin; i < command.size() && command[i] != 32; ++i)
+    if (password == "")
     {
-        userName += command[i];
-    }
-    for (int i = 0; i < users.size(); ++i)
-    {
-        if (userName == users[i]->GetName())
-        {
-            cout << userName << " already exist" << endl;
-            return;
-        }
-    }
-    begin = kmp ("-p", command) + 1;
-    if (begin <= 0 || begin > command.size())
-    {
-        cout << "please set password" << endl;
+        cout << "please input password." << endl;
         return;
-    }
-    while (command[++begin] == 32 && begin < command.size() - 1);
-    string password;
-    for (int i = begin; i < command.size() && command[i] != 32; ++i)
-    {
-        password += command[i];
     }
     User* newUser =new User(userName, password, "0");
     users.push_back(newUser);
@@ -1468,14 +1382,12 @@ void consoleInterface::TouchUser(string command)
     }
     exist.close();
 }
-void consoleInterface::Switch(string command)
+void consoleInterface::Switch(string userName)
 {
-    int begin = kmp("-u", command) + 1;
-    while (command[++begin] == 32);
-    string userName;
-    for (int i = begin; i < command.size() && command[i] != 32; ++i)
+    if (userName == "")
     {
-        userName += command[i];
+        cout << "please input user name." << endl;
+        return;
     }
     for (int i = 0; i < users.size(); ++i)
     {
@@ -1523,7 +1435,7 @@ void consoleInterface::outHelp()
     << "\t-f [-i] string -- list all words details contain this string,type -i \n\tto include all idioms" << endl
     << "i[nfo] --info about the current user" << endl
     << "i[nfo] -t setname [-d] -- list all the word in the set, -d to list all details" << endl
-    << "test -t setname testType --test words in this set" << endl
+    << "test -t setname -l testType --test words in this set" << endl
     << "in test:"<<endl
     << "\ttestType can only be 0,1 or 2"<<endl
     << "\tinput mode0 to return normal mode"<<endl

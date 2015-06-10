@@ -193,6 +193,8 @@ bool Dictionary::particalFind(int level, int maxLevel, vector<Word*>& target, st
         bool res = false;
         for (int i = 0; i < words.size(); ++i)
         {
+            if (target.size() >= 20)
+                return res;
             if (kmp(s, words[i].GetSpell()) >= 0)
             {
                 target.push_back(&words[i]);
@@ -204,6 +206,8 @@ bool Dictionary::particalFind(int level, int maxLevel, vector<Word*>& target, st
     bool res;
     for (int i = 0; i < s.size(); ++i)
     {
+        if (target.size() >= 20)
+            return res;
         string tmp = s;
         tmp.erase(tmp.begin() + i);
         bool r = particalFind(level + 1, maxLevel, target, tmp);

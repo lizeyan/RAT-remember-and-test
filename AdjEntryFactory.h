@@ -1,7 +1,7 @@
 #ifndef _______AdjEntryFactory__
 #define _______AdjEntryFactory__
-
 #include "EntryFactory.h"
+#include "AdjEntry.h"
 #include <iostream>
 #include <cstdlib>
 

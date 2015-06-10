@@ -2,6 +2,7 @@
 #define _______VerbEntryFactory__
 
 #include "EntryFactory.h"
+#include "VerbEntry.h"
 #include <iostream>
 #include <cstdlib>
 

@@ -2,6 +2,7 @@
 #define _______NounEntryFactory__
 
 #include "EntryFactory.h"
+#include "NounEntry.h"
 #include <iostream>
 #include <cstdlib>
 

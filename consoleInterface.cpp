@@ -1224,6 +1224,7 @@ void consoleInterface::AddWord(string setName, vector<string>& words)
             continue;
         Word* w = &(*dic)[p];
         s->Insert(*w);
+        cout << "insert " << words[i] << " into " << setName << endl;
     }
 }
 void consoleInterface::AddFile(string setName, string fileName)

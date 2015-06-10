@@ -25,6 +25,7 @@ first
 for
 guest
 help
+how
 i
 if
 include
@@ -60,6 +61,7 @@ test
 time
 touch
 type
+use
 user
 username
 v

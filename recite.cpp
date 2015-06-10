@@ -42,7 +42,7 @@ recite::recite(Set* m): set(m){
         exit(-1);
     }
     int wordleft=m->GetSize()-m->GetRecitedSize()-m->killed.size();//还有多少单词没有背
-    reciteToday=wordleft/dayleft-set->reciteToday;//今天需要背多少单词
+    reciteToday=wordleft/dayleft-set->reciteToday+m->plusDay;//今天需要背多少单词
     reviewToday=std::min(m->GetRecitedSize(), reciteToday)-set->reviewToday;//今天需要复习多少单词
     if(reviewToday<0) reviewToday=0;
     std::vector<Word*> lin;
@@ -83,6 +83,7 @@ recite::recite(Set* m): set(m){
 }
 
 void recite::DoRecite(Word* m, std::ostream& osout, std::istream& input){
+    osout<<std::endl;
     osout<<"Recite Word..."<<std::endl<<std::endl;
     osout<<*m<<std::endl;
     std::string s;

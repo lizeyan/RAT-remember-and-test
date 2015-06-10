@@ -48,6 +48,7 @@ protected:
     void normalAnalyse(std::string command);
     void Recite(std::string);
     void Change(std::string);
+    void Plus(std::string);
     void Look(Set*);
     void output();
     void Remind(Set*);

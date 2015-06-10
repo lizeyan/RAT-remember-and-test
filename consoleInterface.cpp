@@ -117,7 +117,7 @@ void consoleInterface::Remind(Set* m){
         std::cout<<"No Day Left! Please add days."<<std::endl;
     }else{
         int wordleft=m->GetSize()-m->GetRecitedSize()-m->killed.size();//还有多少单词没有背
-        int reciteToday=wordleft/dayleft-m->reciteToday;//今天需要背多少单词
+        int reciteToday=wordleft/dayleft-m->reciteToday+m->plusDay;//今天需要背多少单词
         cout<<"\t"<<reciteToday<<" words need to be recited today."<<endl;
         int reviewToday=min(m->GetRecitedSize(), reciteToday)-m->reviewToday;
         cout<<"\t"<<reviewToday<<" words need to be reviewed today."<<endl;
@@ -136,7 +136,7 @@ void consoleInterface::load()
         getline(fin, ans);
         while(ans!="*")
         {
-            string lin[10];
+            string lin[12];
             int i;
             for(i=0; ; i++){
                 if(ans[i]!=' '){
@@ -175,6 +175,7 @@ void consoleInterface::load()
                 set->reciteToday=0;
                 set->reviewToday=0;
             }
+            set->plusDay=atoi(lin[8].c_str());
             getline(fin, ans);
         }//set的两个数据都读进来了
         for(int i=0; i<dic->GetSize(); i++){
@@ -637,7 +638,15 @@ void consoleInterface::normalAnalyse(string command)
         if (file >= 0 && file < command.size())
             Recite(command);
         else{
-            Change(command);
+            file = kmp ("-c", command);
+            if(file >= 0 && file < command.size()){
+                Change(command);
+            }else{
+                file = kmp ("-p", command);
+                if(file >= 0 && file < command.size()){
+                    Plus(command);
+                }
+            }
         }
     }
     else if (kmp("add", command) == 0)
@@ -940,8 +949,7 @@ void consoleInterface::Recite(std::string command)
     else
     {
         modified=true;
-        cout<<"In recite word mode, if you want to kill a word ,press k,  if you want to quit,press q"<<endl;
-        cout<<"In review word mode, press Enter to go on reviewing, press q to exit"<<endl;
+        cout<<"In recite/review word mode, press q to quit recite, press k to kill this word, press enter to go on."<<endl;
         recite* Recite = new recite(user->GetSet(linpos));
         Recite->ReciteControl(cout, cin);
         if(Recite->GetDone()){
@@ -996,6 +1004,10 @@ void consoleInterface::Change(std::string command)
             cout<<"please type in day."<<endl;
             return;
         }
+        if(atoi(targetDay.c_str())<0){
+            cout<<"day input error, try again."<<endl;
+            return;
+        }
         int today[2];
         time_t t = time(0);
         char tmp[5],tmp1[8];
@@ -1014,6 +1026,49 @@ void consoleInterface::Change(std::string command)
         user->GetSet(linpos)->useDay=atoi(targetDay.c_str())+dayuse;
         cout<<"success!"<<endl;
         modified=true;
+    }
+}
+void consoleInterface::Plus(std::string command)
+{
+    if (user == NULL)
+    {
+        cout << "please login" << endl;
+        return;
+    }
+    int begin = kmp("-p", command) + 1;
+    if(begin<3 || begin>=command.size()){
+        cout<<"please type in set"<<endl;
+        return;
+    }
+    while (command[++begin] == 32);
+    string setName;int i;
+    for(i=begin; ; ++i)
+    {
+        if(command[i]==' ') break;
+        setName += command[i];
+    }
+    int linpos = user->FindSet(setName);
+    if (linpos < 0 || linpos >= user->GetSize())
+    {
+        cout << "no such set. Try \"touch\"" << endl;
+    }
+    else
+    {
+        while(command[++i] == 32);
+        string targetDay = "";
+        for( ; i<command.size(); i++){
+            targetDay += command[i];
+        }
+        if(targetDay == ""){
+            cout<<"please type in day."<<endl;
+            return;
+        }
+        if(atoi(targetDay.c_str())<0){
+            cout<<"day input error, try again."<<endl;
+            return;
+        }
+        user->GetSet(linpos)->plusDay=atoi(targetDay.c_str());
+        cout<<"success!"<<endl;
     }
 }
 void consoleInterface::Look(Set* m)
@@ -1356,6 +1411,7 @@ void consoleInterface::TouchSet(string command)
         set->recited.clear();
         set->killed.clear();
         set->words.clear();
+        set->plusDay=0;
         ifstream fin((user->GetName() + "/" + setName + ".txt").c_str());
         set->Read(fin);
         fin.close();
@@ -1472,7 +1528,9 @@ void consoleInterface::outHelp()
     << "\ttestType can only be 0,1 or 2"<<endl
     << "\tinput mode0 to return normal mode"<<endl
     << "\tinput exit to exit, you can't simply use e here" << endl
-    << "r[ecite] -t setname --recite words in this set, type q[uit] to quit."
+    << "r[ecite] -t setname --recite words in this set, type q to quit."<<endl
+    << "r[ecite] -c setname daynumber --Add days to recite this set."<<endl
+    << "r[ecite] -p setname wordsnumber --Add extra days to recite this set today."<<endl
     << "rm -t setname -- remove a set" << endl
     << "rm cuser -- remove current user, then switch to guest user" << endl
     << "rm -t setname -w word's number -- remove word form set" << endl
@@ -1504,7 +1562,7 @@ void consoleInterface::output(){
     s+="/source.txt";
     ofstream fout(s.c_str());
     for(int i=0; i<user->GetSize(); i++){
-        fout<<user->GetSet(i)->GetName()<<' '<<user->GetSet(i)->GetUseDay()<<' '<<user->GetSet(i)->GetBeginDay()[0]<<' '<<user->GetSet(i)->GetBeginDay()[1]<<' '<<user->GetSet(i)->lastRecite[0]<<' '<<user->GetSet(i)->lastRecite[1]<<' '<<user->GetSet(i)->reciteToday<<' '<<user->GetSet(i)->reviewToday<<endl;
+        fout<<user->GetSet(i)->GetName()<<' '<<user->GetSet(i)->GetUseDay()<<' '<<user->GetSet(i)->GetBeginDay()[0]<<' '<<user->GetSet(i)->GetBeginDay()[1]<<' '<<user->GetSet(i)->lastRecite[0]<<' '<<user->GetSet(i)->lastRecite[1]<<' '<<user->GetSet(i)->reciteToday<<' '<<user->GetSet(i)->reviewToday<<' '<<user->GetSet(i)->plusDay<<endl;
     }
     fout<<"*"<<endl;
     for(int i=0; i<dic->GetSize(); i++){

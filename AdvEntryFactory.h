@@ -2,6 +2,7 @@
 #define _______AdvEntryFactory__
 
 #include "EntryFactory.h"
+#include "AdvEntry.h"
 #include <iostream>
 #include <cstdlib>
 

@@ -2,6 +2,7 @@
 #define _______ConjEntryFactory__
 
 #include "EntryFactory.h"
+#include "ConjEntry.h"
 #include <iostream>
 #include <cstdlib>
 

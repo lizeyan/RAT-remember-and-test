@@ -2,6 +2,7 @@
 #define _______PrepEntryFactory__
 
 #include "EntryFactory.h"
+#include "PrepEntry.h"
 #include <iostream>
 #include <cstdlib>
 

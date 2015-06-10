@@ -36,6 +36,9 @@
         meaningE:string&amp;, example:vector&lt;string&gt;&amp;)
 +Entry()
 &lt;&lt;friend&gt;&gt;operator&lt;&lt; (out:ostream&amp;, e:Entry&amp;):ostream&amp;
++OutputEleSource(out:ostream&amp;)
+/+OutputSource(out:ostream&amp;)/
+/+Match(s:string&amp;):bool/
 +GetPhonogram():string
 +GetWordClass():string
 +GetMeaningC():string
@@ -64,6 +67,8 @@
 +GetCompleteForm():string
 +GetAbbrForm():string
 +GetpluralForm():string
++Match(s:string&amp;):bool
++OutputSource(out:ostream&amp;)
 ~NounEntry()
 </panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2700</x><y>410</y><w>550</w><h>330</h></coordinates><panel_attributes>VerbEntry
 --
@@ -84,6 +89,8 @@
 +GetPresentForm(rank:int):string
 +GetPastForm(rank:int):string
 +GetPastParticle(rank:int):string
++Match(s:string&amp;):bool
++OutputSource(out:ostream&amp;)
 +~VerbEntry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2710</x><y>810</y><w>430</w><h>270</h></coordinates><panel_attributes>AdjEntry
 --
 -predOrAttr:int
@@ -98,6 +105,8 @@
 +GetPredOrAttr():int
 +GetComparative(rank:int):string
 +GetHighest(rank:int):string
++Match(s:string&amp;):bool
++OutputSource(out:ostream&amp;)
 +~AdjEntry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2710</x><y>1110</y><w>430</w><h>270</h></coordinates><panel_attributes>AdvEntry
 --
 -comparative:vector&lt;string&gt;
@@ -110,6 +119,8 @@
           comparative:vector&lt;string&gt;&amp;,highest:vector&lt;string&gt;&amp;)
 +GetComparative(rank:int):string
 +GetHighest(rank:int):string
++Match(s:string&amp;):bool
++OutputSource(out:ostream&amp;)
 +~AdvEntry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2700</x><y>1690</y><w>440</w><h>280</h></coordinates><panel_attributes>PronEntry
 --
 -person:int
@@ -122,6 +133,8 @@
           single:int)
 +GetPerson():int
 +GetSingle():int
++Match(s:string&amp;):bool
++OutputSource(out:ostream&amp;)
 +~PronEntry</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2690</x><y>2340</y><w>440</w><h>280</h></coordinates><panel_attributes>ConjEntry
 --
 -category:string
@@ -131,12 +144,17 @@
 +Conjentry(phonogram:string&amp;,wordClass:string&amp;,meaningC:string&amp;,
           meaningE:string&amp;, example:vector&lt;string&gt;&amp;,category:string&amp;)
 +GetCategory():string
++Match(s:string&amp;):bool
++OutputSource(out:ostream&amp;)
 +~ConjEntry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2700</x><y>2000</y><w>380</w><h>290</h></coordinates><panel_attributes>PerpEntry
 --
 #OutPut(out:ostream&amp;)
 +PrepEntry()
 +PrepEntry(phonogram:string&amp;,wordClass:string&amp;,meaningC:string&amp;,
           meaningE:string&amp;, example:vector&lt;string&gt;&amp;)
+
++Match(s:string&amp;):bool
++OutputSource(out:ostream&amp;)
 +~Prepentry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1520</x><y>1300</y><w>370</w><h>540</h></coordinates><panel_attributes>Word
 --
 -spell:string
@@ -247,25 +265,27 @@
 --
 +create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3400</x><y>2080</y><w>210</w><h>50</h></coordinates><panel_attributes>PrepEntry
 --
-+create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>60</x><y>1550</y><w>220</w><h>140</h></coordinates><panel_attributes>InterFace
++create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>20</x><y>1470</y><w>280</w><h>240</h></coordinates><panel_attributes>InterFace
 --
 -user:User*
 -users:vector&lt;User*&gt;
 -dic:Dictionary*
---
-/+ini()/
-/+operate()/
-+kmp(a:stirng,b:string)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>0</x><y>1870</y><w>290</w><h>700</h></coordinates><panel_attributes>consoleInterface
---
--instance:consoleInterface*
 -op:opera*
 -mode:int
 -pos:int
 -level:int
 -testType:int
--modeified:bool
+-modified:bool
+--
+/+ini()/
+/+operate()/
++kmp(a:stirng,b:string)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>0</x><y>1870</y><w>310</w><h>690</h></coordinates><panel_attributes>consoleInterface
+--
+-instance:consoleInterface*
 --
 -consoleInterface()
+#Wirte(out:ostraem&amp;,w:const Word*)
+#convert(c:string)
 #List(c:string)
 #RemoveSet(c:string)
 #RemoveUser()
@@ -294,11 +314,15 @@
 #quiryModeAnalyse(c:string)
 #normalanalyse(c:string)
 #Recite(c:string)
+#Change(c:string)
+#Look(s:Set*)
+#output()
+#Remind(s:Set*)
 +GetInstance()consoleInterface*
 +ini()
 +operate()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2540</x><y>180</y><w>190</w><h>1150</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>170;30;30;1130</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2540</x><y>1580</y><w>180</w><h>210</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>160;190;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2540</x><y>1190</y><w>190</w><h>260</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>170;30;30;240</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2540</x><y>910</y><w>190</w><h>520</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>170;30;30;500</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2540</x><y>570</y><w>180</w><h>830</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>160;30;30;810</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2540</x><y>1610</y><w>180</w><h>480</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>160;460;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2540</x><y>1640</y><w>170</w><h>810</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>150;790;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2540</x><y>1470</y><w>520</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
 friend
-</panel_attributes><additional_attributes>30;50;500;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3140</x><y>110</y><w>170</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>30;50;500;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3140</x><y>110</y><w>180</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
 friend
 </panel_attributes><additional_attributes>30;50;160;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3220</x><y>550</y><w>160</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
 friend
@@ -312,8 +336,8 @@ friend
 friend
 </panel_attributes><additional_attributes>30;50;350;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3100</x><y>2420</y><w>320</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
 friend
-</panel_attributes><additional_attributes>30;50;300;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1730</x><y>1810</y><w>90</w><h>360</h></coordinates><panel_attributes>lt=&lt;.
-       friend</panel_attributes><additional_attributes>50;30;50;340</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1670</x><y>1310</y><w>450</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;30;440;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1010</x><y>1410</y><w>530</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;30;510;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1160</x><y>920</y><w>490</w><h>400</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;30;470;30;470;380</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>680</x><y>970</y><w>360</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;30;340;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>170</x><y>980</y><w>330</w><h>620</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;600;190;600;190;30;310;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>170</x><y>1580</y><w>650</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;30;630;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>120</x><y>1660</y><w>50</w><h>230</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>30;210;30;30</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1170</x><y>350</y><w>80</w><h>70</h></coordinates><panel_attributes>Question
+</panel_attributes><additional_attributes>30;50;300;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1730</x><y>1810</y><w>92</w><h>360</h></coordinates><panel_attributes>lt=&lt;.
+       friend</panel_attributes><additional_attributes>50;30;50;340</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1670</x><y>1310</y><w>460</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;30;440;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1010</x><y>1410</y><w>530</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;30;510;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1160</x><y>920</y><w>490</w><h>400</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;30;470;30;470;380</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>680</x><y>970</y><w>360</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;30;340;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>160</x><y>980</y><w>340</w><h>540</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;520;200;520;200;30;320;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>160</x><y>1500</y><w>650</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;30;630;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>120</x><y>1680</y><w>50</w><h>210</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>30;190;30;30</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1170</x><y>350</y><w>80</w><h>70</h></coordinates><panel_attributes>Question
 --
 +s:string
 +num:int</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1350</x><y>540</y><w>280</w><h>140</h></coordinates><panel_attributes>QuestionChoose

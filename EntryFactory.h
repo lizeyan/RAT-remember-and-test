@@ -1,21 +1,14 @@
-#ifndef _______EntryFactory__
-#define _______EntryFactory__
-
+//:Factory.h
+#ifndef ___FACTORY___
+#define ___FACTORY___
 #include "Entry.h"
-#include "PrepEntry.h"
-#include "ConjEntry.h"
-#include "PronEntry.h"
-#include "AdvEntry.h"
-#include "AdjEntry.h"
-#include "VerbEntry.h"
-#include "NounEntry.h"
-#include <iostream>
-#include <cstdlib>
-
+#include <vector>
+#include <string>
+//factory承担分析词典文件的工作
+//每一行是一个string
 class EntryFactory
 {
 public:
     virtual Entry* create (std::vector<std::string>&) = 0;//new一个entry*传出去
 };
-
-#endif /* defined(_______EntryFactory__) */
+#endif

@@ -2,6 +2,7 @@
 #define _______PronEntryFactory__
 
 #include "EntryFactory.h"
+#include "PronEntry.h"
 #include <iostream>
 #include <cstdlib>
 

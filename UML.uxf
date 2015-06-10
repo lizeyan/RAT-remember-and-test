@@ -1,27 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><umlet_diagram><help_text>--
-// Uncomment the following line to change the fontsize:
-// fontsize=14
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////
-// Welcome to UMLet!
-//
-// Double-click on UML elements to add them to the diagram, or to copy them
-// Edit elements by modifying the text in this panel
-// Hold Ctrl to select multiple elements
-// Use Ctrl+mouse to select via lasso
-//
-// Use ± or Ctrl+mouse wheel to zoom
-// Drag a whole relation at its central square icon
-//
-// Press Ctrl+C to copy the whole diagram to the system clipboard (then just paste it to, eg, Word)
-// Edit the files in the "palettes" directory to create your own element palettes
-//
-// Select "Custom Elements &gt; New..." to create new element types
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-
-// This text will be stored with each diagram;  use it for notes.</help_text><zoom_level>10</zoom_level><element><type>com.umlet.element.base.Class</type><coordinates><x>2110</x><y>1310</y><w>460</w><h>360</h></coordinates><panel_attributes>Entry
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><umlet_diagram><help_text/><zoom_level>3</zoom_level><element><type>com.umlet.element.base.Class</type><coordinates><x>1005</x><y>414</y><w>138</w><h>108</h></coordinates><panel_attributes>Entry
 --
 -phonogram: string
 -wordClass:string
@@ -44,7 +21,7 @@
 +GetMeaningC():string
 +GetMeaningE():string
 +GetExample(rank:int):string
-/~Entry()/</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2710</x><y>0</y><w>460</w><h>390</h></coordinates><panel_attributes>NounEntry
+/~Entry()/</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1185</x><y>21</y><w>138</w><h>117</h></coordinates><panel_attributes>NounEntry
 --
 -countable:int
 -aOrAn:int
@@ -70,7 +47,7 @@
 +Match(s:string&amp;):bool
 +OutputSource(out:ostream&amp;)
 ~NounEntry()
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2700</x><y>410</y><w>550</w><h>330</h></coordinates><panel_attributes>VerbEntry
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1182</x><y>144</y><w>165</w><h>99</h></coordinates><panel_attributes>VerbEntry
 --
 -viOrVt:int
 -tpsForm:string
@@ -91,7 +68,7 @@
 +GetPastParticle(rank:int):string
 +Match(s:string&amp;):bool
 +OutputSource(out:ostream&amp;)
-+~VerbEntry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2710</x><y>810</y><w>430</w><h>270</h></coordinates><panel_attributes>AdjEntry
++~VerbEntry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1185</x><y>264</y><w>129</w><h>81</h></coordinates><panel_attributes>AdjEntry
 --
 -predOrAttr:int
 -comparative:vector&lt;string&gt;
@@ -107,7 +84,7 @@
 +GetHighest(rank:int):string
 +Match(s:string&amp;):bool
 +OutputSource(out:ostream&amp;)
-+~AdjEntry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2710</x><y>1110</y><w>430</w><h>270</h></coordinates><panel_attributes>AdvEntry
++~AdjEntry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1185</x><y>354</y><w>129</w><h>81</h></coordinates><panel_attributes>AdvEntry
 --
 -comparative:vector&lt;string&gt;
 -highest:vector&lt;string&gt;
@@ -121,7 +98,7 @@
 +GetHighest(rank:int):string
 +Match(s:string&amp;):bool
 +OutputSource(out:ostream&amp;)
-+~AdvEntry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2700</x><y>1690</y><w>440</w><h>280</h></coordinates><panel_attributes>PronEntry
++~AdvEntry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1182</x><y>528</y><w>132</w><h>84</h></coordinates><panel_attributes>PronEntry
 --
 -person:int
 -single:int
@@ -135,7 +112,7 @@
 +GetSingle():int
 +Match(s:string&amp;):bool
 +OutputSource(out:ostream&amp;)
-+~PronEntry</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2690</x><y>2340</y><w>440</w><h>280</h></coordinates><panel_attributes>ConjEntry
++~PronEntry</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1179</x><y>723</y><w>132</w><h>84</h></coordinates><panel_attributes>ConjEntry
 --
 -category:string
 --
@@ -146,7 +123,7 @@
 +GetCategory():string
 +Match(s:string&amp;):bool
 +OutputSource(out:ostream&amp;)
-+~ConjEntry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2700</x><y>2000</y><w>380</w><h>290</h></coordinates><panel_attributes>PerpEntry
++~ConjEntry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1182</x><y>621</y><w>114</w><h>87</h></coordinates><panel_attributes>PerpEntry
 --
 #OutPut(out:ostream&amp;)
 +PrepEntry()
@@ -155,7 +132,7 @@
 
 +Match(s:string&amp;):bool
 +OutputSource(out:ostream&amp;)
-+~Prepentry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1520</x><y>1300</y><w>370</w><h>540</h></coordinates><panel_attributes>Word
++~Prepentry()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>828</x><y>411</y><w>111</w><h>162</h></coordinates><panel_attributes>Word
 --
 -spell:string
 -entries:vector&lt;Entry*&gt;
@@ -187,7 +164,7 @@
 +sort():string
 &lt;&lt;friend&gt;&gt;search(m:Set*, type:int)
 &lt;&lt;friend&gt;&gt;searchEntry(m:Word*m num:int,type:int):int*
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>800</x><y>1410</y><w>400</w><h>350</h></coordinates><panel_attributes>Dictionary
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>612</x><y>444</y><w>120</w><h>105</h></coordinates><panel_attributes>Dictionary
 --
 -words:vector&lt;Word&gt;
 -instance:Dictionary*
@@ -206,7 +183,7 @@
 +WordExist(s:string):bool
 +GetSize():int
 +ReadAndAdd(fin:istream&amp;)
-+Read(fin:istream&amp;)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>480</x><y>920</y><w>290</w><h>270</h></coordinates><panel_attributes>User
++Read(fin:istream&amp;)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>516</x><y>297</y><w>87</w><h>81</h></coordinates><panel_attributes>User
 --
 -name:string
 -password:string
@@ -222,7 +199,7 @@
 +InsertSet(s:Set&amp;):int
 +GetLevel():int
 +LevelUp()
-+RemoveSet(pos:int)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1020</x><y>900</y><w>310</w><h>390</h></coordinates><panel_attributes>Set
++RemoveSet(pos:int)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>678</x><y>291</y><w>93</w><h>117</h></coordinates><panel_attributes>Set
 --
 -setName:string
 -words:vector&lt;Word*&gt;
@@ -245,27 +222,24 @@
 +GetBeginDay():int
 +Set()
 +Set(n:string)
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1670</x><y>2150</y><w>250</w><h>90</h></coordinates><panel_attributes>WordFactory
---
-#typeChoose(s:string&amp;):EntryFactory*
-+create(s:vector&lt;string&gt;):Word*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3040</x><y>1500</y><w>220</w><h>60</h></coordinates><panel_attributes>EntryFactor
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1533</x><y>471</y><w>66</w><h>18</h></coordinates><panel_attributes>EntryFactory
 --
 /+create(s:vector&lt;string&gt;&amp;):Entry*/
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3300</x><y>130</y><w>210</w><h>50</h></coordinates><panel_attributes>NounEntry
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1362</x><y>60</y><w>63</w><h>15</h></coordinates><panel_attributes>NounEntryFactory
 --
-+create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3360</x><y>580</y><w>210</w><h>50</h></coordinates><panel_attributes>VerbEntry
++create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1380</x><y>195</y><w>63</w><h>15</h></coordinates><panel_attributes>VerbEntryFactory
 --
-+create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3370</x><y>910</y><w>210</w><h>50</h></coordinates><panel_attributes>AdjEntry
++create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1383</x><y>294</y><w>63</w><h>15</h></coordinates><panel_attributes>AdjEntryFactory
 --
-+create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3360</x><y>1200</y><w>210</w><h>50</h></coordinates><panel_attributes>AdvEntry
++create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1380</x><y>381</y><w>63</w><h>15</h></coordinates><panel_attributes>AdvEntryFactory
 --
-+create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3390</x><y>1790</y><w>210</w><h>50</h></coordinates><panel_attributes>PromEntry
++create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1389</x><y>558</y><w>63</w><h>15</h></coordinates><panel_attributes>PromEntryFactory
 --
-+create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3400</x><y>2440</y><w>210</w><h>50</h></coordinates><panel_attributes>ConjEntry
++create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1392</x><y>753</y><w>63</w><h>15</h></coordinates><panel_attributes>ConjEntryFactory
 --
-+create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3400</x><y>2080</y><w>210</w><h>50</h></coordinates><panel_attributes>PrepEntry
++create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1392</x><y>645</y><w>63</w><h>15</h></coordinates><panel_attributes>PrepEntryFactory
 --
-+create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>20</x><y>1470</y><w>280</w><h>240</h></coordinates><panel_attributes>InterFace
++create(s:vector&lt;string&gt;&amp;):Entry*</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>378</x><y>462</y><w>84</w><h>72</h></coordinates><panel_attributes>InterFace
 --
 -user:User*
 -users:vector&lt;User*&gt;
@@ -279,7 +253,7 @@
 --
 /+ini()/
 /+operate()/
-+kmp(a:stirng,b:string)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>0</x><y>1870</y><w>310</w><h>690</h></coordinates><panel_attributes>consoleInterface
++kmp(a:stirng,b:string)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>372</x><y>582</y><w>93</w><h>207</h></coordinates><panel_attributes>consoleInterface
 --
 -instance:consoleInterface*
 --
@@ -320,27 +294,26 @@
 #Remind(s:Set*)
 +GetInstance()consoleInterface*
 +ini()
-+operate()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2540</x><y>180</y><w>190</w><h>1150</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>170;30;30;1130</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2540</x><y>1580</y><w>180</w><h>210</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>160;190;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2540</x><y>1190</y><w>190</w><h>260</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>170;30;30;240</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2540</x><y>910</y><w>190</w><h>520</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>170;30;30;500</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2540</x><y>570</y><w>180</w><h>830</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>160;30;30;810</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2540</x><y>1610</y><w>180</w><h>480</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>160;460;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2540</x><y>1640</y><w>170</w><h>810</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>150;790;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2540</x><y>1470</y><w>520</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
++operate()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1134</x><y>75</y><w>56</w><h>344</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>51;9;9;339</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1134</x><y>495</y><w>53</w><h>62</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>48;57;9;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1134</x><y>378</y><w>56</w><h>77</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>51;9;9;72</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1134</x><y>294</y><w>56</w><h>155</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>51;9;9;150</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1134</x><y>192</y><w>53</w><h>248</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>48;9;9;243</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1134</x><y>504</y><w>53</w><h>143</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>48;138;9;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1134</x><y>513</y><w>50</w><h>242</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>45;237;9;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1134</x><y>462</y><w>404</w><h>21</h></coordinates><panel_attributes>lt=&lt;.
 friend
-</panel_attributes><additional_attributes>30;50;500;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3140</x><y>110</y><w>180</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>9;15;399;15</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1314</x><y>54</y><w>53</w><h>21</h></coordinates><panel_attributes>lt=&lt;.
 friend
-</panel_attributes><additional_attributes>30;50;160;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3220</x><y>550</y><w>160</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>9;15;48;15</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1338</x><y>186</y><w>47</w><h>21</h></coordinates><panel_attributes>lt=&lt;.
 friend
-</panel_attributes><additional_attributes>30;50;140;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3110</x><y>890</y><w>280</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>9;15;42;15</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1305</x><y>288</y><w>83</w><h>21</h></coordinates><panel_attributes>lt=&lt;.
 friend
-</panel_attributes><additional_attributes>30;50;260;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3110</x><y>1190</y><w>270</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>9;15;78;15</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1305</x><y>378</y><w>80</w><h>21</h></coordinates><panel_attributes>lt=&lt;.
 friend
-</panel_attributes><additional_attributes>30;50;250;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3110</x><y>1760</y><w>300</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>9;15;75;15</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1305</x><y>549</y><w>89</w><h>21</h></coordinates><panel_attributes>lt=&lt;.
 friend
-</panel_attributes><additional_attributes>30;50;280;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3050</x><y>2070</y><w>370</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>9;15;84;15</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1287</x><y>642</y><w>110</w><h>21</h></coordinates><panel_attributes>lt=&lt;.
 friend
-</panel_attributes><additional_attributes>30;50;350;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3100</x><y>2420</y><w>320</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>9;15;105;15</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1302</x><y>747</y><w>95</w><h>21</h></coordinates><panel_attributes>lt=&lt;.
 friend
-</panel_attributes><additional_attributes>30;50;300;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1730</x><y>1810</y><w>92</w><h>360</h></coordinates><panel_attributes>lt=&lt;.
-       friend</panel_attributes><additional_attributes>50;30;50;340</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1670</x><y>1310</y><w>460</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;30;440;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1010</x><y>1410</y><w>530</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;30;510;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1160</x><y>920</y><w>490</w><h>400</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;30;470;30;470;380</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>680</x><y>970</y><w>360</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;30;340;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>160</x><y>980</y><w>340</w><h>540</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;520;200;520;200;30;320;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>160</x><y>1500</y><w>650</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;30;630;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>120</x><y>1680</y><w>50</w><h>210</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>30;190;30;30</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1170</x><y>350</y><w>80</w><h>70</h></coordinates><panel_attributes>Question
+</panel_attributes><additional_attributes>9;15;90;15</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>873</x><y>414</y><w>137</w><h>14</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>9;9;132;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>675</x><y>444</y><w>158</w><h>14</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>9;9;153;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>720</x><y>297</y><w>146</w><h>119</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>9;9;141;9;141;114</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>576</x><y>312</y><w>107</w><h>14</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>9;9;102;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>420</x><y>315</y><w>101</w><h>161</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>9;156;60;156;60;9;96;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>420</x><y>471</y><w>194</w><h>14</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>9;9;189;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>408</x><y>525</y><w>14</w><h>62</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>9;57;9;9</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1011</x><y>72</y><w>24</w><h>21</h></coordinates><panel_attributes>Question
 --
 +s:string
-+num:int</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1350</x><y>540</y><w>280</w><h>140</h></coordinates><panel_attributes>QuestionChoose
++num:int</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1008</x><y>126</y><w>84</w><h>42</h></coordinates><panel_attributes>QuestionChoose
 --
 +judge:bool
 --
@@ -348,6 +321,120 @@ friend
 /+AddQuestion()/
 /+DisorganizeQuestion()/
 /+showInScreen()/
-/+GetTheAnswer()/</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1740</x><y>200</y><w>230</w><h>230</h></coordinates><panel_attributes>QuestionFirst
+/+GetTheAnswer()/</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>858</x><y>45</y><w>99</w><h>84</h></coordinates><panel_attributes>QuestionFirst
 --
-word</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1770</x><y>840</y><w>230</w><h>230</h></coordinates><panel_attributes>SimpleClass</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1750</x><y>510</y><w>230</w><h>230</h></coordinates><panel_attributes>SimpleClass</panel_attributes><additional_attributes/></element></umlet_diagram>
+-wordFirst:Word*
+-setFirst:Set*
+-entryFirst:vector&lt;Entry*&gt;
+-num:int
+-right:int
+-level:int
+-answer:int*
+-checkfirst:bool*
+-question:Question*
+--
++QuestionFirst(m:Word*,level:int,n:Set*)
++AddQuestion
++DisorganizeQuestion
++ShowInscreen(out:ostream&amp;)
++GetTheAnswer(s:string,out:ostream&amp;,exam:bool)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>855</x><y>222</y><w>99</w><h>57</h></coordinates><panel_attributes>QuestionSecondFillBlank
+--
+-wordFillBlank:Word*
+-setFillBlank:Set*
+-num:int
+-choose:int
+--
++QuestionFillBlank(m:Word*,level:int,n:Set*)
++AddQuestion
++DisorganizeQuestion
++ShowInscreen(out:ostream&amp;)
++GetTheAnswer(s:string,out:ostream&amp;,exam:bool)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>855</x><y>138</y><w>99</w><h>72</h></coordinates><panel_attributes>QuestionSecondChoose
+--
+-wordSecond:Word*
+-setSecond:Set*
+-num:int
+-level:int
+-choose:int
+-answer:int
+-question:Question*
+--
++QuestionSecond(m:Word*,level:int,n:Set*)
++AddQuestion
++DisorganizeQuestion
++ShowInscreen(out:ostream&amp;)
++GetTheAnswer(s:string,out:ostream&amp;,exam:bool)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>303</x><y>174</y><w>84</w><h>36</h></coordinates><panel_attributes>WordFactory
+--
+#typeChoose(s:string&amp;):EntryFactory*
++create( 	source:vector&lt;string&gt;):Word*
++youdaoCreate(source:vector&lt;string&gt;):Word*
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1446</x><y>480</y><w>92</w><h>290</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>9;285;87;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1446</x><y>474</y><w>92</w><h>185</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>9;180;87;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1443</x><y>474</y><w>95</w><h>95</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>9;90;90;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1434</x><y>381</y><w>104</w><h>107</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>9;9;99;102</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1437</x><y>291</y><w>101</w><h>191</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>9;9;96;186</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1434</x><y>192</y><w>104</w><h>284</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>9;9;99;279</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1416</x><y>57</y><w>122</w><h>419</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>9;9;117;414</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1056</x><y>378</y><w>32</w><h>74</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>9;69;27;69;27;9</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1008</x><y>213</y><w>129</w><h>174</h></coordinates><panel_attributes>Test
+--
+-rightNum0:int
+-rightNum1:int
+-rightNum2:int
+-wrongNum0:int
+-wrongNum1:int
+-wrongNum2:int
+-quaun0:int
+-quan1:int
+-quan2:int
+-staticTmpRightNum0:int
+-staticTmpRightNum1:int
+-staticTmpRightNum2:int
+-staticTmpWrongNum0:int
+-staticTmpWrongNum1:int
+-staticTmpWrongNum2:int
+-staticRightNum0:int
+-staticRightNum1:int
+-staticRightNum2:int
+-staticWrongNum0:int
+-staticWrongNum1:int
+-staticWrongNum2:int
+-rightRate0:double
+-rightRate1:double
+-rightRate2:double
+--
++Test
++QuanChange0
++QuanChange1
++QuanChange2
++Clear
++RightRateChange0
++RightRateChange1
++RightRateChange2
+
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>948</x><y>84</y><w>65</w><h>65</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>9;9;60;60</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>945</x><y>135</y><w>68</w><h>44</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>9;39;63;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>945</x><y>138</y><w>68</w><h>122</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>9;117;63;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1050</x><y>159</y><w>26</w><h>59</h></coordinates><panel_attributes>lt=&lt;.
+      friend</panel_attributes><additional_attributes>15;54;15;9</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>594</x><y>111</y><w>114</w><h>108</h></coordinates><panel_attributes>Recite
+--
+-set:Set*
+-Exit:bool
+-done:bool
+-reciteDay:int
+-reviewDay:int
+-reciteWord:vector&lt;Word*&gt;
+-reviewWord:vector&lt;Word*&gt;
+-reciteThis:vector&lt;Word*&gt;
+-reviewThis:vector&lt;Word*&gt;
+--
++recite(set:Set*)
++DoRecite(m:Word*,out:ostream&amp;,in:istream&amp;)
++DoReview(m:Word*,out:ostream&amp;,in:istream&amp;,huihe:int)
++ReciteControl(out:ostream,in:istream&amp;)
++GetDone
++ReciteNeedTime(m:Word*)
++ReciteThisTime
++ReviewThisTime
++SearchReview(m:vector&lt;Word*&gt;,num:int)
++ReviewQuanUpdate(m:Word*)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>618</x><y>111</y><w>119</w><h>185</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>9;9;114;9;114;180</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>378</x><y>174</y><w>221</w><h>21</h></coordinates><panel_attributes>lt=&gt;.
+	friend</panel_attributes><additional_attributes>216;15;9;15</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>360</x><y>201</y><w>257</w><h>261</h></coordinates><panel_attributes>lt=&gt;.
+firend</panel_attributes><additional_attributes>252;255;15;255;15;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>318</x><y>201</y><w>65</w><h>309</h></coordinates><panel_attributes>lt=&gt;.
+firend</panel_attributes><additional_attributes>60;303;15;303;15;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>762</x><y>99</y><w>251</w><h>203</h></coordinates><panel_attributes>lt=&lt;.
+      friend</panel_attributes><additional_attributes>246;198;15;198;15;9;96;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>786</x><y>171</y><w>227</w><h>125</h></coordinates><panel_attributes>lt=&lt;.
+      friend</panel_attributes><additional_attributes>222;120;15;120;15;9;69;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>816</x><y>246</y><w>197</w><h>41</h></coordinates><panel_attributes>lt=&lt;.
+      friend</panel_attributes><additional_attributes>192;36;15;36;15;9;39;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>306</x><y>201</y><w>377</w><h>635</h></coordinates><panel_attributes>lt=&lt;.
+	friend</panel_attributes><additional_attributes>372;348;372;630;9;627;12;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>909</x><y>333</y><w>104</w><h>83</h></coordinates><panel_attributes>lt=&lt;.
+	friend</panel_attributes><additional_attributes>99;15;15;15;15;78</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>456</x><y>318</y><w>557</w><h>398</h></coordinates><panel_attributes>lt=&lt;.
+	friend</panel_attributes><additional_attributes>552;9;525;9;525;393;9;393</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>606</x><y>210</y><w>227</w><h>234</h></coordinates><panel_attributes>lt=&gt;.
+	friend</panel_attributes><additional_attributes>15;9;15;228;222;228</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>456</x><y>564</y><w>440</w><h>105</h></coordinates><panel_attributes>lt=&gt;.
+	friend</panel_attributes><additional_attributes>9;99;429;99;429;9</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>723</x><y>474</y><w>110</w><h>21</h></coordinates><panel_attributes>lt=&lt;.
+friend</panel_attributes><additional_attributes>105;15;9;15</additional_attributes></element></umlet_diagram>

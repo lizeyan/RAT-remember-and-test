@@ -41,7 +41,7 @@ recite::recite(Set* m): set(m){
         std::cout<<"No Day Left!"<<std::endl;
         exit(-1);
     }
-    int wordleft=m->GetSize()-m->GetRecitedSize();//还有多少单词没有背
+    int wordleft=m->GetSize()-m->GetRecitedSize()-m->killed.size();//还有多少单词没有背
     reciteToday=wordleft/dayleft-set->reciteToday;//今天需要背多少单词
     reviewToday=std::min(m->GetRecitedSize(), reciteToday)-set->reviewToday;//今天需要复习多少单词
     if(reviewToday<0) reviewToday=0;
@@ -59,7 +59,7 @@ recite::recite(Set* m): set(m){
     int num=0;
     for(int i=0; i<lin.size(); i++){
         if(num>=reciteToday) break;
-        if(lin[i]->haveRecited){
+        if(lin[i]->haveRecited || lin[i]->kill){
             continue;
         }else{
             reciteWord.push_back(lin[i]);//把今天要背的单词加进来
@@ -73,8 +73,13 @@ recite::recite(Set* m): set(m){
     m->lastRecite[0]=today[0];
     m->lastRecite[1]=today[1];
     std::cout<<"You have "<<dayleft<<" days left to recite word."<<std::endl;
+    std::cout<<std::endl;
+    std::cout<<"You have recited "<<set->reciteToday<<" words today."<<std::endl;
+    std::cout<<"You have reviewed "<<set->reviewToday<<" words today."<<std::endl;
+    std::cout<<std::endl;
     std::cout<<"You should recite "<<reciteToday<<" words today."<<std::endl;
     std::cout<<"You should review "<<reviewToday<<" words today."<<std::endl;
+    std::cout<<std::endl;
 }
 
 void recite::DoRecite(Word* m, std::ostream& osout, std::istream& input){
@@ -82,8 +87,9 @@ void recite::DoRecite(Word* m, std::ostream& osout, std::istream& input){
     osout<<*m<<std::endl;
     std::string s;
     getline(input, s);
-    if(s=="Y"||s=="y"){
+    if(s=="K"||s=="k"){
         m->kill=true;
+        osout<<"have killed this word!"<<std::endl<<std::endl;
     }else if(s=="q" || s == "quit"){
         Exit=true;
         return;
@@ -149,13 +155,18 @@ void recite::DoReview(Word* m, std::ostream& osout, std::istream& input, int hui
     getline(input, s);
     if(s=="q"){
         Exit=true;
+        return;
+    }else if(s=="K" || s=="k"){
+        m->kill=true;
+        osout<<"have killed this word!"<<std::endl<<std::endl;
+        return;
     }
     if(op->ques->judge){
         m->right++;//正确次数+1
-        m->check.push_back(true);//这次测试正确
+        m->check.push_back(1);//这次测试正确
     }else{
         m->wrong++;
-        m->check.push_back(false);
+        m->check.push_back(0);
     }
     int lin[5];
     time_t t = time(0);
@@ -212,6 +223,9 @@ void recite::ReciteControl(std::ostream& osout, std::istream& input){
             DoRecite(reciteThis[i], osout, input);
             if(Exit) break;
             if(reciteThis[i]->kill){//如果已经被斩了，就不用在复习了
+                set->reviewToday++;
+                reciteThis[i]->haveRecited=false;
+                set->killed.push_back(reciteThis[i]);
                 reciteThis.erase(reciteThis.begin()+i);//从这次需要背的列表中删去已经被斩的
                 i--;
                 continue;
@@ -219,7 +233,7 @@ void recite::ReciteControl(std::ostream& osout, std::istream& input){
             reviewThis.push_back(reciteThis[i]);
         }
         if(Exit) break;
-        std::vector<int> choose=SearchReview(reviewWord, ReviewThisTime()-reciteThis.size());//按照权重选择需要背诵的单词
+        std::vector<int> choose=SearchReview(reviewWord, (int)ReviewThisTime()-(int)reciteThis.size());//按照权重选择需要背诵的单词
         for(int i=0; i<choose.size(); i++){
             reviewThis.push_back(reviewWord[choose[i]]);
         }
@@ -233,6 +247,17 @@ void recite::ReciteControl(std::ostream& osout, std::istream& input){
         for(int i=0; i<reviewThis.size(); i++){
             DoReview(reviewThis[i], osout, input, huihe);
             if(Exit) return;
+            if(reviewThis[i]->kill){//复习的时候斩了这个单词
+                set->reviewToday++;
+                set->killed.push_back(reviewThis[i]);
+                reviewThis[i]->haveRecited=false;
+                for(int j=0; j<reviewWord.size(); j++){
+                    if(reviewWord[j]->kill){
+                        reviewWord.erase(reviewWord.begin()+j);
+                        j--;
+                    }
+                }
+            }
         }
         for(int i=0; i<reviewWord.size(); i++){
             if((huihe-reviewWord[i]->huiHe)*15>reviewWord.size()){
@@ -257,6 +282,7 @@ void recite::ReciteControl(std::ostream& osout, std::istream& input){
                 reviewWord[i]->reviewDay=atoi(tmp);
                 reviewWord.erase(reviewWord.begin()+i);
                 set->reviewToday++;
+                reviewWord[i]->succeessReview++;
                 i--;
             }
         }

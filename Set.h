@@ -14,6 +14,7 @@ private:
     std::string setName;
     std::vector <Word*> words;
     std::vector <Word*> recited;
+    std::vector <Word*> killed;
     int useDay;//背完这个set设定的时间
     int beginDay[2];//开始的时间
     int lastRecite[2];//上次背诵时间

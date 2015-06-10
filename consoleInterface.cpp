@@ -79,8 +79,15 @@ void consoleInterface::ini()
     for(int i=0; i<user->GetSize(); i++){//初始化set中的一些东西
         user->GetSet(i)->lastRecite[0]=0;
         for(int j=0; j<user->GetSet(i)->GetSize(); j++){
-            if(user->GetSet(i)->GetWord(j)->haveRecited){
+            if(user->GetSet(i)->GetWord(j)->succeessReview>=8 && !user->GetSet(i)->GetWord(j)->kill){
+                user->GetSet(i)->GetWord(j)->haveRecited=false;
+                user->GetSet(i)->GetWord(j)->kill=true;//如果累计成功背诵8次以上就相当于kill了
+            }
+            if(user->GetSet(i)->GetWord(j)->haveRecited){//初始化recite
                 user->GetSet(i)->recited.push_back(user->GetSet(i)->GetWord(j));
+            }
+            if(user->GetSet(i)->GetWord(j)->kill){//初始化kill
+                user->GetSet(i)->killed.push_back(user->GetSet(i)->GetWord(j));
             }
         }
     }
@@ -109,9 +116,11 @@ void consoleInterface::Remind(Set* m){
     if(dayleft<=0){
         std::cout<<"No Day Left! Please add days."<<std::endl;
     }else{
-        int wordleft=m->GetSize()-m->GetRecitedSize();//还有多少单词没有背
+        int wordleft=m->GetSize()-m->GetRecitedSize()-m->killed.size();//还有多少单词没有背
         int reciteToday=wordleft/dayleft-m->reciteToday;//今天需要背多少单词
         cout<<"\t"<<reciteToday<<" words need to be recited today."<<endl;
+        int reviewToday=min(m->GetRecitedSize(), reciteToday)-m->reviewToday;
+        cout<<"\t"<<reviewToday<<" words need to be reviewed today."<<endl;
     }
 }
 void consoleInterface::load()
@@ -959,6 +968,18 @@ void consoleInterface::Recite(std::string command)
         if(Recite->GetDone()){
             cout<<"Congratulations! You have finished today's task!"<<endl;
         }
+        user->GetSet(linpos)->recited.clear();
+        for(int i=0; i<user->GetSet(linpos)->words.size(); i++){
+            if(user->GetSet(linpos)->words[i]->haveRecited){
+                user->GetSet(linpos)->recited.push_back(user->GetSet(linpos)->words[i]);
+            }
+        }
+        for(int i=0; i<user->GetSet(linpos)->recited.size(); i++){
+            if(user->GetSet(linpos)->recited[i]->kill){
+                user->GetSet(linpos)->recited.erase(user->GetSet(linpos)->recited.begin()+i);
+                i--;
+            }
+        }
     }
 }
 void consoleInterface::Change(std::string command)
@@ -1018,8 +1039,9 @@ void consoleInterface::Change(std::string command)
 }
 void consoleInterface::Look(Set* m)
 {
+    cout<<"\t"<<"   "<<m->killed.size()<<" words killed."<<endl;
     cout<<"\t"<<"   "<<m->recited.size()<<" words recited."<<endl;
-    cout<<"\t"<<"   "<<m->words.size()-m->recited.size()<<" words left."<<endl;
+    cout<<"\t"<<"   "<<m->words.size()-m->recited.size()-m->killed.size()<<" words left."<<endl;
     int today[2];
     time_t t = time(0);
     char tmp[5],tmp1[8];
@@ -1353,6 +1375,8 @@ void consoleInterface::TouchSet(string command)
         set->reciteToday=0;
         set->reviewToday=0;
         set->recited.clear();
+        set->killed.clear();
+        set->words.clear();
         ifstream fin((user->GetName() + "/" + setName + ".txt").c_str());
         set->Read(fin);
         fin.close();
@@ -1505,8 +1529,12 @@ void consoleInterface::output(){
     }
     fout<<"*"<<endl;
     for(int i=0; i<dic->GetSize(); i++){
-        fout<<(*dic)[i].haveRecited<<endl;
-        if(!(*dic)[i].haveRecited){
+        if((*dic)[i].haveRecited || (*dic)[i].kill){
+            fout<<1<<endl;
+        }else{
+            fout<<0<<endl;
+        }
+        if(!(*dic)[i].haveRecited && !(*dic)[i].kill){
             fout<<"*"<<endl;
             continue;
         }

@@ -65,8 +65,11 @@ Word* WordFactory::create(vector<string>& source)
     result->quan1=result->EntrySize();
     result->quan2=result->EntrySize();
     result->right=0;
+    result->wrong=0;
+    result->kill=false;
     result->reviewDay=0;
     result->haveRecited=false;
+    result->succeessReview=0;
     //remember = new remember;
     result->quanReview=1;
     result->zu=false;

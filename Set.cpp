@@ -41,14 +41,13 @@ void Set::ReadAndAdd(std::istream& load)
 {
     Dictionary* dic = Dictionary::GetInstance();
     string word;
-    while (load >> word)
+    while (getline(load, word))
     {
         if (!WordExist (word))
         {
             int pos = dic->FindWordExact(word);
             if (pos >= 0 && pos < dic->GetSize())
             {
-                int pos = dic->FindWord (word);
                 Insert ((*dic)[pos]);
             }
         }

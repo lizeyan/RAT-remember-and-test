@@ -509,8 +509,10 @@ void consoleInterface::Exam()
     string examFileName[4] = {"", "level1.txt", "level2.txt", "level3.txt"};
     Set* examSet = new Set;
     ifstream fin(examFileName[user->GetLevel() + 1].c_str());
+    cout << "before read" << endl;
     examSet->Read(fin);
     fin.close();
+    cout << "after read " << endl;
     int level = 4;
     int testType = rand() % 3;
     TestDo(examSet, level, testType);

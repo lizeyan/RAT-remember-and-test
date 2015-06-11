@@ -1,5 +1,5 @@
 #include "Question.h"
-
+#include <cstdlib>
 int search(Set* m, int type){
     int* lin = new int[m->GetSize()];
     int num=0;

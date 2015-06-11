@@ -45,7 +45,8 @@ void Set::ReadAndAdd(std::istream& load)
     {
         if (!WordExist (word))
         {
-            if (dic->WordExist (word))
+            int pos = dic->FindWordExact(word);
+            if (pos >= 0 && pos < dic->GetSize())
             {
                 int pos = dic->FindWord (word);
                 Insert ((*dic)[pos]);

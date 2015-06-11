@@ -510,7 +510,6 @@ void consoleInterface::Exam()
     Set* examSet = new Set;
     ifstream fin(examFileName[user->GetLevel() + 1].c_str());
     examSet->Read(fin);
-    cout << examSet->GetSize() << endl;
     fin.close();
     int level = 4;
     int testType = rand() % 3;

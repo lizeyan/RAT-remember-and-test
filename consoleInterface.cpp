@@ -1331,13 +1331,13 @@ void consoleInterface::TouchSet(string setName)
         user->InsertSet (*set);
         modified = true;
         cout<<"please input how many days you want to use to recite the word of this set."<<endl;
-        int dayUse;
+        string dayUse;
         cin>>dayUse;
-        while(dayUse<=0){
+        while(atoi(dayUse.c_str())<=0){
             cout<<"please input corret day."<<endl;
             cin>>dayUse;
         }
-        set->useDay=dayUse;
+        set->useDay=atoi(dayUse.c_str());
         time_t t = time(0);
         char tmp[5],tmp1[8];
         strftime( tmp1, sizeof(tmp), "%Y",localtime(&t) );

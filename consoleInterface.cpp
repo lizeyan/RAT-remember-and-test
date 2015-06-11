@@ -1244,6 +1244,12 @@ void consoleInterface::AddFile(string setName, string fileName)
         cout << "please input file name." << endl;
         return;
     }
+    int pos = user->FindSet(setName);
+    if (pos < 0 || pos >= user->GetSize())
+    {
+        cout << "no this set: " << setName << endl;
+        return;
+    }
     ifstream fin(fileName.c_str());
     if (!fin)
     {
@@ -1269,7 +1275,6 @@ void consoleInterface::AnalyseFile(ifstream& fin, Set* s)
 {
     string examFileName[4] = {"", "level1.txt", "level2.txt", "level3.txt"};
     Set* examSet = new Set;
-    examSet = NULL;
     if (user->GetLevel() > 0)
     {
         ifstream finSet(examFileName[user->GetLevel()].c_str());

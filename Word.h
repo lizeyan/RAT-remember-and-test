@@ -31,20 +31,10 @@ public:
     friend std::ostream& operator<< (std::ostream&, Word&);
     std::string GetSpell()	const	{return spell;}
     Word ();
-    int EntrySize() const{
-        return entries.size();
-    }
-    Entry* GetEntry(int i) const {
-        return entries[i];
-    }
-    bool GetHaveRecited() const
-    {
-        return haveRecited;
-    }
-    int* GetQuanSelect()
-    {
-        return quanSelect;
-    }
+    int EntrySize() const{return entries.size();}
+    Entry* GetEntry(int i) const {return entries[i];}
+    bool GetHaveRecited() const{return haveRecited;}
+    int* GetQuanSelect(){return quanSelect;}
     void Quanchange0();
     void Quanchange1();
     void Quanchange2();

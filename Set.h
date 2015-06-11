@@ -31,22 +31,13 @@ public:
     void ReadAndAdd (std::istream& load);
     void Read (std::istream& load);
     int GetSize () {return words.size();}
-    int GetRecitedSize(){
-        return recited.size();
-    }
-    Word* GetWord(int i){
-        return words[i];
-    }
-    int GetUseDay(){
-        return useDay;
-    }
-    int* GetBeginDay(){
-        return beginDay;
-    }
+    int GetRecitedSize(){return recited.size();}
+    Word* GetWord(int i){return words[i];}
+    int GetUseDay(){return useDay;}
+    int* GetBeginDay(){return beginDay;}
     int removeWord(int rank);
     Set();
-    Set (std::string n): setName(n)	{
-    }
+    Set (std::string n): setName(n)	{}
     friend class recite;
     friend class consoleInterface;
 };

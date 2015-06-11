@@ -16,11 +16,6 @@ int main ()
     Interface* ui = consoleInterface::GetInstance();
     ui->ini();
     ui->operation();
-    
-    ////Dictionary* dic = Dictionary::GetInstance();
-    //for (int i = 0; i < dic->GetSize(); ++i)
-    //	dic->kmp("make", (*dic)[i].GetSpell());
-    //cout << *dic << endl;
     delete ui;
     return 0;
     

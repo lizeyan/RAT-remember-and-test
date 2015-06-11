@@ -1171,9 +1171,10 @@ void consoleInterface::TestDo(Set* s, int le, int ttype)
     modified=true;
     if (ttype == 2)
         le = -1;
+    Test::Clear();
     while(1)
     {
-        op=new opera(s, le, ttype, false);
+        op=new opera(s, le, ttype, true);
         op->ope(cout);
         string answer;
         getline(cin,answer);

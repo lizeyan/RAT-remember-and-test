@@ -44,7 +44,7 @@ void Test::QuanChange2(){
     quan2=std::max(1, wrongNum2-(int)sqrt(wrongNum2+rightNum2));
 }
 
-void Test::Clear(){
+void  Test::Clear(){
     staticTmpRightNum0=0;
     staticTmpRightNum1=0;
     staticTmpRightNum2=0;
